@@ -55,10 +55,20 @@ class Biometrics {
     } on PlatformException catch (e) {
       switch (e.code) {
         case auth_error.passcodeNotSet:
+          authenticateCallback.call();
+          break;
         case auth_error.notAvailable:
+          authenticateCallback.call();
+          break;
         case auth_error.lockedOut:
+          authenticateCallback.call();
+          break;
         case auth_error.otherOperatingSystem:
+          authenticateCallback.call();
+          break;
         case auth_error.permanentlyLockedOut:
+          authenticateCallback.call();
+          break;
         case auth_error.notEnrolled:
           authenticateCallback.call();
           break;
