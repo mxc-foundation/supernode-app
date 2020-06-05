@@ -7,6 +7,7 @@ import 'package:supernodeapp/common/components/security/biometrics.dart';
 import 'package:supernodeapp/common/components/tip.dart';
 import 'package:supernodeapp/common/daos/wallet_dao.dart';
 import 'package:supernodeapp/common/daos/withdraw_dao.dart';
+import 'package:supernodeapp/common/daos/users_dao.dart';
 import 'package:supernodeapp/common/utils/log.dart';
 import 'package:supernodeapp/common/utils/tools.dart';
 import 'package:supernodeapp/global_store/store.dart';
@@ -19,12 +20,32 @@ Effect<WithdrawState> buildEffect() {
   return combineEffects(<Object, Effect<WithdrawState>>{
     Lifecycle.initState: _initState,
     WithdrawAction.onQrScan: _onQrScan,
+    WithdrawAction.onEnterSecurityWithdrawContinue: _onEnterSecurityWithdrawContinue,
+    WithdrawAction.onGotoSet2FA: _onGotoSet2FA,
     WithdrawAction.onSubmit: _onSubmit,
   });
 }
 
 void _initState(Action action, Context<WithdrawState> ctx) {
   _withdrawFee(ctx);
+  _requestTOTPStatus(ctx);
+}
+
+void _requestTOTPStatus(Context<WithdrawState> ctx){
+ UserDao dao = UserDao();
+
+  Map data = {};
+
+  dao.getTOTPStatus(data).then((res){
+    log('totp',res);
+
+    if((res as Map).containsKey('enabled')){
+      ctx.dispatch(WithdrawActionCreator.isEnabled(res['enabled']));
+    }
+
+  }).catchError((err){
+    tip(ctx.context,'$err');
+  });
 }
 
 void _withdrawFee(Context<WithdrawState> ctx) {
@@ -51,6 +72,27 @@ void _onQrScan(Action action, Context<WithdrawState> ctx) async {
   ctx.dispatch(WithdrawActionCreator.address(qrResult));
 }
 
+void _onEnterSecurityWithdrawContinue(Action action, Context<WithdrawState> ctx) async{
+  //showLoading(ctx.context);
+
+  Navigator.push(ctx.context,
+    MaterialPageRoute(
+        maintainState: false,
+        fullscreenDialog: false,
+        builder:(context){
+          return ctx.buildComponent('enterSecurityCodeWithdraw');
+        }
+    ),
+  );
+}
+
+void _onGotoSet2FA(Action action, Context<WithdrawState> ctx) async{
+  Navigator.pushNamed(ctx.context, 'set_2fa_page',arguments:{'isEnabled': false}).then((_){
+    _requestTOTPStatus(ctx);
+  });
+  //Navigator.of(viewService.context).pushNamed('set_2fa_page', arguments:{'isEnabled': false})
+}
+
 void _onSubmit(Action action, Context<WithdrawState> ctx) async {
   var curState = ctx.state;
   double balance = curState.balance;
@@ -59,44 +101,49 @@ void _onSubmit(Action action, Context<WithdrawState> ctx) async {
   // OrganizationsState org = curState.organizations.first;
   String orgId = GlobalStore.store.getState().settings.selectedOrganizationId;
 
-  if ((curState.formKey.currentState as FormState).validate()) {
-    if (address.trim().isEmpty) {
+  String codes = curState.otpCodeCtl.text;
+
+  if((curState.formKey.currentState as FormState).validate()){
+    if(address.trim().isEmpty){
       tip(ctx.context, 'The field of "To" is required.');
       return;
     }
 
-    Biometrics.authenticate(
-      ctx.context,
-      authenticateCallback: () {
-        WithdrawDao dao = WithdrawDao();
-        Map data = {
-          "orgId": orgId,
-          "amount": int.parse(amount),
-          "ethAddress": address,
-          "availableBalance": balance
-        };
-        showLoading(ctx.context);
-        dao.withdraw(data).then((res) {
-          hideLoading(ctx.context);
-          log('withdraw', res);
-          if (res.containsKey('status') && res['status']) {
-            Navigator.pushNamed(ctx.context, 'confirm_page',
-                arguments: {'title': 'withdraw', 'content': 'withdraw_submit_tip'});
+    final canCheckBiometrics = await Biometrics.canCheckBiometrics();
 
-            _updateBalance(ctx);
-            ctx.dispatch(WithdrawActionCreator.status(true));
-          } else {
-            ctx.dispatch(WithdrawActionCreator.status(false));
-            tip(ctx.context, res);
-          }
-        }).catchError((err) {
-          hideLoading(ctx.context);
-          ctx.dispatch(WithdrawActionCreator.status(false));
-          tip(ctx.context, 'WithdrawDao withdraw: $err');
-        });
-      },
-      failAuthenticateCallBack: null,
-    );
+    if (canCheckBiometrics) {
+      Biometrics.authenticate(
+        ctx.context,
+        authenticateCallback: () {
+          WithdrawDao dao = WithdrawDao();
+          Map data = {
+            "orgId": orgId,
+            "amount": int.parse(amount),
+            "ethAddress": address,
+            "availableBalance": balance,
+            "otp_code": codes
+          };
+    showLoading(ctx.context);
+    dao.withdraw(data).then((res){
+      hideLoading(ctx.context);
+      log('withdraw',res);
+
+      if(res.containsKey('status') && res['status']){
+        Navigator.pushNamed(ctx.context, 'confirm_page',arguments:{'title': 'withdraw','content': 'withdraw_submit_tip'});
+        _updateBalance(ctx);
+        ctx.dispatch(WithdrawActionCreator.status(true));
+      }else{
+        ctx.dispatch(WithdrawActionCreator.status(false));
+        tip(ctx.context,res);
+      }
+    }).catchError((err){
+      hideLoading(ctx.context);
+      ctx.dispatch(WithdrawActionCreator.status(false));
+      tip(ctx.context,'WithdrawDao withdraw: $err');
+    });},
+        failAuthenticateCallBack: null,
+      );
+    }
   }
 }
 
