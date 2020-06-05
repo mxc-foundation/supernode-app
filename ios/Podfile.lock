@@ -4,13 +4,15 @@ PODS:
   - flutter_bugly (0.0.1):
     - Bugly
     - Flutter
-  - flutter_compass (0.0.1):
-    - Flutter
   - flutter_local_notifications (0.0.1):
+    - Flutter
+  - flutter_plugin_android_lifecycle (0.0.1):
     - Flutter
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
+  - local_auth (0.0.1):
+    - Flutter
   - location (0.0.1):
     - Flutter
   - location_web (0.0.1):
@@ -38,14 +40,13 @@ PODS:
     - Flutter
   - url_launcher_web (0.0.1):
     - Flutter
-  - user_location (0.0.1):
-    - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_bugly (from `.symlinks/plugins/flutter_bugly/ios`)
-  - flutter_compass (from `.symlinks/plugins/flutter_compass/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
+  - flutter_plugin_android_lifecycle (from `.symlinks/plugins/flutter_plugin_android_lifecycle/ios`)
+  - local_auth (from `.symlinks/plugins/local_auth/ios`)
   - location (from `.symlinks/plugins/location/ios`)
   - location_web (from `.symlinks/plugins/location_web/ios`)
   - majascan (from `.symlinks/plugins/majascan/ios`)
@@ -59,7 +60,6 @@ DEPENDENCIES:
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
   - url_launcher_macos (from `.symlinks/plugins/url_launcher_macos/ios`)
   - url_launcher_web (from `.symlinks/plugins/url_launcher_web/ios`)
-  - user_location (from `.symlinks/plugins/user_location/ios`)
 
 SPEC REPOS:
   trunk:
@@ -71,10 +71,12 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_bugly:
     :path: ".symlinks/plugins/flutter_bugly/ios"
-  flutter_compass:
-    :path: ".symlinks/plugins/flutter_compass/ios"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
+  flutter_plugin_android_lifecycle:
+    :path: ".symlinks/plugins/flutter_plugin_android_lifecycle/ios"
+  local_auth:
+    :path: ".symlinks/plugins/local_auth/ios"
   location:
     :path: ".symlinks/plugins/location/ios"
   location_web:
@@ -101,16 +103,15 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_macos/ios"
   url_launcher_web:
     :path: ".symlinks/plugins/url_launcher_web/ios"
-  user_location:
-    :path: ".symlinks/plugins/user_location/ios"
 
 SPEC CHECKSUMS:
   Bugly: 4edda9bb0e3017fd453612189069757195fa23ca
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_bugly: c9800f4d5bc5bdc27ffdde3417a26ba44266e0c3
-  flutter_compass: cbbd285cea1584c7ac9c4e0c3e1f17cbea55e855
   flutter_local_notifications: 9e4738ce2471c5af910d961a6b7eadcf57c50186
+  flutter_plugin_android_lifecycle: dc0b544e129eebb77a6bfb1239d4d1c673a60a35
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  local_auth: 25938960984c3a7f6e3253e3f8d962fdd16852bd
   location: 3a2eed4dd2fab25e7b7baf2a9efefe82b512d740
   location_web: b94e7433cfe28c0f7c8923c2ee482824b32e55a7
   majascan: 6ad3804777ac93f1ca09160e5d38197e4387081d
@@ -124,7 +125,6 @@ SPEC CHECKSUMS:
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
   url_launcher_macos: fd7894421cd39320dce5f292fc99ea9270b2a313
   url_launcher_web: e5527357f037c87560776e36436bf2b0288b965c
-  user_location: ec382950d42014e9d796513cb4a83de2e643a477
 
 PODFILE CHECKSUM: f3bac21afdb7b5c9732f535b44567b1f5009ad7c
 

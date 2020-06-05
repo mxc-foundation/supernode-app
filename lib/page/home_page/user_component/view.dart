@@ -93,7 +93,7 @@ Widget buildView(UserState state, Dispatch dispatch, ViewService viewService) {
               image: AppImages.gateways,
               title: FlutterI18n.translate(_ctx, 'total_gateways'),
               number: '${state.gatewaysTotal}',
-              subtitle: FlutterI18n.translate(_ctx, 'revenue'),
+              subtitle: FlutterI18n.translate(_ctx, 'profit'),
               price:
                   '${Tools.priceFormat(state.gatewaysRevenue)} MXC (${Tools.priceFormat(state.gatewaysUSDRevenue)} USD)',
             ),
@@ -103,19 +103,19 @@ Widget buildView(UserState state, Dispatch dispatch, ViewService viewService) {
               image: AppImages.devices,
               title: FlutterI18n.translate(_ctx, 'total_devices'),
               number: '${state.devicesTotal}',
-              subtitle: FlutterI18n.translate(_ctx, 'revenue'),
+              subtitle: FlutterI18n.translate(_ctx, 'cost'),
               price:
                   '${Tools.priceFormat(state.devicesRevenue)} MXC (${Tools.priceFormat(state.devicesUSDRevenue)} USD)',
             ),
           ),
-          map(
+          MapWidget(
             context: _ctx,
             userLocationSwitch: true,
-            center: state.gatewaysLocations.isNotEmpty ? state.gatewaysLocations.first.point : null,
             markers: state.gatewaysLocations ?? [],
             controller: state.mapCtl,
             callback: (location) => dispatch(UserActionCreator.addLocation(location)),
-            zoomOutCallback: ()=> dispatch(HomeActionCreator.mapbox()),
+            zoomOutCallback: () => dispatch(HomeActionCreator.mapbox()),
+            myLatLng: state.location,
           ),
           smallColumnSpacer(),
         ],

@@ -133,5 +133,8 @@
 	"all_rights": "版权所有",
 	"foundation": "MXC极域基金会",
 	"version": "版本",
-	"unstake": "解除质押"
+	"unstake": "解除质押",
+	"profit": "收益",
+	"cost": "费用",
+	"verify": "请验证身份"
 }

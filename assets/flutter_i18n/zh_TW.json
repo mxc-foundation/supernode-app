@@ -133,5 +133,8 @@
 	"all_rights": "版权所有",
 	"foundation": "MXC極域基金會",
 	"version": "版本",
-	"unstake": "解除質押"
+	"unstake": "解除質押",
+	"profit": "收益",
+	"cost": "費用",
+	"verify": "請證明你的身份"
 }

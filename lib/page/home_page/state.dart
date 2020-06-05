@@ -1,24 +1,20 @@
-import 'dart:async';
-
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong/latlong.dart';
-// import 'package:latlong/latlong.dart';
 import 'package:supernodeapp/common/daos/time_dao.dart';
 import 'package:supernodeapp/global_store/store.dart';
 import 'package:supernodeapp/page/settings_page/organizations_component/state.dart';
 import 'package:supernodeapp/page/settings_page/state.dart';
 
+import 'device_component/state.dart';
 import 'gateway_component/gateway_list_adapter/gateway_item_component/state.dart';
 import 'gateway_component/state.dart';
 import 'user_component/state.dart';
-import 'device_component/state.dart';
 import 'wallet_component/state.dart';
 import 'wallet_component/wallet_list_adapter/wallet_item_component/state.dart';
 
 class HomeState implements Cloneable<HomeState> {
-
   //home
   int tabIndex = 0;
   bool loading = true;
@@ -46,12 +42,12 @@ class HomeState implements Cloneable<HomeState> {
   int selectedIndexBtn2 = -1;
   List<WalletItemState> walletList = [];
   double withdrawFee = 0;
-  String firstTime = TimeDao.getDatetime(new DateTime.now(),type: 'date');
-  String secondTime = TimeDao.getDatetime(new DateTime.now(),type: 'date');
+  String firstTime = TimeDao.getDatetime(new DateTime.now(), type: 'date');
+  String secondTime = TimeDao.getDatetime(new DateTime.now(), type: 'date');
 
   //stake
   double stakedAmount = 0;
-  
+
   //gateways
   int gatewaysTotal = 0;
   double gatewaysRevenue = 0;
@@ -62,7 +58,7 @@ class HomeState implements Cloneable<HomeState> {
   MapController mapCtl = MapController();
   List<GatewayItemState> gatewaysList = [];
   LatLng location;
-  
+
   //devices
   int devicesTotal = 0;
   double devicesRevenue = 0;
@@ -121,10 +117,9 @@ HomeState initState(Map<String, dynamic> args) {
     ..username = settingsData.username;
 }
 
-class UserConnector extends ConnOp<HomeState, UserState>{
-
+class UserConnector extends ConnOp<HomeState, UserState> {
   @override
-  UserState get(HomeState state){
+  UserState get(HomeState state) {
     return UserState()
       ..id = state.userId
       ..username = state.username
@@ -153,10 +148,9 @@ class UserConnector extends ConnOp<HomeState, UserState>{
   }
 }
 
-class GatewayConnector extends ConnOp<HomeState, GatewayState>{
-
+class GatewayConnector extends ConnOp<HomeState, GatewayState> {
   @override
-  GatewayState get(HomeState state){
+  GatewayState get(HomeState state) {
     return GatewayState()
       ..gatewaysTotal = state.gatewaysTotal
       ..gatewaysRevenue = state.gatewaysRevenue
@@ -167,35 +161,29 @@ class GatewayConnector extends ConnOp<HomeState, GatewayState>{
   }
 
   @override
-  void set(HomeState state, GatewayState subState) {
-
-  }
+  void set(HomeState state, GatewayState subState) {}
 }
 
-class DeviceConnector extends ConnOp<HomeState, DeviceState>{
-
+class DeviceConnector extends ConnOp<HomeState, DeviceState> {
   @override
-  DeviceState get(HomeState state){
+  DeviceState get(HomeState state) {
     return DeviceState();
   }
 
   @override
-  void set(HomeState state, DeviceState subState) {
-   
-  }
+  void set(HomeState state, DeviceState subState) {}
 }
 
-class WalletConnector extends ConnOp<HomeState, WalletState>{
-
+class WalletConnector extends ConnOp<HomeState, WalletState> {
   @override
-  WalletState get(HomeState state){
+  WalletState get(HomeState state) {
     return WalletState()
       ..balance = state.balance
       ..totalStaking = state.totalStaking
       ..organizations = state.organizations
       ..stakedAmount = state.stakedAmount
       ..isSetDate1 = state.isSetDate1
-      ..isSetDate2 =  state.isSetDate2
+      ..isSetDate2 = state.isSetDate2
       ..selectedIndexBtn1 = state.selectedIndexBtn1
       ..selectedIndexBtn2 = state.selectedIndexBtn2
       ..tabIndex = state.walletTabIndex

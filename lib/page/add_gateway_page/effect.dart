@@ -100,7 +100,10 @@ void _register(Context<AddGatewayState> ctx,String serialNumber){
     log('Gateway register',res);
 
     if(res.containsKey('status')){
-      tip(ctx.context,res['status']);
+      tip(ctx.context,res['status'],success: true);
+      if(ctx.state.fromPage == 'home'){
+        Navigator.of(ctx.context).pop();
+      }
     }
   }).catchError((err){
     hideLoading(ctx.context);

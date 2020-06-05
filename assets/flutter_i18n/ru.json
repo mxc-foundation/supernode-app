@@ -133,5 +133,8 @@
 	"all_rights": "Все права защищены",
 	"foundation": "MXC Foundation",
 	"version": "Версия",
-	"unstake": "Вывести"
+	"unstake": "Вывести",
+	"profit": "доход",
+	"cost": "расходы",
+	"verify": "Подтвердите свою личность"
 }

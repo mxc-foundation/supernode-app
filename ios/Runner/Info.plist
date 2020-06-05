@@ -45,8 +45,8 @@
 	<string>Would you allow MXC SmartCity to use the Camera?</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Would you allow MXC SmartCity to use the Contacts?</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Would you allow MXC SmartCity to use the Location Service?</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Would you allow MXC SmartCity to use the Biometric?</string>
 	<key>NSLocationUsageDescription</key>
 	<string>Would you allow MXC SmartCity to use the Location Service?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

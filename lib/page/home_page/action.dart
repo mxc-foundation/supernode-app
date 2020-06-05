@@ -1,6 +1,7 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:supernodeapp/page/home_page/user_component/state.dart';
 import 'package:supernodeapp/page/settings_page/organizations_component/state.dart';
+import 'package:latlong/latlong.dart';
 
 enum HomeAction {
   relogin,
@@ -20,6 +21,7 @@ enum HomeAction {
   updateUsername,
   miningIncome,
   convertUSD,
+  location,
 }
 
 class HomeActionCreator {
@@ -89,5 +91,9 @@ class HomeActionCreator {
 
   static Action convertUSD(String type, value) {
     return Action(HomeAction.convertUSD, payload: {'type': type, 'value': value});
+  }
+
+  static Action onLocation(LatLng location){
+    return Action(HomeAction.location, payload: location);
   }
 }

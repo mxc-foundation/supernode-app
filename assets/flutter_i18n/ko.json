@@ -133,5 +133,8 @@
 	"all_rights": "All Rights Reserverd",
 	"foundation": "MXC Foundation",
 	"version": "버전",
-	"unstake": "스테이킹 취소"
+	"unstake": "스테이킹 취소",
+	"profit": "수익.",
+	"cost": "비용",
+	"verify": "신원 확인"
 }

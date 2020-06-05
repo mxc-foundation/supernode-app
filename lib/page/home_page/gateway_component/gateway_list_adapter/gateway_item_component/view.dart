@@ -4,7 +4,6 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:supernodeapp/common/daos/time_dao.dart';
 import 'package:supernodeapp/theme/font.dart';
 
-import 'action.dart';
 import 'state.dart';
 
 Widget buildView(GatewayItemState state, Dispatch dispatch, ViewService viewService) {
@@ -34,7 +33,6 @@ Widget buildView(GatewayItemState state, Dispatch dispatch, ViewService viewServ
                 style: kBigFontOfBlack
               ),
               Container(
-                margin: EdgeInsets.only(top: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -42,8 +40,29 @@ Widget buildView(GatewayItemState state, Dispatch dispatch, ViewService viewServ
                       '${FlutterI18n.translate(_ctx,'last_seen')}: ${TimeDao.getDatetime(state.lastSeenAt)}',
                       style: kSmallFontOfGrey,
                     ),
+                    Container(
+                      width: 90,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                              TimeDao.isIn5Min(state.lastSeenAt) ?
+                              '(${FlutterI18n.translate(_ctx,'online')})' : '(${FlutterI18n.translate(_ctx,'offline')})',
+                              style: kSmallFontOfGrey
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5,top: 4),
+                            child: Icon(
+                              Icons.lens,
+                              color: TimeDao.isIn5Min(state.lastSeenAt) ? Colors.green : Colors.grey,
+                              size: 10,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Text(
-                      '${FlutterI18n.translate(_ctx,'serial_number')}: ${state.networkServerID}',
+                      '${FlutterI18n.translate(_ctx,'version')}: ${state.description}',
                       style: kSmallFontOfGrey,
                     ),
                     Text(
@@ -64,7 +83,7 @@ Widget buildView(GatewayItemState state, Dispatch dispatch, ViewService viewServ
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Container(
-                  width: 100,
+                  width: 90,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[

@@ -1,7 +1,7 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:supernodeapp/common/utils/tools.dart';
 import 'package:supernodeapp/page/settings_page/organizations_component/state.dart';
-
+import 'package:latlong/latlong.dart';
 import 'action.dart';
 import 'state.dart';
 import 'user_component/state.dart';
@@ -19,7 +19,8 @@ Reducer<HomeState> buildReducer() {
       HomeAction.gatewaysLocations: _gatewaysLocations,
       HomeAction.devices: _devices,
       HomeAction.updateUsername: _updateUsername,
-      HomeAction.convertUSD: _convertUSD
+      HomeAction.convertUSD: _convertUSD,
+      HomeAction.location: _location,
     },
   );
 }
@@ -28,16 +29,14 @@ HomeState _loading(HomeState state, Action action) {
   bool toogle = action.payload;
 
   final HomeState newState = state.clone();
-  return newState
-    ..loading = toogle;
+  return newState..loading = toogle;
 }
 
 HomeState _tabIndex(HomeState state, Action action) {
   int index = action.payload;
 
   final HomeState newState = state.clone();
-  return newState
-    ..tabIndex = index;
+  return newState..tabIndex = index;
 }
 
 HomeState _profile(HomeState state, Action action) {
@@ -59,16 +58,14 @@ HomeState _balance(HomeState state, Action action) {
   double data = action.payload;
 
   final HomeState newState = state.clone();
-  return newState
-    ..balance = data;
+  return newState..balance = data;
 }
 
 HomeState _stakedAmount(HomeState state, Action action) {
   double data = action.payload;
 
   final HomeState newState = state.clone();
-  return newState
-    ..stakedAmount = data;
+  return newState..stakedAmount = data;
 }
 
 HomeState _gateways(HomeState state, Action action) {
@@ -87,16 +84,14 @@ HomeState _miningIncome(HomeState state, Action action) {
   double value = action.payload;
 
   final HomeState newState = state.clone();
-  return newState
-    ..gatewaysRevenue = value;
+  return newState..gatewaysRevenue = value;
 }
 
 HomeState _gatewaysLocations(HomeState state, Action action) {
   List data = action.payload;
 
   final HomeState newState = state.clone();
-  return newState 
-    ..gatewaysLocations = data;
+  return newState..gatewaysLocations = data;
 }
 
 HomeState _devices(HomeState state, Action action) {
@@ -114,26 +109,28 @@ HomeState _updateUsername(HomeState state, Action action) {
   Map data = action.payload;
 
   final HomeState newState = state.clone();
-  return newState
-    ..username = data['username'];
+  return newState..username = data['username'];
 }
-
 
 HomeState _convertUSD(HomeState state, Action action) {
   Map data = action.payload;
 
   final HomeState newState = state.clone();
 
-  if(data['type'] == 'gateway'){
-    return newState
-      ..gatewaysUSDRevenue = Tools.convertDouble(data['value']);
+  if (data['type'] == 'gateway') {
+    return newState..gatewaysUSDRevenue = Tools.convertDouble(data['value']);
   }
 
-  if(data['type'] == 'device'){
-    return newState
-      ..devicesUSDRevenue = Tools.convertDouble(data['value']);
+  if (data['type'] == 'device') {
+    return newState..devicesUSDRevenue = Tools.convertDouble(data['value']);
   }
 
   return state;
-  
+}
+
+HomeState _location(HomeState state, Action action) {
+  LatLng loc = action.payload;
+
+  final HomeState newState = state.clone();
+  return newState..location = loc;
 }

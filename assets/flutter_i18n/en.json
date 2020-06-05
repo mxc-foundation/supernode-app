@@ -133,5 +133,8 @@
 	"all_rights": "All Rights Reserved",
 	"foundation": "MXC Foundation",
 	"version": "Version",
-	"unstake": "Unstake"
+	"unstake": "Unstake",
+	"profit": "Revenue",
+	"cost": "Fee",
+	"verify": "Verify Your Identity"
 }

@@ -133,5 +133,8 @@
 	"all_rights": "All Rights Reserverd",
 	"foundation": "MXC Foundation",
 	"version": "バージョン",
-	"unstake": "ステークを解除する"
+	"unstake": "ステークを解除する",
+	"profit": "利益を収める",
+	"cost": "費用",
+	"verify": "本人確認"
 }

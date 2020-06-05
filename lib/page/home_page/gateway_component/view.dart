@@ -36,7 +36,7 @@ Widget buildView(GatewayState state, Dispatch dispatch, ViewService viewService)
               onPressed: () => dispatch(GatewayActionCreator.onAdd()),
               titleText: FlutterI18n.translate(_ctx,'total_gateways'),
               subtitleText: '${state.gatewaysTotal}',
-              trailTitle: FlutterI18n.translate(_ctx,'revenue'),
+              trailTitle: FlutterI18n.translate(_ctx,'profit'),
               trailSubtitle: '${Tools.priceFormat(state.gatewaysRevenue)} MXC (${Tools.priceFormat(state.gatewaysUSDRevenue)} USD)'
             )
           ),

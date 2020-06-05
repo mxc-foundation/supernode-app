@@ -2,7 +2,6 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'package:supernodeapp/page/home_page/action.dart';
 import 'package:supernodeapp/page/settings_page/organizations_component/state.dart';
-import 'action.dart';
 import 'state.dart';
 
 Effect<UserState> buildEffect() {
@@ -22,5 +21,6 @@ void _onOperate(Action action, Context<UserState> ctx) {
   double balance = ctx.state.balance;
   List<OrganizationsState> organizations = ctx.state.organizations;
 
-  Navigator.pushNamed(ctx.context,'${act}_page',arguments: {'balance': balance,'organizations':organizations,'userId': userId});
+  Navigator.pushNamed(ctx.context, '${act}_page',
+      arguments: {'balance': balance, 'organizations': organizations, 'userId': userId});
 }

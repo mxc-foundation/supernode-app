@@ -1,22 +1,28 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-Widget loading({bool isSmall = false}){
-  return isSmall ? 
-  indicatior():
-  Scaffold(
-    backgroundColor: Colors.transparent,
-    body: indicatior()
-  );
+Widget loading({BuildContext context, bool isSmall = false}) {
+  return isSmall
+      ? indicatior(context)
+      : Scaffold(
+          backgroundColor: Colors.transparent, body: indicatior(context));
 }
 
-Widget indicatior(){
+Widget indicatior(BuildContext context) {
   return Center(
-    child: SizedBox(
-      width: 30,
-      height: 30,
-      child: CupertinoActivityIndicator()
-    )     
+    child: Container(
+      width: 100,
+      height: 100,
+      alignment: Alignment.center,
+      child: SizedBox(
+        width: 50.0,
+        height: 50.0,
+        child: SpinKitPulse(
+          color: Color.fromARGB(255, 28, 20, 120),
+          size: 50.0,
+        ),
+      ),
+    ),
   );
 }

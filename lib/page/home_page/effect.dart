@@ -3,18 +3,19 @@ import 'dart:async';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong/latlong.dart';
 import 'package:supernodeapp/common/components/loading.dart';
+import 'package:supernodeapp/common/components/location_utils.dart';
+import 'package:supernodeapp/common/components/tip.dart';
 import 'package:supernodeapp/common/configs/config.dart';
 import 'package:supernodeapp/common/configs/images.dart';
 import 'package:supernodeapp/common/daos/app_dao.dart';
-import 'package:supernodeapp/common/components/tip.dart';
 import 'package:supernodeapp/common/utils/log.dart';
 import 'package:supernodeapp/common/utils/storage_manager_native.dart';
 import 'package:supernodeapp/common/utils/tools.dart';
 import 'package:supernodeapp/global_store/store.dart';
 import 'package:supernodeapp/page/settings_page/organizations_component/state.dart';
 import 'package:supernodeapp/page/settings_page/state.dart';
-import 'package:page_transition/page_transition.dart';
 import 'action.dart';
 import 'gateway_component/gateway_list_adapter/gateway_item_component/state.dart';
 import 'state.dart';
@@ -72,6 +73,18 @@ void _relogin(Action action, Context<HomeState> ctx) {
 
 void _initState(Action action, Context<HomeState> ctx) {
   _profile(ctx);
+  _getUserLocation(ctx);
+}
+
+Future<void> _getUserLocation(Context<HomeState> ctx) async {
+  await LocationUtils.getLocation();
+  if (LocationUtils.locationData != null) {
+    ctx.dispatch(
+      HomeActionCreator.onLocation(
+        LatLng(LocationUtils.locationData.latitude, LocationUtils.locationData.longitude),
+      ),
+    );
+  }
 }
 
 void _onProfile(Action action, Context<HomeState> ctx) {
@@ -190,6 +203,10 @@ void _gateways(Context<HomeState> ctx) {
   dao.list(data).then((res) async {
     log('GatewaysDao list', res);
 
+    // [0-9]\d{0,1}\.[0-9]\d{0,1}\.[0-9]\d{0,1}
+    // 用于匹配版本号 允许范围 0.0.0 -> 99.99.99
+    var reg = RegExp(r"[0-9]\d{0,1}\.[0-9]\d{0,1}\.[0-9]\d{0,1}");
+
     int total = int.parse(res['totalCount']);
     // int allValues = 0;
     List<GatewayItemState> list = [];
@@ -199,6 +216,13 @@ void _gateways(Context<HomeState> ctx) {
     if (tempList.length > 0) {
       for (int index = 0; index < tempList.length; index++) {
         // allValues += tempList[index]['location']['accuracy'];
+        Iterable<Match> matches = reg.allMatches(tempList[index]['description']);
+        String description = '';
+        for (Match m in matches) {
+          description = m.group(0);
+        }
+
+        tempList[index]['description'] = description;
         list.add(GatewayItemState.fromMap(tempList[index]));
       }
     }
@@ -283,7 +307,9 @@ void _mapbox(Action action, Context<HomeState> ctx) {
   Navigator.pushNamed(
     ctx.context,
     'mapbox_page',
-    arguments: {'markers': ctx.state.gatewaysLocations},
+    arguments: {
+      'markers': ctx.state.gatewaysLocations,
+    },
   );
 }
 

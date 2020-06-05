@@ -12,7 +12,6 @@ import 'package:supernodeapp/common/components/text_field/text_field_with_title.
 import 'package:supernodeapp/common/configs/sys.dart';
 import 'package:supernodeapp/common/utils/reg.dart';
 import 'package:supernodeapp/common/utils/tools.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'action.dart';
 import 'state.dart';

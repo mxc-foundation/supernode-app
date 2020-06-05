@@ -4,6 +4,7 @@ import 'package:supernodeapp/page/settings_page/organizations_component/state.da
 
 class WithdrawState implements Cloneable<WithdrawState> {
 
+  // why use GlobalKey ? it very expensive !
   GlobalKey formKey = GlobalKey<FormState>();
   TextEditingController amountCtl = TextEditingController();
   TextEditingController addressCtl = TextEditingController();
