@@ -18,7 +18,7 @@ Widget homeBar(String title,{Function onPressed}){
           color: Colors.black,
         ),
         onPressed: onPressed,
-      ) : 
+      ) :
       Container()
     ],
   );

@@ -92,6 +92,13 @@ const kBigFontOfBlue = TextStyle(
   height: 1.5,
 );
 
+const kBigFontOfDartBlue = TextStyle(
+  color: const Color.fromARGB(255, 28, 20, 120),
+  fontFamily: "Roboto",
+  fontSize: 16,
+  height: 1.5,
+);
+
 const kBigFontOfGrey = TextStyle(
   color: const Color.fromARGB(138, 0, 0, 0),
   fontFamily: "Roboto",

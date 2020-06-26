@@ -32,7 +32,9 @@ Widget buildView(
             child: panelBody(
                 loading: false,
                 icon: Icons.add_circle,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(viewService.context, 'choose_application_page');
+                },
                 titleText: FlutterI18n.translate(_ctx, 'total_device'),
                 subtitleText: '4',
                 trailTitle: FlutterI18n.translate(_ctx, 'downlink_fee'),
