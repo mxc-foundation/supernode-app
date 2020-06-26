@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 import 'colors.dart';
 
 const kSmallFontOfGrey = TextStyle(
-  color: const Color.fromARGB(138, 0, 0, 0),
-  fontFamily: "Roboto",
-  fontSize: 12,
-  height: 1.33333,
-  decoration: TextDecoration.none
-);
+    color: const Color.fromARGB(138, 0, 0, 0),
+    fontFamily: "Roboto",
+    fontSize: 12,
+    height: 1.33333,
+    decoration: TextDecoration.none);
 
 const kSmallFontOfGreen = TextStyle(
   color: const Color.fromARGB(255, 16, 196, 105),
@@ -88,6 +87,13 @@ const kBigFontOfBlack = TextStyle(
 
 const kBigFontOfBlue = TextStyle(
   color: const Color.fromARGB(255, 77, 137, 229),
+  fontFamily: "Roboto",
+  fontSize: 16,
+  height: 1.5,
+);
+
+const kBigFontOfGrey = TextStyle(
+  color: const Color.fromARGB(138, 0, 0, 0),
   fontFamily: "Roboto",
   fontSize: 16,
   height: 1.5,
