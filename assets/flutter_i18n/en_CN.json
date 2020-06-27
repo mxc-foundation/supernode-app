@@ -177,5 +177,13 @@
 	"update_dialog_downloading": "Downloading File...",
 	"tip_latest_version": "This is the latest version.",
 	"total_device": "Total Devices",
-	"downlink_fee": "Downlink Fee"
+	"device_choose": "Choose Your Application",
+	"ai_camera": "AI Camera",
+	"smart_watch": "Smart Watch",
+	"smart_door_lock": "Smart Door Lock",
+	"smart_parking": "Smart Parking",
+	"device_cancel": "Cancel",
+	"smart_watchID": "SmartwatchID",
+	"smart_bluetooth_connect": "Please connect this device in Bluetooth settings"
+
 }

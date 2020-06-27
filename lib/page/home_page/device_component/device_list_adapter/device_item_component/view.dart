@@ -15,6 +15,9 @@ Widget buildView(
           bottom: BorderSide(color: Color.fromARGB(26, 0, 0, 0), width: 1)),
     ),
     child: ListTile(
+      onTap: (){
+        Navigator.pushNamed(_ctx, 'smart_watch_detail_page');
+      },
       // onTap: () => dispatch(GatewayItemActionCreator.onProfile()),
       title: Container(
         padding: EdgeInsets.symmetric(vertical: 10),

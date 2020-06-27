@@ -1,39 +1,42 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:supernodeapp/common/components/bottom_sheet/ios_style_bottom_sheet.dart';
 import 'package:supernodeapp/common/components/page/page_body.dart';
 import 'package:supernodeapp/common/components/panel/panel_frame.dart';
-import 'package:supernodeapp/common/components/select_picker.dart';
 import 'package:supernodeapp/theme/colors.dart';
 import 'package:supernodeapp/theme/font.dart';
 
 import 'state.dart';
 
+const dartBlue = Color.fromRGBO(28, 20, 120, 1);
+
 Widget buildView(
     ChooseApplicationState state, Dispatch dispatch, ViewService viewService) {
-  var _ctx=viewService.context;
-  return Scaffold(
-    body: pageBody(children: [
-      Container(
-        padding: EdgeInsets.only(top: kToolbarHeight, bottom: 10, left: 10),
-        child: Text(
-          'Choose Your Application',
-          style: kBigFontOfBlack,
-        ),
-      ),
-      panelFrame(
-        child: _buildPanelItem(
-            icon: Icons.camera_enhance,
-            title: 'AI Camera',
-            trailing: Icon(
-              Icons.keyboard_arrow_down,
-              size: 30,
-              color: Colors.black,
+  var _ctx = viewService.context;
+  return Builder(
+    builder: (context) {
+      return Scaffold(
+        body: pageBody(children: [
+          Container(
+            padding: EdgeInsets.only(top: kToolbarHeight, bottom: 10, left: 10),
+            child: Text(
+              FlutterI18n.translate(_ctx, 'device_choose'),
+              style: kBigFontOfBlack,
             ),
-            onTap: () {
-              showBottomSheet(
-//                  barrierDismissible: true,
-                  context: _ctx,
+          ),
+          panelFrame(
+            child: _buildPanelItem(
+              icon: Icons.camera_enhance,
+              title: FlutterI18n.translate(_ctx, 'ai_camera'),
+              trailing: Icon(
+                Icons.keyboard_arrow_down,
+                size: 30,
+                color: Colors.black,
+              ),
+              onTap: () {
+                showDialog(
+                  context: context,
                   builder: (BuildContext context) {
                     var list = List();
                     list.add('AI Camera');
@@ -46,34 +49,54 @@ Widget buildView(
                         Navigator.pop(context);
                       },
                     );
-                  });
-            }),
-      ),
-      panelFrame(
-        child: _buildPanelItem(icon: Icons.vpn_key, title: 'Smart Watch'),
-      ),
-      panelFrame(
-        child: _buildPanelItem(icon: Icons.watch, title: 'Smart Door Lock'),
-      ),
-      panelFrame(
-        child:
-            _buildPanelItem(icon: Icons.directions_car, title: 'Smart Parking'),
-      ),
-      SizedBox(height: 30),
-      _buildButton(
-        onPressed: () {
-          Navigator.pop(_ctx);
-        },
-        title: 'Update',
-      ),
-      SizedBox(height: 20),
-      _buildButton(
-        onPressed: () {
-          Navigator.pop(_ctx);
-        },
-        title: 'Cancel',
-      ),
-    ]),
+                  },
+                );
+              },
+            ),
+          ),
+          panelFrame(
+            child: _buildPanelItem(
+              icon: Icons.vpn_key,
+              title: FlutterI18n.translate(_ctx, 'smart_watch'),
+            ),
+          ),
+          panelFrame(
+            child: _buildPanelItem(
+              icon: Icons.watch,
+              title: FlutterI18n.translate(_ctx, 'smart_door_lock'),
+              onTap: () {
+                showDialog(
+                  context: _ctx,
+                  builder: (context) {
+                    return _buildSmartDialog(_ctx);
+                  },
+                );
+              },
+            ),
+          ),
+          panelFrame(
+            child: _buildPanelItem(
+              icon: Icons.directions_car,
+              title: FlutterI18n.translate(_ctx, 'smart_parking'),
+            ),
+          ),
+          SizedBox(height: 30),
+          _buildButton(
+            onPressed: () {
+              Navigator.pop(_ctx);
+            },
+            title: FlutterI18n.translate(_ctx, "update"),
+          ),
+          SizedBox(height: 20),
+          _buildButton(
+            onPressed: () {
+              Navigator.pop(_ctx);
+            },
+            title: FlutterI18n.translate(_ctx, "device_cancel"),
+          ),
+        ]),
+      );
+    },
   );
 }
 
@@ -102,6 +125,63 @@ Widget _buildButton({VoidCallback onPressed, String title}) {
   );
 }
 
+Widget _buildSmartDialog(BuildContext ctx) {
+  return AlertDialog(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    title: Container(
+      margin: EdgeInsets.only(top: 10),
+      child: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              color: dartBlue,
+              shape: BoxShape.circle,
+            ),
+            width: 44,
+            height: 44,
+          ),
+          Positioned(
+            child: Icon(
+              Icons.watch,
+              size: 24,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    ),
+    content: Container(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(
+            FlutterI18n.translate(ctx, "smart_watchID") + "(Bluetooth name)",
+            style: kBigFontOfBlack,
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 14),
+          Text(
+            FlutterI18n.translate(ctx, "smart_bluetooth_connect"),
+            textAlign: TextAlign.center,
+            style: kMiddleFontOfGrey,
+          ),
+          SizedBox(height: 38),
+          Text(
+            FlutterI18n.translate(ctx, 'goto_bluetooth_setting'),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              decoration: TextDecoration.underline,
+              fontSize: 14,
+              color: dartBlue,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
 Widget _buildPanelItem(
     {IconData icon, String title, Widget trailing, VoidCallback onTap}) {
   return ListTile(
@@ -112,7 +192,7 @@ Widget _buildPanelItem(
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
-              color: Color.fromRGBO(28, 20, 120, 1),
+              color: dartBlue,
               shape: BoxShape.circle,
             ),
             width: 44,
