@@ -4,7 +4,6 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:supernodeapp/common/components/page/page_frame.dart';
 import 'package:supernodeapp/common/components/page/page_icon_nav_bar.dart';
 import 'package:supernodeapp/common/components/picker/date_range_picker.dart';
-import 'package:supernodeapp/common/components/wallet/date_buttons.dart';
 import 'package:supernodeapp/theme/font.dart';
 
 import 'state.dart';
@@ -16,14 +15,14 @@ Widget buildView(
     context: _ctx,
     children: [
       _buildNavBar(_ctx),
-      _buildSmartDetail(),
+      _buildSmartDetail(_ctx),
       Container(
         padding: EdgeInsets.only(top: 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              'Confirmed Test Results',
+              FlutterI18n.translate(_ctx, 'confirm_tr'),
               style: kMiddleFontOfBlack,
             ),
             Container(
@@ -54,7 +53,7 @@ Widget _buildNavBar(BuildContext ctx) {
       ),
     ),
     title: Text(
-      'My Smart watch',
+      FlutterI18n.translate(ctx, 'my_sw'),
       style: kBigFontOfBlack,
     ),
     onTap: () {
@@ -83,19 +82,19 @@ Widget _buildSmartDetailItem({String title, String des}) {
   );
 }
 
-Widget _buildSmartDetail() {
+Widget _buildSmartDetail(ctx) {
   return Container(
     padding: EdgeInsets.only(top: 16),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        _buildSmartDetailItem(title: 'Description', des: 'Test'),
-        _buildSmartDetailItem(title: 'Last Seen', des: '2020-05-22 09:39:12'),
-        _buildSmartDetailItem(title: 'Device ID', des: 'SmartWatch02436'),
+        _buildSmartDetailItem(title: FlutterI18n.translate(ctx, 'description'), des: 'Test'),
+        _buildSmartDetailItem(title: FlutterI18n.translate(ctx, 'last_seen'), des: '2020-05-22 09:39:12'),
+        _buildSmartDetailItem(title: FlutterI18n.translate(ctx, 'device_ID'),des: 'SmartWatch02436'),
         Container(
           margin: EdgeInsets.only(top: 20),
           child: Text(
-            'Go to Bluetooth Setting',
+            FlutterI18n.translate(ctx, 'goto_bluetooth_setting'),
             style: kMiddleFontOfBlueLink,
           ),
         ),

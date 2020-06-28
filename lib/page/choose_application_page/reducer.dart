@@ -6,12 +6,17 @@ import 'state.dart';
 Reducer<ChooseApplicationState> buildReducer() {
   return asReducer(
     <Object, Reducer<ChooseApplicationState>>{
-      ChooseApplicationAction.action: _onAction,
+      ChooseApplicationAction.changeCamera: _onChangeCamera,
     },
   );
 }
 
-ChooseApplicationState _onAction(ChooseApplicationState state, Action action) {
+ChooseApplicationState _onChangeCamera(
+    ChooseApplicationState state, Action action) {
+  var nextIndex = action.payload ?? 0;
   final ChooseApplicationState newState = state.clone();
+  if (nextIndex > -1) {
+    newState.selectCameraIndex = nextIndex;
+  }
   return newState;
 }

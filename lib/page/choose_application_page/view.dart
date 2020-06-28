@@ -1,9 +1,11 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:supernodeapp/common/components/bottom_sheet/ios_style_bottom_sheet.dart';
+import 'package:supernodeapp/common/components/dialog/full_screen_dialog.dart';
 import 'package:supernodeapp/common/components/page/page_body.dart';
 import 'package:supernodeapp/common/components/panel/panel_frame.dart';
+import 'package:supernodeapp/common/components/picker/ios_style_bottom_dailog.dart';
+import 'package:supernodeapp/page/choose_application_page/action.dart';
 import 'package:supernodeapp/theme/colors.dart';
 import 'package:supernodeapp/theme/font.dart';
 
@@ -38,16 +40,21 @@ Widget buildView(
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    var list = List();
-                    list.add('AI Camera');
-                    list.add('Fire Detect');
-                    list.add('Waste Detect');
-                    list.add('Human Detect');
-                    return IosStyleBottomSheet(
-                      list: list,
-                      onItemClickListener: (index) async {
-                        Navigator.pop(context);
-                      },
+                    var list = List<String>();
+                    list.add(FlutterI18n.translate(context, 'ai_camera'));
+                    list.add(FlutterI18n.translate(context, 'fire_detect'));
+                    list.add(FlutterI18n.translate(context, 'waste_detect'));
+                    list.add(FlutterI18n.translate(context, 'human_detect'));
+                    return FullScreenDialog(
+                      child: IosStyleBottomDialog(
+                        selectIndex: state.selectCameraIndex,
+                        list: list,
+                        onItemClickListener: (index){
+                          println(state.selectCameraIndex);
+                          print(index);
+                          dispatch(ChooseApplicationActionCreator.onChangeCamera(index));
+                        },
+                      ),
                     );
                   },
                 );
@@ -55,8 +62,11 @@ Widget buildView(
             ),
           ),
           panelFrame(
-            child: _buildPanelItem(
-              icon: Icons.vpn_key,
+            child: _buildImagePanelItem(
+              leading:ImageIcon(
+                AssetImage('assets/images/device/solid-camera.png'),
+                color: Colors.white,
+              ),
               title: FlutterI18n.translate(_ctx, 'smart_watch'),
             ),
           ),
@@ -204,6 +214,33 @@ Widget _buildPanelItem(
               size: 24,
               color: Colors.white,
             ),
+          ),
+        ],
+      ),
+      title: Text(
+        title ?? "",
+        style: kBigFontOfBlack,
+      ),
+      trailing: trailing);
+}
+Widget _buildImagePanelItem(
+    {Widget leading,String title, Widget trailing, VoidCallback onTap}) {
+  return ListTile(
+      onTap: onTap,
+      contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+      leading: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              color: dartBlue,
+              shape: BoxShape.circle,
+            ),
+            width: 44,
+            height: 44,
+          ),
+          Positioned(
+            child: leading,
           ),
         ],
       ),

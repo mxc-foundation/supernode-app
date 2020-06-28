@@ -1,10 +1,9 @@
 import 'package:fish_redux/fish_redux.dart';
 
-//TODO replace with your own action
-enum ChooseApplicationAction { action }
+enum ChooseApplicationAction { changeCamera }
 
 class ChooseApplicationActionCreator {
-  static Action onAction() {
-    return const Action(ChooseApplicationAction.action);
+  static Action onChangeCamera(int selectIndex) {
+    return Action(ChooseApplicationAction.changeCamera,payload: selectIndex);
   }
 }

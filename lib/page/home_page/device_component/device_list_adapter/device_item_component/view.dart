@@ -15,7 +15,7 @@ Widget buildView(
           bottom: BorderSide(color: Color.fromARGB(26, 0, 0, 0), width: 1)),
     ),
     child: ListTile(
-      onTap: (){
+      onTap: () {
         Navigator.pushNamed(_ctx, 'smart_watch_detail_page');
       },
       // onTap: () => dispatch(GatewayItemActionCreator.onProfile()),
@@ -46,19 +46,19 @@ Widget buildView(
                     children: <Widget>[
                       Icon(
                         Icons.camera_enhance,
-                        size: 20,
+                        size: 24,
                       ),
                       Icon(
                         Icons.watch,
-                        size: 20,
+                        size: 24,
                       ),
-                      Icon(
-                        Icons.vpn_key,
-                        size: 20,
+                      Image.asset(
+                        'assets/images/device/solid-camera.png',
+                        width: 24,
                       ),
                       Icon(
                         Icons.directions_car,
-                        size: 20,
+                        size: 24,
                       ),
                       SizedBox(width: 7),
                       Expanded(
