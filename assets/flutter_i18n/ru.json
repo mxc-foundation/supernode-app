@@ -177,5 +177,21 @@
 	"update_dialog_downloading": "Файл скачивается...",
 	"tip_latest_version": "Это последняя версия.",
 	"total_device": "Всего устройств",
-	"downlink_fee": "Комиссия"
+	"downlink_fee": "Комиссия",
+	"device_choose": "Choose Your Application",
+	"ai_camera": "AI Camera",
+	"fire_detect": "Fire Detect",
+	"waste_detect": "Waste Detect",
+	"human_detect": "Human Detect",
+	"smart_watch": "Smart Watch",
+	"smart_door_lock": "Smart Door Lock",
+	"smart_parking": "Smart Parking",
+	"device_cancel": "Cancel",
+	"smart_watchID": "SmartwatchID",
+	"smart_bluetooth_connect": "Please connect this device in Bluetooth settings",
+	"goto_bluetooth_setting": "Go to Bluetooth Setting",
+	"description": "Description",
+	"device_ID": "Device ID",
+	"confirm_tr": "Confirmed Test Results",
+	"my_sw": "My Smart watch"
 }
