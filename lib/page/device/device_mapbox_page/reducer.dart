@@ -7,6 +7,7 @@ Reducer<DeviceMapBoxState> buildReducer() {
   return asReducer(
     <Object, Reducer<DeviceMapBoxState>>{
       DeviceMapBoxAction.addMapController: _addMapController,
+      DeviceMapBoxAction.introductionVisible: _introductionVisible,
     },
   );
 }
@@ -14,4 +15,9 @@ Reducer<DeviceMapBoxState> buildReducer() {
 DeviceMapBoxState _addMapController(DeviceMapBoxState state, Action action) {
   final DeviceMapBoxState newState = state.clone();
   return newState..mapCtl = action.payload;
+}
+
+DeviceMapBoxState _introductionVisible(DeviceMapBoxState state, Action action) {
+  final DeviceMapBoxState newState = state.clone();
+  return newState..showIntroduction = action.payload;
 }

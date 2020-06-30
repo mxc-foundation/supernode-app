@@ -1,10 +1,13 @@
 import 'package:fish_redux/fish_redux.dart';
 
-//TODO replace with your own action
-enum IntroductionAction { action }
+enum IntroductionAction { changeRadio, changeGenderRadio }
 
 class IntroductionActionCreator {
-  static Action onAction() {
-    return const Action(IntroductionAction.action);
+  static Action onChangeRadio(String value) {
+    return Action(IntroductionAction.changeRadio, payload: value);
+  }
+
+  static Action onChangeGenderRadio(String value) {
+    return Action(IntroductionAction.changeGenderRadio, payload: value);
   }
 }

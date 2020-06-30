@@ -6,7 +6,8 @@ import 'package:supernodeapp/common/components/widgets/scaffold_widget.dart';
 import 'action.dart';
 import 'state.dart';
 
-Widget buildView(DeviceMapBoxState state, Dispatch dispatch, ViewService viewService) {
+Widget buildView(
+    DeviceMapBoxState state, Dispatch dispatch, ViewService viewService) {
   return ScaffoldWidget(
     body: Stack(
       children: <Widget>[
@@ -15,22 +16,26 @@ Widget buildView(DeviceMapBoxState state, Dispatch dispatch, ViewService viewSer
           userLocationSwitch: true,
           isFullScreen: true,
         ),
-        Positioned(
-          left: 0,
-          right: 0,
-          bottom: 0,
-          top: 0,
-          child: Container(
-            color: Color.fromRGBO(0, 0, 0, 0.4),
-          ),
-        ),
-        Positioned(
-          bottom: 0,
-          top: 80,
-          left: 0,
-          right: 0,
-          child: viewService.buildComponent('introduction'),
-        ),
+        state.showIntroduction
+            ? Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                top: 0,
+                child: Container(
+                  color: Color.fromRGBO(0, 0, 0, 0.4),
+                ),
+              )
+            : SizedBox(),
+        state.showIntroduction
+            ? Positioned(
+                bottom: 0,
+                top: 80,
+                left: 0,
+                right: 0,
+                child: viewService.buildComponent('introduction'),
+              )
+            : SizedBox(),
       ],
     ),
     useSafeArea: false,
