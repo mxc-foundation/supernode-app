@@ -16,7 +16,7 @@ Widget buildView(
     ),
     child: ListTile(
       onTap: () {
-        Navigator.pushNamed(_ctx, 'smart_watch_detail_page');
+        Navigator.pushNamed(_ctx, 'device_mapbox_page');
       },
       // onTap: () => dispatch(GatewayItemActionCreator.onProfile()),
       title: Container(

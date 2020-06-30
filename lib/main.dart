@@ -10,12 +10,14 @@ import 'package:supernodeapp/configs/sys.dart';
 import 'package:supernodeapp/common/utils/storage_manager_native.dart';
 
 import 'package:supernodeapp/global_store/store.dart';
+import 'package:supernodeapp/page/device/device_mapbox_page/page.dart';
 import 'package:supernodeapp/page/device/smart_watch_detail_page/page.dart';
 import 'package:supernodeapp/page/sign_up_page/page.dart';
 import 'package:supernodeapp/theme/colors.dart';
 import 'global_store/state.dart';
 import 'page/add_gateway_page/page.dart';
 import 'page/change_password_page/page.dart';
+import 'page/device/choose_application_page/page.dart';
 import 'page/set_2fa_page/page.dart';
 import 'page/confirm_page/page.dart';
 import 'page/deposit_page/page.dart';
@@ -69,7 +71,7 @@ Widget mxcApp() {
         'set_2fa_page': Set2FAPage(),
         'add_gateway_page': AddGatewayPage(),
         'mapbox_page': MapBoxPage(),
-      'smart_watch_detail_page': SmartWatchDetailPage(),
+      'device_mapbox_page': DeviceMapBoxPage(),
       },
       visitor: (String path, Page<Object, dynamic> page) {
         if (page.isTypeof<GlobalBaseState>()) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supernodeapp/theme/font.dart';
 
-Widget pageNavBar(String name,{EdgeInsetsGeometry padding,Function onTap}){
+Widget pageNavBar(String name,{EdgeInsetsGeometry padding,Function onTap,bool hideClose=false}){
   return Container(
     padding: padding,
     child: Row(
@@ -12,7 +12,8 @@ Widget pageNavBar(String name,{EdgeInsetsGeometry padding,Function onTap}){
           style: kBigFontOfBlack,
         ),
         Spacer(),
-        GestureDetector(
+        hideClose ? SizedBox()
+        : GestureDetector(
           child: Icon(
             Icons.close,
             color: Colors.black,

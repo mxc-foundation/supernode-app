@@ -85,6 +85,12 @@ const kBigFontOfBlack = TextStyle(
   height: 1.5,
 );
 
+const kVeryBigFontOfBlack = TextStyle(
+  color: const Color.fromARGB(222, 0, 0, 0),
+  fontFamily: "Roboto",
+  fontSize: 24,
+);
+
 const kBigFontOfBlue = TextStyle(
   color: const Color.fromARGB(255, 77, 137, 229),
   fontFamily: "Roboto",
