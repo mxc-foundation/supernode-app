@@ -1,15 +1,21 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:supernodeapp/common/components/map_box.dart';
+import 'package:supernodeapp/page/device/device_mapbox_page/discover_component/state.dart';
 
+import 'footprints_component/state.dart';
 import 'introduction_component/state.dart';
+import 'notification_component/state.dart';
 
 class DeviceMapBoxState implements Cloneable<DeviceMapBoxState> {
   MapViewController mapCtl = MapViewController();
   bool showIntroduction = true;
   String userGroupValue = 'Me';
   String genderGroupValue = 'Male';
-  PageController pageController = new PageController();
+  PageController introPageController = new PageController();
+  PageController bottomPageController = new PageController();
+  TabController bottomTabController;
+  int selectTabIndex = 0;
 
   @override
   DeviceMapBoxState clone() {
@@ -18,7 +24,9 @@ class DeviceMapBoxState implements Cloneable<DeviceMapBoxState> {
       ..showIntroduction = showIntroduction
       ..userGroupValue = userGroupValue
       ..genderGroupValue = genderGroupValue
-      ..pageController = pageController;
+      ..introPageController = introPageController
+      ..bottomPageController = bottomPageController
+      ..selectTabIndex = selectTabIndex;
   }
 }
 
@@ -33,13 +41,44 @@ class IntroductionConnector
     return IntroductionState()
       ..userGroupValue = state.userGroupValue
       ..genderGroupValue = state.genderGroupValue
-      ..pageController = state.pageController;
+      ..pageController = state.introPageController;
   }
 
   @override
   void set(DeviceMapBoxState state, IntroductionState subState) {
     state.userGroupValue = subState.userGroupValue;
     state.genderGroupValue = subState.genderGroupValue;
-    state.pageController = subState.pageController;
+    state.introPageController = subState.pageController;
   }
+}
+
+class DiscoverConnector extends ConnOp<DeviceMapBoxState, DiscoverState> {
+  @override
+  DiscoverState get(DeviceMapBoxState state) {
+    return DiscoverState();
+  }
+
+  @override
+  void set(DeviceMapBoxState state, DiscoverState subState) {}
+}
+
+class FootprintsConnector extends ConnOp<DeviceMapBoxState, FootprintsState> {
+  @override
+  FootprintsState get(DeviceMapBoxState state) {
+    return FootprintsState();
+  }
+
+  @override
+  void set(DeviceMapBoxState state, FootprintsState subState) {}
+}
+
+class NotificationConnector
+    extends ConnOp<DeviceMapBoxState, NotificationState> {
+  @override
+  NotificationState get(DeviceMapBoxState state) {
+    return NotificationState();
+  }
+
+  @override
+  void set(DeviceMapBoxState state, NotificationState subState) {}
 }
