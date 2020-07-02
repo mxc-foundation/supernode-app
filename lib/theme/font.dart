@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'colors.dart';
-
+const kSmallFontOfWhite = TextStyle(
+    color: Colors.white,
+    fontFamily: "Roboto",
+    fontSize: 12,
+    height: 1.33333,
+    decoration: TextDecoration.none);
 const kSmallFontOfGrey = TextStyle(
     color: const Color.fromARGB(138, 0, 0, 0),
     fontFamily: "Roboto",
@@ -48,6 +53,20 @@ const kMiddleFontOfBlueLink = TextStyle(
   decoration: TextDecoration.underline,
   fontFamily: "Roboto",
   fontSize: 14,
+);
+
+const kMiddleFontOfDartBlueLink = TextStyle(
+  color: const Color.fromARGB(255, 28, 20, 120),
+  fontFamily: "Roboto",
+  decoration: TextDecoration.underline,
+  fontSize: 14,
+);
+
+const kBigFontOfDartBlueLink = TextStyle(
+  color: const Color.fromARGB(255, 28, 20, 120),
+  fontFamily: "Roboto",
+  decoration: TextDecoration.underline,
+  fontSize: 16,
 );
 
 const kMiddleFontOfGreen = TextStyle(

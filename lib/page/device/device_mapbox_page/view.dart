@@ -4,6 +4,7 @@ import 'package:supernodeapp/common/components/device/bottom_nav_tab.dart';
 import 'package:supernodeapp/common/components/map_box.dart';
 import 'package:supernodeapp/common/components/page/drag_page.dart';
 import 'package:supernodeapp/common/components/widgets/scaffold_widget.dart';
+import 'package:supernodeapp/theme/colors.dart';
 import 'package:supernodeapp/theme/font.dart';
 
 import 'action.dart';
@@ -11,34 +12,31 @@ import 'state.dart';
 
 Widget buildView(
     DeviceMapBoxState state, Dispatch dispatch, ViewService viewService) {
-  var tabViewModel=[
+  var tabViewModel = [
     BottomNavTabViewModel(
-      title: 'Discover',
-      selectImageUrl: 'assets/images/device/map.png',
-      imageUrl: 'assets/images/device/map_bg.png',
-      onTap: (){
-        state.bottomPageController.jumpToPage(0);
-        dispatch(DeviceMapBoxActionCreator.changeBottomTab(0));
-      }
-    ),
+        title: 'Discover',
+        selectImageUrl: 'assets/images/device/map.png',
+        imageUrl: 'assets/images/device/map_bg.png',
+        onTap: () {
+          state.bottomPageController.jumpToPage(0);
+          dispatch(DeviceMapBoxActionCreator.changeBottomTab(0));
+        }),
     BottomNavTabViewModel(
         title: 'Footprints',
         selectImageUrl: 'assets/images/device/signal.png',
         imageUrl: 'assets/images/device/signal_bg.png',
-        onTap: (){
+        onTap: () {
           state.bottomPageController.jumpToPage(1);
           dispatch(DeviceMapBoxActionCreator.changeBottomTab(1));
-        }
-    ),
+        }),
     BottomNavTabViewModel(
         title: 'Notification',
         selectImageUrl: 'assets/images/device/notification.png',
         imageUrl: 'assets/images/device/notification_bg.png',
-        onTap: (){
+        onTap: () {
           state.bottomPageController.jumpToPage(2);
           dispatch(DeviceMapBoxActionCreator.changeBottomTab(2));
-        }
-    ),
+        }),
   ];
   return DragPage(
     backChild: ScaffoldWidget(
@@ -75,40 +73,38 @@ Widget buildView(
     frontWidget: state.showIntroduction
         ? SizedBox()
         : Stack(
-          children: <Widget>[
-            PageView(
+            children: <Widget>[
+              PageView(
                 controller: state.bottomPageController,
                 physics: NeverScrollableScrollPhysics(),
                 children: <Widget>[
                   _buildPage(
                     appBar: _buildAppBar(title: 'Discovery'),
-                    pageContent: _buildPageContent(),
+                    pageContent: viewService.buildComponent('discover'),
                   ),
                   _buildPage(
-                    appBar: _buildAppBar(title: 'Discovery'),
-                    pageContent: _buildPageContent(),
+                    appBar: _buildAppBar(title: 'Footprints'),
+                    pageContent: viewService.buildComponent('footprints'),
                   ),
                   _buildPage(
-                    appBar: _buildAppBar(title: 'Discovery'),
-                    pageContent: _buildPageContent(),
+                    appBar: _buildAppBar(title: 'Notification'),
+                    pageContent: viewService.buildComponent('notification'),
                   ),
                 ],
               ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: BottomNavTab(selectIndex: state.selectTabIndex,viewModel: tabViewModel,),
-            )
-          ],
-
-        ),
-    initHeight: state.showIntroduction ? 0 : 314,
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: BottomNavTab(
+                  selectIndex: state.selectTabIndex,
+                  viewModel: tabViewModel,
+                ),
+              )
+            ],
+          ),
+    initHeight: state.showIntroduction ? 0 : 110,
   );
-}
-
-Widget _buildPageContent() {
-  return Container();
 }
 
 Widget _buildAppBar({String title}) {
@@ -123,7 +119,7 @@ Widget _buildAppBar({String title}) {
       ),
       boxShadow: [
         BoxShadow(
-          color: Color.fromRGBO(0, 0, 0, 0.1),
+          color: boxShadowColor,
           offset: Offset(0, 0),
           blurRadius: 3.0,
         )
@@ -152,7 +148,8 @@ Widget _buildPage({Widget appBar, Widget pageContent}) {
     child: Column(
       children: <Widget>[
         appBar == null ? SizedBox() : appBar,
-        pageContent == null ? SizedBox() : pageContent,
+        pageContent == null ? SizedBox() : Expanded(child: pageContent),
+        SizedBox(height: 82.5),
       ],
     ),
   );

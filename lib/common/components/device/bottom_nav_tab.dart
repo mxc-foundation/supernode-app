@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supernodeapp/theme/colors.dart';
 import 'package:supernodeapp/theme/font.dart';
 
 class BottomNavTabViewModel {
@@ -33,6 +34,7 @@ class _BottomNavTabState extends State<BottomNavTab>
     _tabController =
         new TabController(length: widget.viewModel.length, vsync: this);
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -46,47 +48,58 @@ class _BottomNavTabState extends State<BottomNavTab>
 
   @override
   Widget build(BuildContext context) {
-    return TabBar(
-      indicatorColor: Colors.transparent,
-      controller: _tabController,
-      tabs: widget.viewModel
-          .asMap()
-          .map((index, tabInfo) =>
-              MapEntry(index, _renderTabItem(tabInfo, index)))
-          .values
-          .toList(),
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: boxShadowColor,
+            offset: Offset(0, 0),
+            blurRadius: 3.0,
+          )
+        ],
+      ),
+      child: TabBar(
+        indicatorColor: Colors.transparent,
+        controller: _tabController,
+        tabs: widget.viewModel
+            .asMap()
+            .map((index, tabInfo) =>
+                MapEntry(index, _renderTabItem(tabInfo, index)))
+            .values
+            .toList(),
+      ),
     );
   }
 
   Widget _renderTabItem(BottomNavTabViewModel tabInfo, int index) {
-    return Container(
-      height: 82.5,
-      decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
-          offset: Offset(0, 0),
-          blurRadius: 3.0,
-          color: Color(0x0000001A),
-        )
-      ]),
-      padding: EdgeInsets.only(top: 10, bottom: 10),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Image.asset(
-              widget.selectIndex == index
-                  ? tabInfo.selectImageUrl
-                  : tabInfo.imageUrl,
-              width: 24,
-              height: 22,
-              fit: BoxFit.contain),
-          SizedBox(height: 2),
-          Text(
-            tabInfo.title ?? "",
-            style: widget.selectIndex == index
-                ? kBigFontOfDartBlue
-                : kBigFontOfGrey,
-          ),
-        ],
+    return InkWell(
+      onTap: () {
+        tabInfo?.onTap?.call();
+      },
+      child: Container(
+        height: 82.5,
+        padding: EdgeInsets.only(top: 10, bottom: 10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Image.asset(
+                widget.selectIndex == index
+                    ? tabInfo.selectImageUrl
+                    : tabInfo.imageUrl,
+                width: 24,
+                height: 22,
+                fit: BoxFit.contain),
+            SizedBox(height: 2),
+            Text(
+              tabInfo.title ?? "",
+              style: widget.selectIndex == index
+                  ? kBigFontOfDartBlue
+                  : kBigFontOfGrey,
+            ),
+          ],
+        ),
       ),
     );
   }
