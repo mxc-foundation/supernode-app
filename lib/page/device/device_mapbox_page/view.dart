@@ -39,6 +39,7 @@ Widget buildView(
         }),
   ];
   return DragPage(
+    key: state.dragPageState,
     backChild: ScaffoldWidget(
       body: Stack(
         children: <Widget>[
@@ -70,9 +71,7 @@ Widget buildView(
         ],
       ),
     ),
-    frontWidget: state.showIntroduction
-        ? SizedBox()
-        : Stack(
+    frontWidget: Stack(
             children: <Widget>[
               PageView(
                 controller: state.bottomPageController,
@@ -103,7 +102,7 @@ Widget buildView(
               )
             ],
           ),
-    initHeight: state.showIntroduction ? 0 : 110,
+    showFrontWidget: !state.showIntroduction,
   );
 }
 

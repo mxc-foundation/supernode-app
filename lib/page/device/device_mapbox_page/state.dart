@@ -1,6 +1,7 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:supernodeapp/common/components/map_box.dart';
+import 'package:supernodeapp/common/components/page/drag_page.dart';
 import 'package:supernodeapp/page/device/device_mapbox_page/discover_component/state.dart';
 
 import 'footprints_component/state.dart';
@@ -16,6 +17,7 @@ class DeviceMapBoxState implements Cloneable<DeviceMapBoxState> {
   PageController bottomPageController = new PageController();
   TabController bottomTabController;
   int selectTabIndex = 0;
+  GlobalKey<DragPageState> dragPageState = new GlobalKey();
 
   @override
   DeviceMapBoxState clone() {
@@ -26,7 +28,8 @@ class DeviceMapBoxState implements Cloneable<DeviceMapBoxState> {
       ..genderGroupValue = genderGroupValue
       ..introPageController = introPageController
       ..bottomPageController = bottomPageController
-      ..selectTabIndex = selectTabIndex;
+      ..selectTabIndex = selectTabIndex
+      ..dragPageState = dragPageState;
   }
 }
 
