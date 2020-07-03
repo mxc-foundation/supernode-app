@@ -49,13 +49,11 @@ Widget buildView(
                   SizedBox(width: 10),
                   Container(
                     width: 65,
-                    child: Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(0.0),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(3),
-                          ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(0.0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(3),
                         ),
                       ),
                     ),

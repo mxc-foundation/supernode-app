@@ -63,7 +63,7 @@ Widget buildView(
 
 Widget _buildFrontWidget(
     DeviceMapBoxState state, Dispatch dispatch, ViewService viewService) {
-  if (state.showTabDetailName == null) {
+  Widget nextPage = SizedBox();
     var tabViewModel = [
       BottomNavTabViewModel(
           title: 'Discover',
@@ -90,42 +90,10 @@ Widget _buildFrontWidget(
             dispatch(DeviceMapBoxActionCreator.changeBottomTab(2));
           }),
     ];
-    return Stack(
-      children: <Widget>[
-        PageView(
-          controller: state.bottomPageController,
-          physics: NeverScrollableScrollPhysics(),
-          children: <Widget>[
-            _buildPage(
-              appBar: _buildAppBar(title: 'Discovery'),
-              pageContent: viewService.buildComponent('discover'),
-            ),
-            _buildPage(
-              appBar: _buildAppBar(title: 'Footprints'),
-              pageContent: viewService.buildComponent('footprints'),
-            ),
-            _buildPage(
-              appBar: _buildAppBar(title: 'Notification'),
-              pageContent: viewService.buildComponent('notification'),
-            ),
-          ],
-        ),
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: BottomNavTab(
-            selectIndex: state.selectTabIndex,
-            viewModel: tabViewModel,
-          ),
-        )
-      ],
-    );
-  }
 
   switch (state.showTabDetailName) {
     case TabDetailPageEnum.Discovery:
-      return _buildPage(
+      nextPage = _buildPage(
         appBar: _buildAppBar(
           title: 'Gateway_01234',
           trackingWidget: InkWell(
@@ -140,9 +108,9 @@ Widget _buildFrontWidget(
         ),
         pageContent: viewService.buildComponent('discoverBorder'),
       );
-
+      break;
     case TabDetailPageEnum.Footprints:
-      return _buildPage(
+      nextPage = _buildPage(
         appBar: _buildAppBar(
           title: '2020-05-22 09:39:12 14km -135dBm',
           trackingWidget: InkWell(
@@ -159,9 +127,10 @@ Widget _buildFrontWidget(
           'footPrintsLocation',
         ),
       );
+      break;
 
     case TabDetailPageEnum.Notification:
-      return _buildPage(
+      nextPage = _buildPage(
         appBar: _buildAppBar(
           title: 'Out of Border Notification',
           trackingWidget: InkWell(
@@ -176,9 +145,47 @@ Widget _buildFrontWidget(
         ),
         pageContent: viewService.buildComponent('notificationOut'),
       );
-    default:
-      return SizedBox();
+      break;
   }
+  return  Stack(
+    children: <Widget>[
+      Opacity(
+        opacity: state.showTabDetailName==null?1:0,
+        child: Stack(
+          children: <Widget>[
+            PageView(
+              controller: state.bottomPageController,
+              physics: NeverScrollableScrollPhysics(),
+              children: <Widget>[
+                _buildPage(
+                  appBar: _buildAppBar(title: 'Discovery'),
+                  pageContent: viewService.buildComponent('discover'),
+                ),
+                _buildPage(
+                  appBar: _buildAppBar(title: 'Footprints'),
+                  pageContent: viewService.buildComponent('footprints'),
+                ),
+                _buildPage(
+                  appBar: _buildAppBar(title: 'Notification'),
+                  pageContent: viewService.buildComponent('notification'),
+                ),
+              ],
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: BottomNavTab(
+                selectIndex: state.selectTabIndex,
+                viewModel: tabViewModel,
+              ),
+            )
+          ],
+        ),
+      ),
+      nextPage,
+    ],
+  );
 }
 
 Widget _buildAppBar({String title, Widget trackingWidget}) {
