@@ -1,7 +1,11 @@
 import 'package:fish_redux/fish_redux.dart';
+import 'package:supernodeapp/page/device/device_mapbox_page/border_prompt_component/component.dart';
 import 'package:supernodeapp/page/device/device_mapbox_page/discover_component/component.dart';
+import 'package:supernodeapp/page/device/device_mapbox_page/discovery_border_component/component.dart';
 import 'package:supernodeapp/page/device/device_mapbox_page/footprints_component/component.dart';
+import 'package:supernodeapp/page/device/device_mapbox_page/footprints_location_component/component.dart';
 import 'package:supernodeapp/page/device/device_mapbox_page/notification_component/component.dart';
+import 'package:supernodeapp/page/device/device_mapbox_page/notification_out_component/component.dart';
 
 import 'effect.dart';
 import 'introduction_component/component.dart';
@@ -25,6 +29,14 @@ class DeviceMapBoxPage extends Page<DeviceMapBoxState, Map<String, dynamic>> {
                 'footprints': FootprintsConnector() + FootprintsComponent(),
                 'notification':
                     NotificationConnector() + NotificationComponent(),
+                'discoverBorder':
+                    DiscoverBorderConnector() + DiscoveryBorderComponent(),
+                'footPrintsLocation': FootPrintsLocationConnector() +
+                    FootPrintsLocationComponent(),
+                'notificationOut':
+                    NotificationOutConnector() + NotificationOutComponent(),
+                'borderPrompt':
+                    BorderPromptConnector() + BorderPromptComponent(),
               }),
           middleware: <Middleware<DeviceMapBoxState>>[],
         );

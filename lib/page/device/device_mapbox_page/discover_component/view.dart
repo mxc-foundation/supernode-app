@@ -1,6 +1,7 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:supernodeapp/common/components/device/description_item.dart';
+import 'package:supernodeapp/page/device/device_mapbox_page/action.dart';
 import 'package:supernodeapp/theme/colors.dart';
 import 'package:supernodeapp/theme/font.dart';
 
@@ -28,11 +29,16 @@ Widget buildView(
         DescriptionItem(
           title: 'Tracking Border',
           content: '10km',
-          contentTrackWidget: Container(
-            margin: EdgeInsets.only(left: 16),
-            child: Text(
-              'Set Border',
-              style: kMiddleFontOfDartBlueLink,
+          contentTrackWidget: InkWell(
+            onTap: (){
+              dispatch(DeviceMapBoxActionCreator.setBorderPromptVisible(true));
+            },
+            child: Container(
+              margin: EdgeInsets.only(left: 16),
+              child: Text(
+                'Set Border',
+                style: kMiddleFontOfDartBlueLink,
+              ),
             ),
           ),
         ),

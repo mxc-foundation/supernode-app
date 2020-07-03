@@ -9,8 +9,17 @@ Reducer<DeviceMapBoxState> buildReducer() {
       DeviceMapBoxAction.addMapController: _addMapController,
       DeviceMapBoxAction.introductionVisible: _introductionVisible,
       DeviceMapBoxAction.changeBottomTab: _changeBottomTab,
+      DeviceMapBoxAction.setBorderPromptVisible: _setBorderPromptVisible,
+      DeviceMapBoxAction.setDragFrontWidgetVisible: _setDragFrontWidgetVisible,
+      DeviceMapBoxAction.changeTabDetailName: _changeShowTabDetailName,
     },
   );
+}
+
+DeviceMapBoxState _changeShowTabDetailName(
+    DeviceMapBoxState state, Action action) {
+  final DeviceMapBoxState newState = state.clone();
+  return newState..showTabDetailName = action.payload;
 }
 
 DeviceMapBoxState _addMapController(DeviceMapBoxState state, Action action) {
@@ -23,7 +32,19 @@ DeviceMapBoxState _introductionVisible(DeviceMapBoxState state, Action action) {
   return newState..showIntroduction = action.payload;
 }
 
+DeviceMapBoxState _setBorderPromptVisible(
+    DeviceMapBoxState state, Action action) {
+  final DeviceMapBoxState newState = state.clone();
+  return newState..showSetBorderPrompt = action.payload;
+}
+
 DeviceMapBoxState _changeBottomTab(DeviceMapBoxState state, Action action) {
   final DeviceMapBoxState newState = state.clone();
   return newState..selectTabIndex = action.payload;
+}
+
+DeviceMapBoxState _setDragFrontWidgetVisible(
+    DeviceMapBoxState state, Action action) {
+  final DeviceMapBoxState newState = state.clone();
+  return newState..showDragFrontWidget = action.payload;
 }

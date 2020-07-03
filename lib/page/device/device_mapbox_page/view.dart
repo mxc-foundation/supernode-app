@@ -1,9 +1,11 @@
 import 'package:fish_redux/fish_redux.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:supernodeapp/common/components/device/bottom_nav_tab.dart';
 import 'package:supernodeapp/common/components/map_box.dart';
 import 'package:supernodeapp/common/components/page/drag_page.dart';
 import 'package:supernodeapp/common/components/widgets/scaffold_widget.dart';
+import 'package:supernodeapp/common/configs/sys.dart';
 import 'package:supernodeapp/theme/colors.dart';
 import 'package:supernodeapp/theme/font.dart';
 
@@ -12,32 +14,6 @@ import 'state.dart';
 
 Widget buildView(
     DeviceMapBoxState state, Dispatch dispatch, ViewService viewService) {
-  var tabViewModel = [
-    BottomNavTabViewModel(
-        title: 'Discover',
-        selectImageUrl: 'assets/images/device/map.png',
-        imageUrl: 'assets/images/device/map_bg.png',
-        onTap: () {
-          state.bottomPageController.jumpToPage(0);
-          dispatch(DeviceMapBoxActionCreator.changeBottomTab(0));
-        }),
-    BottomNavTabViewModel(
-        title: 'Footprints',
-        selectImageUrl: 'assets/images/device/signal.png',
-        imageUrl: 'assets/images/device/signal_bg.png',
-        onTap: () {
-          state.bottomPageController.jumpToPage(1);
-          dispatch(DeviceMapBoxActionCreator.changeBottomTab(1));
-        }),
-    BottomNavTabViewModel(
-        title: 'Notification',
-        selectImageUrl: 'assets/images/device/notification.png',
-        imageUrl: 'assets/images/device/notification_bg.png',
-        onTap: () {
-          state.bottomPageController.jumpToPage(2);
-          dispatch(DeviceMapBoxActionCreator.changeBottomTab(2));
-        }),
-  ];
   return DragPage(
     key: state.dragPageState,
     backChild: ScaffoldWidget(
@@ -68,42 +44,95 @@ Widget buildView(
                   child: viewService.buildComponent('introduction'),
                 )
               : SizedBox(),
+          state.showSetBorderPrompt
+              ? Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  top: 0,
+                  child: viewService.buildComponent('borderPrompt'),
+                )
+              : SizedBox(),
         ],
       ),
     ),
-    frontWidget: Stack(
-            children: <Widget>[
-              PageView(
-                controller: state.bottomPageController,
-                physics: NeverScrollableScrollPhysics(),
-                children: <Widget>[
-                  _buildPage(
-                    appBar: _buildAppBar(title: 'Discovery'),
-                    pageContent: viewService.buildComponent('discover'),
-                  ),
-                  _buildPage(
-                    appBar: _buildAppBar(title: 'Footprints'),
-                    pageContent: viewService.buildComponent('footprints'),
-                  ),
-                  _buildPage(
-                    appBar: _buildAppBar(title: 'Notification'),
-                    pageContent: viewService.buildComponent('notification'),
-                  ),
-                ],
-              ),
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: BottomNavTab(
-                  selectIndex: state.selectTabIndex,
-                  viewModel: tabViewModel,
-                ),
-              )
-            ],
-          ),
-    showFrontWidget: !state.showIntroduction,
+    frontWidget: _buildFrontWidget(state, dispatch, viewService),
+    showFrontWidget: state.showDragFrontWidget,
   );
+}
+
+Widget _buildFrontWidget(
+    DeviceMapBoxState state, Dispatch dispatch, ViewService viewService) {
+  if (state.showTabDetailName == null) {
+    var tabViewModel = [
+      BottomNavTabViewModel(
+          title: 'Discover',
+          selectImageUrl: 'assets/images/device/map.png',
+          imageUrl: 'assets/images/device/map_bg.png',
+          onTap: () {
+            state.bottomPageController.jumpToPage(0);
+            dispatch(DeviceMapBoxActionCreator.changeBottomTab(0));
+          }),
+      BottomNavTabViewModel(
+          title: 'Footprints',
+          selectImageUrl: 'assets/images/device/signal.png',
+          imageUrl: 'assets/images/device/signal_bg.png',
+          onTap: () {
+            state.bottomPageController.jumpToPage(1);
+            dispatch(DeviceMapBoxActionCreator.changeBottomTab(1));
+          }),
+      BottomNavTabViewModel(
+          title: 'Notification',
+          selectImageUrl: 'assets/images/device/notification.png',
+          imageUrl: 'assets/images/device/notification_bg.png',
+          onTap: () {
+            state.bottomPageController.jumpToPage(2);
+            dispatch(DeviceMapBoxActionCreator.changeBottomTab(2));
+          }),
+    ];
+    return Stack(
+      children: <Widget>[
+        PageView(
+          controller: state.bottomPageController,
+          physics: NeverScrollableScrollPhysics(),
+          children: <Widget>[
+            _buildPage(
+              appBar: _buildAppBar(title: 'Discovery'),
+              pageContent: viewService.buildComponent('discover'),
+            ),
+            _buildPage(
+              appBar: _buildAppBar(title: 'Footprints'),
+              pageContent: viewService.buildComponent('footprints'),
+            ),
+            _buildPage(
+              appBar: _buildAppBar(title: 'Notification'),
+              pageContent: viewService.buildComponent('notification'),
+            ),
+          ],
+        ),
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: BottomNavTab(
+            selectIndex: state.selectTabIndex,
+            viewModel: tabViewModel,
+          ),
+        )
+      ],
+    );
+  }
+
+  switch (state.showTabDetailName) {
+    case TabDetailPageEnum.Discovery:
+      return viewService.buildComponent('discoverBorder');
+    case TabDetailPageEnum.Footprints:
+      return viewService.buildComponent('footPrintsLocation');
+    case TabDetailPageEnum.Footprints:
+      return viewService.buildComponent('notificationOut');
+    default:
+      return SizedBox();
+  }
 }
 
 Widget _buildAppBar({String title}) {

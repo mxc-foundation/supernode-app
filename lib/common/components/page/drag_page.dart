@@ -36,6 +36,7 @@ class DragPageState extends State<DragPage> with TickerProviderStateMixin {
         _animationController.value = showHeightAnimationValue;
       }
     });
+
   }
 
   void _drag(DragUpdateDetails d, double screenHeight) {
