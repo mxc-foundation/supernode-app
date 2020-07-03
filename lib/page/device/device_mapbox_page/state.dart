@@ -26,6 +26,7 @@ class DeviceMapBoxState implements Cloneable<DeviceMapBoxState> {
   int selectTabIndex = 0;
   GlobalKey<DragPageState> dragPageState = new GlobalKey();
   TabDetailPageEnum showTabDetailName;
+  double gatewaySliderValue = 0;
 
   @override
   DeviceMapBoxState clone() {
@@ -40,7 +41,8 @@ class DeviceMapBoxState implements Cloneable<DeviceMapBoxState> {
       ..bottomPageController = bottomPageController
       ..selectTabIndex = selectTabIndex
       ..dragPageState = dragPageState
-      ..showTabDetailName = showTabDetailName;
+      ..showTabDetailName = showTabDetailName
+      ..gatewaySliderValue = gatewaySliderValue;
   }
 }
 
@@ -101,11 +103,14 @@ class DiscoverBorderConnector
     extends ConnOp<DeviceMapBoxState, DiscoveryBorderState> {
   @override
   DiscoveryBorderState get(DeviceMapBoxState state) {
-    return DiscoveryBorderState();
+    return DiscoveryBorderState()
+      ..gatewaySliderValue = state.gatewaySliderValue;
   }
 
   @override
-  void set(DeviceMapBoxState state, DiscoveryBorderState subState) {}
+  void set(DeviceMapBoxState state, DiscoveryBorderState subState) {
+    state.gatewaySliderValue = subState.gatewaySliderValue;
+  }
 }
 
 class FootPrintsLocationConnector

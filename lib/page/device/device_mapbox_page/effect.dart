@@ -30,6 +30,8 @@ bool _setBorderPromptVisible(Action action, Context<DeviceMapBoxState> ctx) {
     ctx.dispatch((DeviceMapBoxActionCreator.setDragFrontWidgetVisible(false)));
   } else {
     ctx.state.dragPageState?.currentState?.setInitHeight();
+    ctx.dispatch((DeviceMapBoxActionCreator.changeTabDetailName(
+        TabDetailPageEnum.Discovery)));
     ctx.dispatch((DeviceMapBoxActionCreator.setDragFrontWidgetVisible(true)));
   }
 

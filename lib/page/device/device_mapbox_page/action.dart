@@ -10,11 +10,15 @@ enum DeviceMapBoxAction {
   changeBottomTab,
   setBorderPromptVisible,
   changeTabDetailName,
+  changeGatewaySliderValue,
 }
 
 class DeviceMapBoxActionCreator {
+  static Action changeGatewaySliderValue(double value) {
+    return Action(DeviceMapBoxAction.changeGatewaySliderValue, payload: value);
+  }
 
-  static Action changeShowTabDetailName(TabDetailPageEnum detailPageEnum) {
+  static Action changeTabDetailName(TabDetailPageEnum detailPageEnum) {
     return Action(DeviceMapBoxAction.changeTabDetailName,
         payload: detailPageEnum);
   }

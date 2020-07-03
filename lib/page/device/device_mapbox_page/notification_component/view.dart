@@ -4,6 +4,8 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:supernodeapp/common/components/device/description_item.dart';
 import 'package:supernodeapp/common/components/device/notification_item.dart';
 import 'package:supernodeapp/common/components/picker/date_range_picker.dart';
+import 'package:supernodeapp/page/device/device_mapbox_page/action.dart';
+import 'package:supernodeapp/page/device/device_mapbox_page/state.dart';
 import 'package:supernodeapp/theme/font.dart';
 
 import 'state.dart';
@@ -50,8 +52,18 @@ Widget buildView(
             ],
           ),
         ),
-        NotificationItem(),
-        NotificationItem(),
+        NotificationItem(
+          onTap: () {
+            dispatch(DeviceMapBoxActionCreator.changeTabDetailName(
+                TabDetailPageEnum.Notification));
+          },
+        ),
+        NotificationItem(
+          onTap: () {
+            dispatch(DeviceMapBoxActionCreator.changeTabDetailName(
+                TabDetailPageEnum.Notification));
+          },
+        ),
       ],
     ),
   );

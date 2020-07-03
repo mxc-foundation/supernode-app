@@ -12,8 +12,15 @@ Reducer<DeviceMapBoxState> buildReducer() {
       DeviceMapBoxAction.setBorderPromptVisible: _setBorderPromptVisible,
       DeviceMapBoxAction.setDragFrontWidgetVisible: _setDragFrontWidgetVisible,
       DeviceMapBoxAction.changeTabDetailName: _changeShowTabDetailName,
+      DeviceMapBoxAction.changeGatewaySliderValue: _changeGatewaySliderValue,
     },
   );
+}
+
+DeviceMapBoxState _changeGatewaySliderValue(
+    DeviceMapBoxState state, Action action) {
+  final DeviceMapBoxState newState = state.clone();
+  return newState..gatewaySliderValue = action.payload;
 }
 
 DeviceMapBoxState _changeShowTabDetailName(

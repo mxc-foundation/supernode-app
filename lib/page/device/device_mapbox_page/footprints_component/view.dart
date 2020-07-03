@@ -5,6 +5,8 @@ import 'package:supernodeapp/common/components/device/description_item.dart';
 import 'package:supernodeapp/common/components/device/foot_prints_item.dart';
 import 'package:supernodeapp/common/components/device/line_color.dart';
 import 'package:supernodeapp/common/components/picker/date_range_picker.dart';
+import 'package:supernodeapp/page/device/device_mapbox_page/action.dart';
+import 'package:supernodeapp/page/device/device_mapbox_page/state.dart';
 import 'package:supernodeapp/theme/colors.dart';
 import 'package:supernodeapp/theme/font.dart';
 
@@ -69,11 +71,30 @@ Widget buildView(
             ],
           ),
         ),
-        FootPrintsItem(),
-        FootPrintsItem(),
-        FootPrintsItem(),
-        FootPrintsItem(),
-        FootPrintsItem(),
+        FootPrintsItem(
+          onTap: () {
+            dispatch(DeviceMapBoxActionCreator.changeTabDetailName(
+                TabDetailPageEnum.Footprints));
+          },
+        ),
+        FootPrintsItem(
+          onTap: () {
+            dispatch(DeviceMapBoxActionCreator.changeTabDetailName(
+                TabDetailPageEnum.Footprints));
+          },
+        ),
+        FootPrintsItem(
+          onTap: () {
+            dispatch(DeviceMapBoxActionCreator.changeTabDetailName(
+                TabDetailPageEnum.Footprints));
+          },
+        ),
+        FootPrintsItem(
+          onTap: () {
+            dispatch(DeviceMapBoxActionCreator.changeTabDetailName(
+                TabDetailPageEnum.Footprints));
+          },
+        ),
       ],
     ),
   );

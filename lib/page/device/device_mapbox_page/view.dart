@@ -125,17 +125,63 @@ Widget _buildFrontWidget(
 
   switch (state.showTabDetailName) {
     case TabDetailPageEnum.Discovery:
-      return viewService.buildComponent('discoverBorder');
+      return _buildPage(
+        appBar: _buildAppBar(
+          title: 'Gateway_01234',
+          trackingWidget: InkWell(
+            onTap: () {
+              dispatch(DeviceMapBoxActionCreator.changeTabDetailName(null));
+            },
+            child: Icon(
+              Icons.close,
+              size: 20,
+            ),
+          ),
+        ),
+        pageContent: viewService.buildComponent('discoverBorder'),
+      );
+
     case TabDetailPageEnum.Footprints:
-      return viewService.buildComponent('footPrintsLocation');
-    case TabDetailPageEnum.Footprints:
-      return viewService.buildComponent('notificationOut');
+      return _buildPage(
+        appBar: _buildAppBar(
+          title: '2020-05-22 09:39:12 14km -135dBm',
+          trackingWidget: InkWell(
+            onTap: () {
+              dispatch(DeviceMapBoxActionCreator.changeTabDetailName(null));
+            },
+            child: Icon(
+              Icons.close,
+              size: 20,
+            ),
+          ),
+        ),
+        pageContent: viewService.buildComponent(
+          'footPrintsLocation',
+        ),
+      );
+
+    case TabDetailPageEnum.Notification:
+      return _buildPage(
+        appBar: _buildAppBar(
+          title: 'Out of Border Notification',
+          trackingWidget: InkWell(
+            onTap: () {
+              dispatch(DeviceMapBoxActionCreator.changeTabDetailName(null));
+            },
+            child: Icon(
+              Icons.close,
+              size: 20,
+            ),
+          ),
+        ),
+        pageContent: viewService.buildComponent('notificationOut'),
+      );
     default:
       return SizedBox();
   }
 }
 
-Widget _buildAppBar({String title}) {
+Widget _buildAppBar({String title, Widget trackingWidget}) {
   return Container(
     width: double.infinity,
     padding: EdgeInsets.only(top: 8),
@@ -155,9 +201,16 @@ Widget _buildAppBar({String title}) {
     ),
     child: Container(
       padding: EdgeInsets.symmetric(vertical: 21.5, horizontal: 16),
-      child: Text(
-        title ?? "",
-        style: kBigFontOfBlack,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Text(
+              title ?? "",
+              style: kBigFontOfBlack,
+            ),
+          ),
+          trackingWidget != null ? trackingWidget : SizedBox(),
+        ],
       ),
     ),
   );
