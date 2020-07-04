@@ -5,7 +5,6 @@ import 'package:supernodeapp/common/components/device/bottom_nav_tab.dart';
 import 'package:supernodeapp/common/components/map_box.dart';
 import 'package:supernodeapp/common/components/page/drag_page.dart';
 import 'package:supernodeapp/common/components/widgets/scaffold_widget.dart';
-import 'package:supernodeapp/common/configs/sys.dart';
 import 'package:supernodeapp/theme/colors.dart';
 import 'package:supernodeapp/theme/font.dart';
 
