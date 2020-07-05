@@ -1,5 +1,6 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
+import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:supernodeapp/common/components/map_box.dart';
 import 'package:supernodeapp/common/components/page/drag_page.dart';
 import 'package:supernodeapp/page/device/device_mapbox_page/border_prompt_component/state.dart';
@@ -27,6 +28,7 @@ class DeviceMapBoxState implements Cloneable<DeviceMapBoxState> {
   GlobalKey<DragPageState> dragPageState = new GlobalKey();
   TabDetailPageEnum showTabDetailName;
   double gatewaySliderValue = 0;
+  LatLng centerPoint = LatLng(37.386, -122.083);
 
   TextEditingController ageController = new TextEditingController();
 
@@ -45,7 +47,8 @@ class DeviceMapBoxState implements Cloneable<DeviceMapBoxState> {
       ..dragPageState = dragPageState
       ..showTabDetailName = showTabDetailName
       ..gatewaySliderValue = gatewaySliderValue
-      ..ageController = ageController;
+      ..ageController = ageController
+      ..centerPoint = centerPoint;
   }
 }
 
@@ -122,11 +125,13 @@ class FootPrintsLocationConnector
     extends ConnOp<DeviceMapBoxState, FootPrintsLocationState> {
   @override
   FootPrintsLocationState get(DeviceMapBoxState state) {
-    return FootPrintsLocationState();
+    return FootPrintsLocationState()..mapCtl = state.mapCtl;
   }
 
   @override
-  void set(DeviceMapBoxState state, FootPrintsLocationState subState) {}
+  void set(DeviceMapBoxState state, FootPrintsLocationState subState) {
+    state.mapCtl = subState.mapCtl;
+  }
 }
 
 class NotificationOutConnector

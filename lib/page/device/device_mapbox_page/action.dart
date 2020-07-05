@@ -11,9 +11,15 @@ enum DeviceMapBoxAction {
   setBorderPromptVisible,
   changeTabDetailName,
   changeGatewaySliderValue,
+  onMapBoxTap,
 }
 
 class DeviceMapBoxActionCreator {
+
+  static Action onMapBoxTap(LatLng coordinates) {
+    return Action(DeviceMapBoxAction.onMapBoxTap, payload: coordinates);
+  }
+
   static Action changeGatewaySliderValue(double value) {
     return Action(DeviceMapBoxAction.changeGatewaySliderValue, payload: value);
   }

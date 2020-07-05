@@ -1,10 +1,9 @@
 import 'package:fish_redux/fish_redux.dart';
 
-//TODO replace with your own action
-enum FootPrintsLocationAction { action }
+enum FootPrintsLocationAction { resetToDefault }
 
 class FootPrintsLocationActionCreator {
-  static Action onAction() {
-    return const Action(FootPrintsLocationAction.action);
+  static Action resetToDefault() {
+    return const Action(FootPrintsLocationAction.resetToDefault);
   }
 }

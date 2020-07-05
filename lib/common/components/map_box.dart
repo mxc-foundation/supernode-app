@@ -13,6 +13,9 @@ import 'package:supernodeapp/configs/sys.dart';
 
 class MapViewController {
   List<MapMarker> markers;
+  List<CircleOptions> markerCircleOptions;
+  List<Circle> realCirclePoint;
+  List<Symbol> realSymbolPoint;
   MapboxMapController ctl;
   LatLng myLatLng;
   double zoom;
@@ -36,29 +39,61 @@ class MapViewController {
     if (markers == null) markers = List<MapMarker>();
     var result = markers.where((MapMarker item) =>
         (item.point.latitude == marker.point.latitude) &&
-        (item.point.longitude == item.point.longitude));
+        (item.point.longitude == marker.point.longitude));
     if (result.isEmpty) {
       markers.add(marker);
     }
-    await ctl?.addSymbol(SymbolOptions(
+    if (marker.withCircle != null && marker.withCircle) {
+      if (marker.circleOptions != null) {
+        await addCircle(marker.circleOptions);
+      }
+    }
+    var symbolPoint = await ctl?.addSymbol(SymbolOptions(
       iconImage: marker.image,
       geometry: marker.point,
       iconSize: marker?.size ?? 1,
+      iconOffset: marker.iconOffset,
     ));
+    if (realSymbolPoint == null) {
+      realSymbolPoint = new List<Symbol>();
+    }
+    if (symbolPoint != null) {
+      realSymbolPoint.add(symbolPoint);
+    }
   }
-  Future<void> addCircle(MapMarker marker) async {
-    if (markers == null) markers = List<MapMarker>();
-    var result = markers.where((MapMarker item) =>
-    (item.point.latitude == marker.point.latitude) &&
-        (item.point.longitude == item.point.longitude));
-    if (result.isEmpty) {
-      markers.add(marker);
+
+  Future<void> removeAll() async {
+    if ((realSymbolPoint?.length ?? 0) > 0) {
+      realSymbolPoint.forEach((item) {
+        print(item.id);
+        ctl?.removeSymbol(item);
+      });
+      realSymbolPoint.clear();
+      markers.clear();
     }
-    await ctl?.addSymbol(SymbolOptions(
-      iconImage: marker.image,
-      geometry: marker.point,
-      iconSize: marker?.size ?? 1,
-    ));
+    if ((realCirclePoint?.length ?? 0) > 0) {
+      realCirclePoint.forEach((item) {
+        ctl?.removeCircle(item);
+      });
+      realCirclePoint.clear();
+      markerCircleOptions.clear();
+    }
+  }
+
+  Future<void> addCircle(CircleOptions circleOption) async {
+    if (markerCircleOptions == null)
+      markerCircleOptions = List<CircleOptions>();
+    var result = markerCircleOptions.where((CircleOptions item) =>
+        (item.geometry.latitude == circleOption.geometry.latitude) &&
+        (item.geometry.longitude == circleOption.geometry.longitude));
+    if (result.isEmpty) {
+      markerCircleOptions.add(circleOption);
+    }
+    var circle = await ctl?.addCircle(circleOption);
+    if (realCirclePoint == null) realCirclePoint = new List<Circle>();
+    if (circle != null) {
+      realCirclePoint.add(circle);
+    }
   }
 
   void addSymbols(List<MapMarker> markers) {
@@ -78,10 +113,19 @@ class MapMarker {
   final LatLng point;
   final double size;
   final String image;
-  final
-  bool onMap = false;
+  final bool withCircle;
+  final CircleOptions circleOptions;
+  final Offset iconOffset;
+  final bool onMap = false;
 
-  MapMarker({this.point, this.size, this.image});
+  MapMarker({
+    this.point,
+    this.size,
+    this.image,
+    this.withCircle,
+    this.circleOptions,
+    this.iconOffset,
+  });
 }
 
 class MapBoxWidget extends StatefulWidget {
@@ -90,6 +134,7 @@ class MapBoxWidget extends StatefulWidget {
   final bool userLocationSwitch;
   final VoidCallback zoomOutCallback;
   final ValueChanged<LatLng> onTap;
+  final bool needFirstPosition;
 
   // new field
   final Function clickLocation;
@@ -98,16 +143,17 @@ class MapBoxWidget extends StatefulWidget {
   // delete field
 //  final BuildContext context;
 
-  const MapBoxWidget({
-    Key key,
-    @required this.config,
-    this.onTap,
-    this.zoomOutCallback,
-    this.clickLocation,
-    this.userLocationSwitch = true,
-    this.isFullScreen = false,
-    this.isActionsTop = false,
-  }) : super(key: key);
+  const MapBoxWidget(
+      {Key key,
+      @required this.config,
+      this.onTap,
+      this.zoomOutCallback,
+      this.clickLocation,
+      this.userLocationSwitch = true,
+      this.isFullScreen = false,
+      this.isActionsTop = false,
+      this.needFirstPosition = true})
+      : super(key: key);
 
   @override
   _MapBoxWidgetState createState() => _MapBoxWidgetState();
@@ -132,7 +178,9 @@ class _MapBoxWidgetState extends State<MapBoxWidget> {
   @override
   void initState() {
     super.initState();
-//    _initLocation();
+    if (widget.needFirstPosition) {
+      _initLocation();
+    }
   }
 
   void _initLocation() {
@@ -196,7 +244,7 @@ class _MapBoxWidgetState extends State<MapBoxWidget> {
           onMapClick: (point, coordinates) {
             widget.onTap(coordinates);
           },
-          onMapCreated: (controller){
+          onMapCreated: (controller) {
             config.onMapCreated(controller);
           },
           onStyleLoadedCallback: widget.config.onStyleLoadedInit,

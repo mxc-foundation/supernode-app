@@ -44,9 +44,19 @@ class DragPageState extends State<DragPage> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  void setMinHeight() {
+    setState(() {
+      if (_minHeightAnimateValue != null) {
+        _heightStatusEnum = HeightStatusEnum.min;
+        _animationController.value = _minHeightAnimateValue;
+      }
+    });
+  }
+
   void setMiddleHeight() {
     setState(() {
       if (_middleHeightAnimateValue != null) {
+        _heightStatusEnum = HeightStatusEnum.middle;
         _animationController.value = _middleHeightAnimateValue;
       }
     });

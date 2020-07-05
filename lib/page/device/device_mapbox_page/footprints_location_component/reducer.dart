@@ -6,12 +6,12 @@ import 'state.dart';
 Reducer<FootPrintsLocationState> buildReducer() {
   return asReducer(
     <Object, Reducer<FootPrintsLocationState>>{
-      FootPrintsLocationAction.action: _onAction,
+      FootPrintsLocationAction.resetToDefault: _resetToDefault,
     },
   );
 }
 
-FootPrintsLocationState _onAction(FootPrintsLocationState state, Action action) {
+FootPrintsLocationState _resetToDefault(FootPrintsLocationState state, Action action) {
   final FootPrintsLocationState newState = state.clone();
   return newState;
 }

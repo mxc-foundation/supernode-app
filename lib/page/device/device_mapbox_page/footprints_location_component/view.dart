@@ -22,9 +22,14 @@ Widget buildView(
                 FlutterI18n.translate(_ctx, 'location'),
                 style: kMiddleFontOfBlack,
               ),
-              trailing: Text(
-                FlutterI18n.translate(_ctx, 'reset_to_default'),
-                style: kMiddleFontOfDarkBlueLink,
+              trailing: InkWell(
+                onTap: (){
+                  dispatch(FootPrintsLocationActionCreator.resetToDefault());
+                },
+                child: Text(
+                  FlutterI18n.translate(_ctx, 'reset_to_default'),
+                  style: kMiddleFontOfDarkBlueLink,
+                ),
               ),
             ),
             ListTile(

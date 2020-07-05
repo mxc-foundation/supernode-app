@@ -21,11 +21,14 @@ Widget buildView(
       body: Stack(
         children: <Widget>[
           MapBoxWidget(
-            userLocationSwitch: false,
+            needFirstPosition: false,
+            userLocationSwitch: true,
             isActionsTop: true,
             config: state.mapCtl,
             isFullScreen: true,
-            onTap: (LatLng coordinates) {},
+            onTap: (LatLng coordinates) {
+              dispatch(DeviceMapBoxActionCreator.onMapBoxTap(coordinates));
+            },
           ),
           state.showIntroduction
               ? Positioned(
