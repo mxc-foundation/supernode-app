@@ -37,7 +37,7 @@ Widget buildView(
               margin: EdgeInsets.only(left: 16),
               child: Text(
                 'Set Border',
-                style: kMiddleFontOfDartBlueLink,
+                style: kMiddleFontOfDarkBlueLink,
               ),
             ),
           ),

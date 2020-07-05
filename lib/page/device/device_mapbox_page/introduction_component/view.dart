@@ -1,20 +1,31 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:supernodeapp/common/components/buttons/primary_button.dart';
-import 'package:supernodeapp/common/components/buttons/secondary_button.dart';
-import 'package:supernodeapp/common/components/buttons/secondary_shadow_button.dart';
 import 'package:supernodeapp/common/components/page/page_nav_bar.dart';
 import 'package:supernodeapp/common/components/panel/panel_frame.dart';
 import 'package:supernodeapp/common/components/text_field/primary_text_field.dart';
 import 'package:supernodeapp/page/device/device_mapbox_page/action.dart';
 import 'package:supernodeapp/page/device/device_mapbox_page/introduction_component/action.dart';
-import 'package:supernodeapp/page/home_page/device_component/action.dart';
 import 'package:supernodeapp/theme/font.dart';
 
 import 'state.dart';
 
+const bottomHeight = 62.5;
+
 Widget buildView(
     IntroductionState state, Dispatch dispatch, ViewService viewService) {
+  MediaQueryData screenData;
+  void initScreenData(BuildContext context) {
+    if (screenData == null) {
+      screenData = MediaQuery.of(context);
+    }
+  }
+
+  Widget _buildButtonHeight() {
+    return SizedBox(
+        height: bottomHeight + 30 + (screenData?.padding?.bottom ?? 0));
+  }
+
   Widget _buildIndicatorPoint({bool isSelected = false}) {
     return Container(
       padding: EdgeInsets.all(10),
@@ -79,7 +90,7 @@ Widget buildView(
   Widget _buildFirstBody() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
+      child: ListView(
         children: <Widget>[
           Container(
             alignment: Alignment.center,
@@ -142,7 +153,7 @@ Widget buildView(
   Widget _buildSecondBody() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
+      child: ListView(
         children: <Widget>[
           Container(
             alignment: Alignment.center,
@@ -174,8 +185,7 @@ Widget buildView(
   }
 
   Widget _buildThirdBody() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return ListView(
       children: <Widget>[
         Container(
           alignment: Alignment.center,
@@ -339,13 +349,14 @@ Widget buildView(
                           )
                         : SizedBox(),
                   ),
-                  Container(child: pageBody),
+                  Expanded(child: pageBody),
+                  _buildButtonHeight(),
                 ],
               ),
             ),
           ),
           Positioned(
-            bottom: 52.5,
+            bottom: bottomHeight + (screenData?.padding?.bottom ?? 0),
             left: 0,
             right: 0,
             child: Container(
@@ -357,6 +368,8 @@ Widget buildView(
     );
   }
 
+  var _ctx = viewService.context;
+  initScreenData(_ctx);
   return PageView(
     controller: state.pageController,
     children: <Widget>[

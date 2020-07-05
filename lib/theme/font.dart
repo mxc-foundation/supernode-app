@@ -28,6 +28,13 @@ const kSmallFontOfRed = TextStyle(
   height: 1.33333,
 );
 
+const kMiddleFontODarkBlue = TextStyle(
+  color: const Color.fromARGB(255, 28, 20, 120),
+  fontFamily: "Roboto",
+  fontSize: 14,
+  height: 1.33333,
+);
+
 const kMiddleFontOfGrey = TextStyle(
   color: const Color.fromARGB(138, 0, 0, 0),
   fontFamily: "Roboto",
@@ -55,14 +62,14 @@ const kMiddleFontOfBlueLink = TextStyle(
   fontSize: 14,
 );
 
-const kMiddleFontOfDartBlueLink = TextStyle(
+const kMiddleFontOfDarkBlueLink = TextStyle(
   color: const Color.fromARGB(255, 28, 20, 120),
   fontFamily: "Roboto",
   decoration: TextDecoration.underline,
   fontSize: 14,
 );
 
-const kBigFontOfDartBlueLink = TextStyle(
+const kBigFontOfDarkBlueLink = TextStyle(
   color: const Color.fromARGB(255, 28, 20, 120),
   fontFamily: "Roboto",
   decoration: TextDecoration.underline,
@@ -125,7 +132,7 @@ const kBigFontOfWhite = TextStyle(
   height: 1.5,
 );
 
-const kBigFontOfDartBlue = TextStyle(
+const kBigFontOfDarkBlue = TextStyle(
   color: const Color.fromARGB(255, 28, 20, 120),
   fontFamily: "Roboto",
   fontSize: 16,

@@ -6,10 +6,11 @@ class NotificationItem extends StatelessWidget {
   final VoidCallback onTap;
 
   const NotificationItem({Key key, this.onTap}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         onTap?.call();
       },
       child: Container(
@@ -21,21 +22,19 @@ class NotificationItem extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(10)),
               boxShadow: [
                 BoxShadow(
-                  offset: Offset(0,2),
+                  offset: Offset(0, 2),
                   blurRadius: 7,
                   color: boxShadowColor,
                 )
-              ]
-          ),
+              ]),
           child: ListTile(
             title: Text(
               '2020-05-20 09:39:12 14km -135dBm',
               style: kMiddleFontOfGrey,
             ),
-            trailing: Icon(
-              Icons.location_off,
-              size: 22,
-              color: dbm120,
+            trailing: Image.asset(
+              'assets/images/device/location_warn.png',
+              width: 22,
             ),
           ),
         ),

@@ -1,6 +1,7 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:supernodeapp/common/components/device/bottom_nav_tab.dart';
 import 'package:supernodeapp/common/components/map_box.dart';
 import 'package:supernodeapp/common/components/page/drag_page.dart';
@@ -19,9 +20,11 @@ Widget buildView(
       body: Stack(
         children: <Widget>[
           MapBoxWidget(
+            userLocationSwitch: false,
+            isActionsTop: true,
             config: state.mapCtl,
-            userLocationSwitch: true,
             isFullScreen: true,
+            onTap: (LatLng coordinates) {},
           ),
           state.showIntroduction
               ? Positioned(
@@ -63,32 +66,32 @@ Widget buildView(
 Widget _buildFrontWidget(
     DeviceMapBoxState state, Dispatch dispatch, ViewService viewService) {
   Widget nextPage = SizedBox();
-    var tabViewModel = [
-      BottomNavTabViewModel(
-          title: 'Discover',
-          selectImageUrl: 'assets/images/device/map.png',
-          imageUrl: 'assets/images/device/map_bg.png',
-          onTap: () {
-            state.bottomPageController.jumpToPage(0);
-            dispatch(DeviceMapBoxActionCreator.changeBottomTab(0));
-          }),
-      BottomNavTabViewModel(
-          title: 'Footprints',
-          selectImageUrl: 'assets/images/device/signal.png',
-          imageUrl: 'assets/images/device/signal_bg.png',
-          onTap: () {
-            state.bottomPageController.jumpToPage(1);
-            dispatch(DeviceMapBoxActionCreator.changeBottomTab(1));
-          }),
-      BottomNavTabViewModel(
-          title: 'Notification',
-          selectImageUrl: 'assets/images/device/notification.png',
-          imageUrl: 'assets/images/device/notification_bg.png',
-          onTap: () {
-            state.bottomPageController.jumpToPage(2);
-            dispatch(DeviceMapBoxActionCreator.changeBottomTab(2));
-          }),
-    ];
+  var tabViewModel = [
+    BottomNavTabViewModel(
+        title: 'Discover',
+        selectImageUrl: 'assets/images/device/map.png',
+        imageUrl: 'assets/images/device/map_bg.png',
+        onTap: () {
+          state.bottomPageController.jumpToPage(0);
+          dispatch(DeviceMapBoxActionCreator.changeBottomTab(0));
+        }),
+    BottomNavTabViewModel(
+        title: 'Footprints',
+        selectImageUrl: 'assets/images/device/signal.png',
+        imageUrl: 'assets/images/device/signal_bg.png',
+        onTap: () {
+          state.bottomPageController.jumpToPage(1);
+          dispatch(DeviceMapBoxActionCreator.changeBottomTab(1));
+        }),
+    BottomNavTabViewModel(
+        title: 'Notification',
+        selectImageUrl: 'assets/images/device/notification.png',
+        imageUrl: 'assets/images/device/notification_bg.png',
+        onTap: () {
+          state.bottomPageController.jumpToPage(2);
+          dispatch(DeviceMapBoxActionCreator.changeBottomTab(2));
+        }),
+  ];
 
   switch (state.showTabDetailName) {
     case TabDetailPageEnum.Discovery:
@@ -146,10 +149,10 @@ Widget _buildFrontWidget(
       );
       break;
   }
-  return  Stack(
+  return Stack(
     children: <Widget>[
       Opacity(
-        opacity: state.showTabDetailName==null?1:0,
+        opacity: state.showTabDetailName == null ? 1 : 0,
         child: Stack(
           children: <Widget>[
             PageView(

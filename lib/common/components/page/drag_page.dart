@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 const double minHeight = 110;
-const double showHeight = 314;
+const double middleHeight = 314;
+enum HeightStatusEnum {
+  min,
+  middle,
+  big,
+}
 
 class DragPage extends StatefulWidget {
   final Widget backChild;
@@ -20,23 +25,56 @@ class DragPage extends StatefulWidget {
 }
 
 class DragPageState extends State<DragPage> with TickerProviderStateMixin {
-  double showHeightAnimationValue;
+  double _middleHeightAnimateValue;
+  double _bigHeightAnimateValue;
+  double _minHeightAnimateValue = 0;
   AnimationController _animationController;
+  HeightStatusEnum _heightStatusEnum = HeightStatusEnum.middle;
 
   @override
   void initState() {
     super.initState();
     _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 100));
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
   }
 
-  void setInitHeight() {
+  @override
+  void dispose() {
+    _animationController?.dispose();
+    super.dispose();
+  }
+
+  void setMiddleHeight() {
     setState(() {
-      if (showHeightAnimationValue != null) {
-        _animationController.value = showHeightAnimationValue;
+      if (_middleHeightAnimateValue != null) {
+        _animationController.value = _middleHeightAnimateValue;
       }
     });
+  }
 
+  void _changeHeightStatus() {
+    if (_heightStatusEnum == HeightStatusEnum.min) {
+      if (_middleHeightAnimateValue != null) {
+        setState(() {
+          _heightStatusEnum = HeightStatusEnum.middle;
+          _animationController.value = _middleHeightAnimateValue;
+        });
+      }
+    } else if (_heightStatusEnum == HeightStatusEnum.middle) {
+      if (_bigHeightAnimateValue != null) {
+        setState(() {
+          _heightStatusEnum = HeightStatusEnum.big;
+          _animationController.value = _bigHeightAnimateValue;
+        });
+      }
+    } else if (_heightStatusEnum == HeightStatusEnum.big) {
+      if (_bigHeightAnimateValue != null) {
+        setState(() {
+          _heightStatusEnum = HeightStatusEnum.min;
+          _animationController.value = _minHeightAnimateValue;
+        });
+      }
+    }
   }
 
   void _drag(DragUpdateDetails d, double screenHeight) {
@@ -45,21 +83,22 @@ class DragPageState extends State<DragPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    var screenData = MediaQuery.of(context);
+    var realMinHeight = minHeight + (screenData?.padding?.bottom ?? 0);
+    var realMiddleHeight = middleHeight + (screenData?.padding?.bottom ?? 0);
     final screenSize = MediaQuery.of(context).size;
-    showHeightAnimationValue = 1 -
-        ((screenSize.height - showHeight) / (screenSize.height - minHeight));
+    _middleHeightAnimateValue = 1 -
+        ((screenSize.height - realMiddleHeight) /
+            (screenSize.height - realMinHeight));
+    _bigHeightAnimateValue = 1 -
+        ((screenSize.height - screenSize.height + 100) /
+            (screenSize.height - realMinHeight));
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          InkWell(
-            onTap: () {
-              setState(() {
-                _animationController.value = 0;
-              });
-            },
-            child: Container(
-              child: widget.backChild,
-            ),
+          Container(
+            child: widget.backChild,
           ),
           widget.showFrontWidget
               ? AnimatedBuilder(
@@ -70,7 +109,7 @@ class DragPageState extends State<DragPage> with TickerProviderStateMixin {
                       right: 0.0,
                       bottom: 0.0,
                       top: (1 - _animationController.value) *
-                          (screenSize.height - minHeight),
+                          (screenSize.height - realMinHeight),
                       child: Stack(
                         alignment: Alignment.center,
                         children: <Widget>[
@@ -78,11 +117,15 @@ class DragPageState extends State<DragPage> with TickerProviderStateMixin {
                           Positioned(
                             top: 0,
                             child: GestureDetector(
+                              onTap: () {
+                                _changeHeightStatus();
+                              },
                               onVerticalDragUpdate: (DragUpdateDetails d) {
                                 _drag(d, screenSize.height);
                               },
                               child: Container(
-                                padding: EdgeInsets.all(10),
+                                padding: EdgeInsets.only(
+                                    top: 10, left: 20, right: 20, bottom: 20),
                                 child: Container(
                                   height: 4,
                                   width: 42.4,

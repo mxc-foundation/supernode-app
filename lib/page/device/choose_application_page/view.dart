@@ -129,7 +129,7 @@ Widget _buildButton({VoidCallback onPressed, String title}) {
       ),
       child: Text(
         title ?? "",
-        style: kBigFontOfDartBlue,
+        style: kBigFontOfDarkBlue,
       ),
     ),
   );

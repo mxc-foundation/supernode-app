@@ -1,9 +1,9 @@
 import 'package:fish_redux/fish_redux.dart';
 
-enum DeviceAction { action }
+enum DeviceAction { onQrScan }
 
 class DeviceActionCreator {
-  static Action onAction() {
-    return const Action(DeviceAction.action);
+  static Action onQrScan() {
+    return const Action(DeviceAction.onQrScan);
   }
 }

@@ -1,9 +1,11 @@
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:supernodeapp/common/components/panel/panel_frame.dart';
 import 'package:supernodeapp/common/components/permission_utils.dart';
@@ -44,6 +46,20 @@ class MapViewController {
       iconSize: marker?.size ?? 1,
     ));
   }
+  Future<void> addCircle(MapMarker marker) async {
+    if (markers == null) markers = List<MapMarker>();
+    var result = markers.where((MapMarker item) =>
+    (item.point.latitude == marker.point.latitude) &&
+        (item.point.longitude == item.point.longitude));
+    if (result.isEmpty) {
+      markers.add(marker);
+    }
+    await ctl?.addSymbol(SymbolOptions(
+      iconImage: marker.image,
+      geometry: marker.point,
+      iconSize: marker?.size ?? 1,
+    ));
+  }
 
   void addSymbols(List<MapMarker> markers) {
     for (MapMarker mark in markers ?? []) {
@@ -62,12 +78,14 @@ class MapMarker {
   final LatLng point;
   final double size;
   final String image;
+  final
   bool onMap = false;
 
   MapMarker({this.point, this.size, this.image});
 }
 
 class MapBoxWidget extends StatefulWidget {
+  final bool isActionsTop;
   final bool isFullScreen;
   final bool userLocationSwitch;
   final VoidCallback zoomOutCallback;
@@ -86,8 +104,9 @@ class MapBoxWidget extends StatefulWidget {
     this.onTap,
     this.zoomOutCallback,
     this.clickLocation,
-    this.userLocationSwitch,
+    this.userLocationSwitch = true,
     this.isFullScreen = false,
+    this.isActionsTop = false,
   }) : super(key: key);
 
   @override
@@ -102,6 +121,7 @@ class _MapBoxWidgetState extends State<MapBoxWidget> {
   MapViewController get config => widget.config;
   MyLocationTrackingMode _myLocationTrackingMode =
       MyLocationTrackingMode.Tracking;
+
   Future<void> _myLocationMove({bool state}) async {
     bool has = await PermissionUtil.getLocationPermission();
     setState(() {
@@ -112,7 +132,7 @@ class _MapBoxWidgetState extends State<MapBoxWidget> {
   @override
   void initState() {
     super.initState();
-    _initLocation();
+//    _initLocation();
   }
 
   void _initLocation() {
@@ -136,9 +156,7 @@ class _MapBoxWidgetState extends State<MapBoxWidget> {
   void _changeModeToLocation() {
     setState(() {
       _myLocationTrackingMode =
-          _myLocationTrackingMode == MyLocationTrackingMode.Tracking
-              ? MyLocationTrackingMode.None
-              : MyLocationTrackingMode.Tracking;
+          _myLocationTrackingMode = MyLocationTrackingMode.None;
     });
     Future.delayed(
         Duration(
@@ -146,9 +164,7 @@ class _MapBoxWidgetState extends State<MapBoxWidget> {
         ), () {
       setState(() {
         _myLocationTrackingMode =
-            _myLocationTrackingMode == MyLocationTrackingMode.Tracking
-                ? MyLocationTrackingMode.None
-                : MyLocationTrackingMode.Tracking;
+            _myLocationTrackingMode = MyLocationTrackingMode.Tracking;
       });
     });
   }
@@ -180,7 +196,9 @@ class _MapBoxWidgetState extends State<MapBoxWidget> {
           onMapClick: (point, coordinates) {
             widget.onTap(coordinates);
           },
-          onMapCreated: config.onMapCreated,
+          onMapCreated: (controller){
+            config.onMapCreated(controller);
+          },
           onStyleLoadedCallback: widget.config.onStyleLoadedInit,
           gestureRecognizers: !widget.isFullScreen
               ? <Factory<OneSequenceGestureRecognizer>>[
@@ -190,36 +208,58 @@ class _MapBoxWidgetState extends State<MapBoxWidget> {
                 ].toSet()
               : null,
         ),
-        _buildMyLocationIcon(),
-        _buildMyLocationStateChange(),
-        widget.isFullScreen ? _buildCloseIcon() : _buildZoomOutIcon(),
+        _buildActionWidgets(),
       ],
     );
   }
 
-  Widget _buildMyLocationIcon() {
+  Widget _buildActionWidgets() {
+    double topHeight;
+    double bottomHeight;
+    if (widget.isActionsTop || !widget.isFullScreen) {
+      if (widget.isFullScreen) {
+        topHeight = _mediaData.padding.top + 50;
+      } else {
+        topHeight = 20;
+      }
+      bottomHeight = null;
+    } else {
+      topHeight = null;
+      bottomHeight = 40 + _mediaData.padding.bottom + 80 + 10;
+    }
     return Positioned(
-      bottom:
-          widget.isFullScreen ? 40 + _mediaData.padding.bottom + 80 + 10 : 205,
+      top: topHeight,
+      bottom: bottomHeight,
       right: 20,
+      child: Column(
+        children: <Widget>[
+          _buildMyLocationIcon(),
+          _buildMyLocationStateChange(),
+          widget.isFullScreen ? _buildCloseIcon() : _buildZoomOutIcon(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMyLocationIcon() {
+    return Container(
+      margin: EdgeInsets.only(bottom: 10),
       width: 40,
       height: 40,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.blueAccent,
-          borderRadius: BorderRadius.circular(20.0),
-          boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 10.0)],
-        ),
-        child: IconButton(
-          onPressed: () async {
-            await _myLocationMove();
+      decoration: BoxDecoration(
+        color: Colors.blueAccent,
+        borderRadius: BorderRadius.circular(20.0),
+        boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 10.0)],
+      ),
+      child: IconButton(
+        onPressed: () async {
+          await _myLocationMove();
 //            config.moveToMyLatLng();
-            _changeModeToLocation();
-          },
-          icon: Icon(
-            Icons.my_location,
-            color: Colors.white,
-          ),
+          _changeModeToLocation();
+        },
+        icon: Icon(
+          Icons.my_location,
+          color: Colors.white,
         ),
       ),
     );
@@ -227,75 +267,68 @@ class _MapBoxWidgetState extends State<MapBoxWidget> {
 
   Widget _buildZoomOutIcon() {
     if (widget.zoomOutCallback == null) return SizedBox();
-    return Positioned(
-      bottom: 105,
-      right: 20,
+    return Container(
+      margin: EdgeInsets.only(bottom: 10),
       width: 40,
       height: 40,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.blueAccent,
-          borderRadius: BorderRadius.circular(20.0),
-          boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 10.0)],
-        ),
-        child: IconButton(
-          onPressed: widget.zoomOutCallback,
-          icon: Icon(
-            Icons.zoom_out_map,
-            color: Colors.white,
-          ),
+      decoration: BoxDecoration(
+        color: Colors.blueAccent,
+        borderRadius: BorderRadius.circular(20.0),
+        boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 10.0)],
+      ),
+      child: IconButton(
+        onPressed: widget.zoomOutCallback,
+        icon: Icon(
+          Icons.zoom_out_map,
+          color: Colors.white,
         ),
       ),
     );
   }
 
   Widget _buildMyLocationStateChange() {
-    return Positioned(
-      bottom: widget.isFullScreen ? 80 + _mediaData.padding.bottom : 155,
-      right: 20,
+    if (!widget.userLocationSwitch) {
+      return SizedBox();
+    }
+    return Container(
+      margin: EdgeInsets.only(bottom: 10),
       width: 40,
       height: 40,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.blueAccent,
-          borderRadius: BorderRadius.circular(20.0),
-          boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 10.0)],
-        ),
-        child: IconButton(
-          onPressed: () async {
-            _myLocationMove(state: !_myLocationEnable);
-          },
-          icon: Icon(
-            _myLocationEnable ? Icons.location_off : Icons.location_on,
-            color: Colors.white,
-          ),
+      decoration: BoxDecoration(
+        color: Colors.blueAccent,
+        borderRadius: BorderRadius.circular(20.0),
+        boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 10.0)],
+      ),
+      child: IconButton(
+        onPressed: () async {
+          _myLocationMove(state: !_myLocationEnable);
+        },
+        icon: Icon(
+          _myLocationEnable ? Icons.location_off : Icons.location_on,
+          color: Colors.white,
         ),
       ),
     );
   }
 
   Widget _buildCloseIcon() {
-    return Positioned(
-      bottom: 30 + _mediaData.padding.bottom,
-      right: 20,
+    return Container(
       width: 40,
       height: 40,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.blueAccent,
-          borderRadius: BorderRadius.circular(20.0),
-          boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 10.0)],
-        ),
-        child: IconButton(
-          onPressed: () {
-            if (Navigator.of(context).canPop()) {
-              Navigator.of(context).pop();
-            }
-          },
-          icon: Icon(
-            Icons.close,
-            color: Colors.white,
-          ),
+      decoration: BoxDecoration(
+        color: Colors.blueAccent,
+        borderRadius: BorderRadius.circular(20.0),
+        boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 10.0)],
+      ),
+      child: IconButton(
+        onPressed: () {
+          if (Navigator.of(context).canPop()) {
+            Navigator.of(context).pop();
+          }
+        },
+        icon: Icon(
+          Icons.close,
+          color: Colors.white,
         ),
       ),
     );

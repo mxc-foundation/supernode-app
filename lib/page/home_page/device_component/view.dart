@@ -7,6 +7,7 @@ import 'package:supernodeapp/common/components/loading_list.dart';
 import 'package:supernodeapp/common/components/page/page_body.dart';
 import 'package:supernodeapp/common/components/panel/panel_body.dart';
 import 'package:supernodeapp/common/components/panel/panel_frame.dart';
+import 'package:supernodeapp/page/home_page/device_component/action.dart';
 
 import '../action.dart';
 import 'state.dart';
@@ -24,7 +25,6 @@ Widget buildView(
     body: RefreshIndicator(
       displacement: 10,
       onRefresh: () async {
-        await Future.delayed(Duration(seconds: 2), () {});
       },
       child: pageBody(
         children: [
@@ -33,7 +33,7 @@ Widget buildView(
                 loading: false,
                 icon: Icons.add_circle,
                 onPressed: () {
-                  Navigator.pushNamed(viewService.context, 'choose_application_page');
+                 dispatch( DeviceActionCreator.onQrScan());
                 },
                 titleText: FlutterI18n.translate(_ctx, 'total_device'),
                 subtitleText: '4',
@@ -50,12 +50,12 @@ Widget buildView(
                   )
                 : empty(_ctx),
           ),
-          panelFrame(
-            child: empty(_ctx),
-          ),
-          panelFrame(
-            child: LoadingList(),
-          ),
+//          panelFrame(
+//            child: empty(_ctx),
+//          ),
+//          panelFrame(
+//            child: LoadingList(),
+//          ),
         ],
       ),
     ),

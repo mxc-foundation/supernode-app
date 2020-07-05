@@ -22,7 +22,7 @@ Widget buildView(
               ),
               trailing: Text(
                 'Reset to Default',
-                style: kMiddleFontOfDartBlueLink,
+                style: kMiddleFontOfDarkBlueLink,
               ),
             ),
             ListTile(

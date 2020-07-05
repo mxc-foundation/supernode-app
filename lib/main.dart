@@ -71,7 +71,8 @@ Widget mxcApp() {
         'set_2fa_page': Set2FAPage(),
         'add_gateway_page': AddGatewayPage(),
         'mapbox_page': MapBoxPage(),
-      'device_mapbox_page': DeviceMapBoxPage(),
+        'choose_application_page': ChooseApplicationPage(),
+        'device_mapbox_page': DeviceMapBoxPage(),
       },
       visitor: (String path, Page<Object, dynamic> page) {
         if (page.isTypeof<GlobalBaseState>()) {

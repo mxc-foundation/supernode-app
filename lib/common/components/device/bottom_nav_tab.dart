@@ -74,12 +74,14 @@ class _BottomNavTabState extends State<BottomNavTab>
   }
 
   Widget _renderTabItem(BottomNavTabViewModel tabInfo, int index) {
+    var screenData = MediaQuery.of(context);
     return InkWell(
       onTap: () {
         tabInfo?.onTap?.call();
       },
       child: Container(
-        height: 82.5,
+        width: double.infinity,
+        height: 82.5 + (screenData?.padding?.bottom ?? 0),
         padding: EdgeInsets.only(top: 10, bottom: 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -95,8 +97,8 @@ class _BottomNavTabState extends State<BottomNavTab>
             Text(
               tabInfo.title ?? "",
               style: widget.selectIndex == index
-                  ? kBigFontOfDartBlue
-                  : kBigFontOfGrey,
+                  ? kMiddleFontODarkBlue
+                  : kMiddleFontOfGrey,
             ),
           ],
         ),
