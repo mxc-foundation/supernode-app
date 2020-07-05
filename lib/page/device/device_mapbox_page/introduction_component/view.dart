@@ -1,9 +1,11 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:supernodeapp/common/components/buttons/primary_button.dart';
 import 'package:supernodeapp/common/components/page/page_nav_bar.dart';
 import 'package:supernodeapp/common/components/panel/panel_frame.dart';
 import 'package:supernodeapp/common/components/text_field/primary_text_field.dart';
+import 'package:supernodeapp/common/components/text_field/text_field_with_button.dart';
 import 'package:supernodeapp/page/device/device_mapbox_page/action.dart';
 import 'package:supernodeapp/page/device/device_mapbox_page/introduction_component/action.dart';
 import 'package:supernodeapp/theme/font.dart';
@@ -15,6 +17,8 @@ const bottomHeight = 62.5;
 Widget buildView(
     IntroductionState state, Dispatch dispatch, ViewService viewService) {
   MediaQueryData screenData;
+
+  var _ctx=viewService.context;
   void initScreenData(BuildContext context) {
     if (screenData == null) {
       screenData = MediaQuery.of(context);
@@ -276,25 +280,18 @@ Widget buildView(
             ),
           ],
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 16),
-              padding: EdgeInsets.only(top: 10),
-              child: Text(
-                'User Age',
-                style: kBigFontOfBlack,
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 16),
-              padding: EdgeInsets.only(top: 10),
-              child: PrimaryTextField(
-                hint: 'User Age',
-              ),
-            ),
-          ],
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: textfieldWithButton(
+              readOnly: true,
+              inputLabel: 'User Age',
+              isDivider: false,
+              icon: Icons.expand_more,
+              controller: state.ageController,
+              onTap: () {
+                dispatch(IntroductionActionCreator.onAgePicker());
+              }
+          ),
         ),
         Container(
           margin: EdgeInsets.only(top: 20),
@@ -367,8 +364,6 @@ Widget buildView(
       ),
     );
   }
-
-  var _ctx = viewService.context;
   initScreenData(_ctx);
   return PageView(
     controller: state.pageController,

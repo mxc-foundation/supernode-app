@@ -5,12 +5,14 @@ class IntroductionState implements Cloneable<IntroductionState> {
   String userGroupValue = 'Me';
   String genderGroupValue = 'Male';
   PageController pageController = new PageController();
+  TextEditingController ageController;
 
   @override
   IntroductionState clone() {
     return IntroductionState()
       ..userGroupValue = userGroupValue
       ..genderGroupValue = genderGroupValue
-      ..pageController = pageController;
+      ..pageController = pageController
+      ..ageController = ageController;
   }
 }

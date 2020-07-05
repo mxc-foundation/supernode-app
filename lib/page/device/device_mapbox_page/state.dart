@@ -28,6 +28,8 @@ class DeviceMapBoxState implements Cloneable<DeviceMapBoxState> {
   TabDetailPageEnum showTabDetailName;
   double gatewaySliderValue = 0;
 
+  TextEditingController ageController = new TextEditingController();
+
   @override
   DeviceMapBoxState clone() {
     return DeviceMapBoxState()
@@ -42,7 +44,8 @@ class DeviceMapBoxState implements Cloneable<DeviceMapBoxState> {
       ..selectTabIndex = selectTabIndex
       ..dragPageState = dragPageState
       ..showTabDetailName = showTabDetailName
-      ..gatewaySliderValue = gatewaySliderValue;
+      ..gatewaySliderValue = gatewaySliderValue
+      ..ageController = ageController;
   }
 }
 
@@ -57,7 +60,8 @@ class IntroductionConnector
     return IntroductionState()
       ..userGroupValue = state.userGroupValue
       ..genderGroupValue = state.genderGroupValue
-      ..pageController = state.introPageController;
+      ..pageController = state.introPageController
+      ..ageController = state.ageController;
   }
 
   @override
@@ -65,6 +69,7 @@ class IntroductionConnector
     state.userGroupValue = subState.userGroupValue;
     state.genderGroupValue = subState.genderGroupValue;
     state.introPageController = subState.pageController;
+    state.ageController = subState.ageController;
   }
 }
 
