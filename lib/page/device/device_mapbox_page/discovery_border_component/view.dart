@@ -1,5 +1,6 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:supernodeapp/page/device/device_mapbox_page/action.dart';
 import 'package:supernodeapp/theme/font.dart';
 
@@ -7,7 +8,8 @@ import 'state.dart';
 
 Widget buildView(
     DiscoveryBorderState state, Dispatch dispatch, ViewService viewService) {
-  return  MediaQuery.removePadding(
+  var _ctx = viewService.context;
+  return MediaQuery.removePadding(
     removeTop: true,
     context: viewService.context,
     child: ListView(
@@ -16,7 +18,7 @@ Widget buildView(
           padding: EdgeInsets.only(top: 18),
           margin: EdgeInsets.symmetric(horizontal: 16),
           child: Text(
-            'Border : 2km',
+            FlutterI18n.translate(_ctx, 'border') + ": 2km",
             style: kMiddleFontOfGrey,
           ),
         ),

@@ -6,6 +6,7 @@ import 'package:supernodeapp/common/components/device/notification_item.dart';
 import 'package:supernodeapp/common/components/picker/date_range_picker.dart';
 import 'package:supernodeapp/page/device/device_mapbox_page/action.dart';
 import 'package:supernodeapp/page/device/device_mapbox_page/state.dart';
+import 'package:supernodeapp/theme/colors.dart';
 import 'package:supernodeapp/theme/font.dart';
 
 import 'state.dart';
@@ -19,15 +20,16 @@ Widget buildView(
     child: ListView(
       children: <Widget>[
         DescriptionItem(
-          title: 'Description',
+          title: FlutterI18n.translate(_ctx, 'description'),
           content: 'Signal Test',
         ),
         DescriptionItem(
-          title: 'Device ID',
-          content: 'Oracle02436',
-        ),
-        DescriptionItem(
-          title: 'Last Seen',
+          title: FlutterI18n.translate(_ctx, 'alert_setting'),
+          titleTrackWidget: Switch(
+            activeColor: dartBlueColor,
+            value: true,
+            onChanged: (value) {},
+          ),
           content: '2020-05-22 09:39:12',
         ),
         Container(
@@ -36,7 +38,7 @@ Widget buildView(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'Out of Border Notification',
+                FlutterI18n.translate(_ctx, 'out_of_border_notification'),
                 style: kMiddleFontOfBlack,
               ),
               SizedBox(height: 20),

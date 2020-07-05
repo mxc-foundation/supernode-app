@@ -1,6 +1,7 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:supernodeapp/common/components/device/bottom_nav_tab.dart';
 import 'package:supernodeapp/common/components/map_box.dart';
@@ -65,10 +66,11 @@ Widget buildView(
 
 Widget _buildFrontWidget(
     DeviceMapBoxState state, Dispatch dispatch, ViewService viewService) {
+  var _ctx = viewService.context;
   Widget nextPage = SizedBox();
   var tabViewModel = [
     BottomNavTabViewModel(
-        title: 'Discover',
+        title: FlutterI18n.translate(_ctx, 'discovery'),
         selectImageUrl: 'assets/images/device/map.png',
         imageUrl: 'assets/images/device/map_bg.png',
         onTap: () {
@@ -76,7 +78,7 @@ Widget _buildFrontWidget(
           dispatch(DeviceMapBoxActionCreator.changeBottomTab(0));
         }),
     BottomNavTabViewModel(
-        title: 'Footprints',
+        title: FlutterI18n.translate(_ctx, 'footprints'),
         selectImageUrl: 'assets/images/device/signal.png',
         imageUrl: 'assets/images/device/signal_bg.png',
         onTap: () {
@@ -84,7 +86,7 @@ Widget _buildFrontWidget(
           dispatch(DeviceMapBoxActionCreator.changeBottomTab(1));
         }),
     BottomNavTabViewModel(
-        title: 'Notification',
+        title: FlutterI18n.translate(_ctx, 'notification_single'),
         selectImageUrl: 'assets/images/device/notification.png',
         imageUrl: 'assets/images/device/notification_bg.png',
         onTap: () {
@@ -160,15 +162,19 @@ Widget _buildFrontWidget(
               physics: NeverScrollableScrollPhysics(),
               children: <Widget>[
                 _buildPage(
-                  appBar: _buildAppBar(title: 'Discovery'),
+                  appBar: _buildAppBar(
+                      title: FlutterI18n.translate(_ctx, 'discovery')),
                   pageContent: viewService.buildComponent('discover'),
                 ),
                 _buildPage(
-                  appBar: _buildAppBar(title: 'Footprints'),
+                  appBar: _buildAppBar(
+                      title: FlutterI18n.translate(_ctx, 'footprints')),
                   pageContent: viewService.buildComponent('footprints'),
                 ),
                 _buildPage(
-                  appBar: _buildAppBar(title: 'Notification'),
+                  appBar: _buildAppBar(
+                      title:
+                          FlutterI18n.translate(_ctx, 'notification_single')),
                   pageContent: viewService.buildComponent('notification'),
                 ),
               ],

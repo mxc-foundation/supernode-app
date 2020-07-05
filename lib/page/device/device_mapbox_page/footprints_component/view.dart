@@ -21,7 +21,7 @@ Widget buildView(
     child: ListView(
       children: <Widget>[
         DescriptionItem(
-          title: 'Description',
+          title:FlutterI18n.translate(_ctx, 'description'),
           content: 'Signal Test',
         ),
         LineColor(
@@ -41,11 +41,11 @@ Widget buildView(
           thirdColor: dbm120,
         ),
         DescriptionItem(
-          title: 'Device ID',
+          title: FlutterI18n.translate(_ctx, 'device_ID'),
           content: 'Oracle02436',
         ),
         DescriptionItem(
-          title: 'Last Seen',
+          title: FlutterI18n.translate(_ctx, 'last_seen'),
           content: '2020-05-22 09:39:12',
         ),
         Container(

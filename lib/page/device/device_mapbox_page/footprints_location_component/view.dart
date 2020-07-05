@@ -1,5 +1,6 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:supernodeapp/common/components/buttons/primary_button.dart';
 import 'package:supernodeapp/theme/font.dart';
 
@@ -8,6 +9,7 @@ import 'state.dart';
 
 Widget buildView(
     FootPrintsLocationState state, Dispatch dispatch, ViewService viewService) {
+  var _ctx = viewService.context;
   return MediaQuery.removePadding(
     removeTop: true,
     context: viewService.context,
@@ -17,11 +19,11 @@ Widget buildView(
           children: <Widget>[
             ListTile(
               leading: Text(
-                'Location',
+                FlutterI18n.translate(_ctx, 'location'),
                 style: kMiddleFontOfBlack,
               ),
               trailing: Text(
-                'Reset to Default',
+                FlutterI18n.translate(_ctx, 'reset_to_default'),
                 style: kMiddleFontOfDarkBlueLink,
               ),
             ),
@@ -79,7 +81,7 @@ Widget buildView(
             child: PrimaryButton(
               minHeight: 35,
               padding: EdgeInsets.symmetric(vertical: 5),
-              buttonTitle: 'Confirm Location',
+              buttonTitle: FlutterI18n.translate(_ctx, 'confirm_location'),
               bgColor: Color.fromRGBO(28, 20, 120, 1),
               onTap: () {},
             ),

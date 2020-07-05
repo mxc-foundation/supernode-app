@@ -18,7 +18,7 @@ Widget buildView(
     IntroductionState state, Dispatch dispatch, ViewService viewService) {
   MediaQueryData screenData;
 
-  var _ctx=viewService.context;
+  var _ctx = viewService.context;
   void initScreenData(BuildContext context) {
     if (screenData == null) {
       screenData = MediaQuery.of(context);
@@ -100,7 +100,7 @@ Widget buildView(
             alignment: Alignment.center,
             padding: EdgeInsets.only(top: 16, bottom: 16),
             child: Text(
-              'Congratulation!',
+              FlutterI18n.translate(_ctx, 'congratulation') + "!",
               style: kVeryBigFontOfBlack,
             ),
           ),
@@ -109,17 +109,9 @@ Widget buildView(
             child: Column(
               children: <Widget>[
                 Text(
-                  'You successfully connected your device. ',
+                  FlutterI18n.translate(_ctx, 'connected_device_success'),
                   textAlign: TextAlign.center,
                   style: kBigFontOfGrey,
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  child: Text(
-                    'Now it is time to travel around your region to test the signals for better tracking results. Leave your footprints!',
-                    textAlign: TextAlign.center,
-                    style: kBigFontOfGrey,
-                  ),
                 ),
               ],
             ),
@@ -137,8 +129,10 @@ Widget buildView(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text('Strong Signal', style: kSmallFontOfGrey),
-                Text('Weak Signal', style: kSmallFontOfGrey),
+                Text(FlutterI18n.translate(_ctx, 'strong_signal'),
+                    style: kSmallFontOfGrey),
+                Text(FlutterI18n.translate(_ctx, 'weak_signal'),
+                    style: kSmallFontOfGrey),
               ],
             ),
           ),
@@ -163,14 +157,14 @@ Widget buildView(
             alignment: Alignment.center,
             padding: EdgeInsets.only(top: 16, bottom: 16),
             child: Text(
-              'Set Borders',
+              FlutterI18n.translate(_ctx, 'set_borders'),
               style: kVeryBigFontOfBlack,
             ),
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: Text(
-              'Oracle is an IoT Data sharing device. In order to earn MXC token you will need to fill your details below. If you do not wish to earn MXC token you can skip this step.',
+              FlutterI18n.translate(_ctx, 'set_borders_desc'),
               textAlign: TextAlign.center,
               style: kBigFontOfGrey,
             ),
@@ -195,7 +189,7 @@ Widget buildView(
           alignment: Alignment.center,
           padding: EdgeInsets.only(top: 16, bottom: 16),
           child: Text(
-            'Your Data Matters',
+            FlutterI18n.translate(_ctx, 'your_data_matters'),
             style: kVeryBigFontOfBlack,
           ),
         ),
@@ -206,7 +200,7 @@ Widget buildView(
               Container(
                 padding: EdgeInsets.symmetric(vertical: 20),
                 child: Text(
-                  'Oracle is an IoT Data sharing device. In order to earn MXC token you will need to fill your details below. If you do not wish to earn MXC token you can skip this step.',
+                 FlutterI18n.translate(_ctx, 'oracle_desc'),
                   textAlign: TextAlign.center,
                   style: kBigFontOfGrey,
                 ),
@@ -221,24 +215,24 @@ Widget buildView(
               margin: EdgeInsets.symmetric(horizontal: 16),
               padding: EdgeInsets.only(top: 30),
               child: Text(
-                'Who is using this device?',
+                FlutterI18n.translate(_ctx,'device_who_use'),
                 style: kBigFontOfBlack,
               ),
             ),
             _buildRadioListTile(
-              value: 'Me',
+              value: FlutterI18n.translate(_ctx, 'me'),
               groupValue: state.userGroupValue,
               onChanged: (value) =>
                   dispatch(IntroductionActionCreator.onChangeRadio(value)),
             ),
             _buildRadioListTile(
-              value: 'Family member',
+              value: FlutterI18n.translate(_ctx, 'family_member'),
               groupValue: state.userGroupValue,
               onChanged: (value) =>
                   dispatch(IntroductionActionCreator.onChangeRadio(value)),
             ),
             _buildRadioListTile(
-              value: 'This is for my pet',
+              value: FlutterI18n.translate(_ctx, 'for_my_pet'),
               groupValue: state.userGroupValue,
               onChanged: (value) =>
                   dispatch(IntroductionActionCreator.onChangeRadio(value)),
@@ -252,26 +246,26 @@ Widget buildView(
               margin: EdgeInsets.symmetric(horizontal: 16),
               padding: EdgeInsets.only(top: 10),
               child: Text(
-                'User Gender',
+                FlutterI18n.translate(_ctx,'user_gender'),
                 style: kBigFontOfBlack,
               ),
             ),
             Row(
               children: <Widget>[
                 _buildRadioListTile(
-                  value: 'Male',
+                  value: FlutterI18n.translate(_ctx, 'male'),
                   groupValue: state.genderGroupValue,
                   onChanged: (value) => dispatch(
                       IntroductionActionCreator.onChangeGenderRadio(value)),
                 ),
                 _buildRadioListTile(
-                  value: 'Female',
+                  value: FlutterI18n.translate(_ctx, 'female'),
                   groupValue: state.genderGroupValue,
                   onChanged: (value) => dispatch(
                       IntroductionActionCreator.onChangeGenderRadio(value)),
                 ),
                 _buildRadioListTile(
-                  value: 'Non-binary',
+                  value: FlutterI18n.translate(_ctx, 'non-binary'),
                   groupValue: state.genderGroupValue,
                   onChanged: (value) => dispatch(
                       IntroductionActionCreator.onChangeGenderRadio(value)),
@@ -284,14 +278,13 @@ Widget buildView(
           padding: EdgeInsets.symmetric(horizontal: 16),
           child: textfieldWithButton(
               readOnly: true,
-              inputLabel: 'User Age',
+              inputLabel: FlutterI18n.translate(_ctx, 'user_age'),
               isDivider: false,
               icon: Icons.expand_more,
               controller: state.ageController,
               onTap: () {
                 dispatch(IntroductionActionCreator.onAgePicker());
-              }
-          ),
+              }),
         ),
         Container(
           margin: EdgeInsets.only(top: 20),
@@ -301,7 +294,7 @@ Widget buildView(
               PrimaryButton(
                 minHeight: 35,
                 padding: EdgeInsets.symmetric(vertical: 5),
-                buttonTitle: 'Save',
+                buttonTitle: FlutterI18n.translate(_ctx, 'save'),
                 bgColor: Color.fromRGBO(28, 20, 120, 1),
                 onTap: () {
                   dispatch(
@@ -327,7 +320,7 @@ Widget buildView(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   pageNavBar(
-                    'MXC Oracle',
+                    FlutterI18n.translate(_ctx, 'MXC_oracle'),
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
                     actionWidget: showSkip
                         ? InkWell(
@@ -339,7 +332,8 @@ Widget buildView(
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                Text('Skip', style: kBigFontOfBlack),
+                                Text(FlutterI18n.translate(_ctx, 'skip'),
+                                    style: kBigFontOfBlack),
                                 Icon(Icons.arrow_forward_ios, size: 24),
                               ],
                             ),
@@ -364,6 +358,7 @@ Widget buildView(
       ),
     );
   }
+
   initScreenData(_ctx);
   return PageView(
     controller: state.pageController,
