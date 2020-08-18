@@ -37,7 +37,8 @@ class TextFieldWithList extends StatefulWidget {
     this.onChanged,
     this.maxLength,
     this.counterText,
-  });
+    Key key,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -49,10 +50,12 @@ class TextFieldWithTitleState extends State<TextFieldWithList> {
   FocusNode _focusNode = FocusNode();
 
   OverlayEntry _overlayEntry;
-  List<String> users = StorageManager.sharedPreferences.getStringList(Config.USER_KEY) ?? [];
+  List<String> users =
+      StorageManager.sharedPreferences.getStringList(Config.USER_KEY) ?? [];
 
   searchUser(search) {
-    users = StorageManager.sharedPreferences.getStringList(Config.USER_KEY) ?? [];
+    users =
+        StorageManager.sharedPreferences.getStringList(Config.USER_KEY) ?? [];
     List<String> _users = [];
     for (var item in users) {
       if (item.contains(search)) {
@@ -108,12 +111,15 @@ class TextFieldWithTitleState extends State<TextFieldWithList> {
                     itemCount: users.length,
                     itemBuilder: (context, int index) {
                       return Container(
-                        decoration: new BoxDecoration(border: new Border(bottom: new BorderSide(width: 0.1))),
+                        decoration: new BoxDecoration(
+                            border:
+                                new Border(bottom: new BorderSide(width: 0.1))),
                         child: ListTile(
                           dense: true,
                           onTap: () {
                             setState(() {
-                              widget.controller.text = "${users.elementAt(index)}";
+                              widget.controller.text =
+                                  "${users.elementAt(index)}";
 
                               FocusScope.of(context).requestFocus(FocusNode());
                               try {
@@ -125,7 +131,8 @@ class TextFieldWithTitleState extends State<TextFieldWithList> {
                               }
                             });
                           },
-                          title: Text("${users.elementAt(index)}", style: new TextStyle(fontSize: 18.0)),
+                          title: Text("${users.elementAt(index)}",
+                              style: new TextStyle(fontSize: 18.0)),
                         ),
                       );
                     },
@@ -176,7 +183,10 @@ class TextFieldWithTitleState extends State<TextFieldWithList> {
                     borderRadius: BorderRadius.all(Radius.circular(3)),
                   ),
                 ),
-                onFieldSubmitted: (_) => widget.textInputAction == TextInputAction.next ? FocusScope.of(context).nextFocus() : FocusScope.of(context).unfocus(),
+                onFieldSubmitted: (_) =>
+                    widget.textInputAction == TextInputAction.next
+                        ? FocusScope.of(context).nextFocus()
+                        : FocusScope.of(context).unfocus(),
                 style: kMiddleFontOfBlack,
                 textAlignVertical: TextAlignVertical.center,
                 maxLines: 1,
@@ -190,7 +200,9 @@ class TextFieldWithTitleState extends State<TextFieldWithList> {
               ),
               Positioned(
                 right: 0,
-                child: Visibility(visible: widget.suffixChild != null, child: widget.suffixChild ?? Container()),
+                child: Visibility(
+                    visible: widget.suffixChild != null,
+                    child: widget.suffixChild ?? Container()),
               )
             ],
           ),

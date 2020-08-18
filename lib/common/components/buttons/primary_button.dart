@@ -11,7 +11,8 @@ class PrimaryButton extends StatelessWidget {
     this.bgColor = buttonPrimaryColor,
     this.textColor = Colors.white,
     this.padding = const EdgeInsets.symmetric(vertical: 0),
-  });
+    Key key,
+  }) : super(key: key);
 
   final Color bgColor;
   final Color textColor;
