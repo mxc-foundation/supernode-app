@@ -59,7 +59,7 @@ jobs:
     - name: "Start adb-server"
       run: /Users/runner/Library/Android/sdk/platform-tools/adb start-server   
     - name: "Start Simulator"
-      run: /Users/runner/Library/Android/sdk/emulator/emulator -avd Pixel_3a_API_30 -no-audio & #FIXME: figure out how to add more avds, only launches one
+      run: /Users/runner/Library/Android/sdk/emulator/emulator -avd Pixel_3a_API_30 -id Pixel_3a_API_30 -no-audio & #FIXME: figure out how to add more avds, only launches one
       continue-on-error: true
     - name: Checkout
       uses: actions/checkout@v1
