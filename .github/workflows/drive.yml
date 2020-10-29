@@ -55,11 +55,11 @@ jobs:
     runs-on: self-hosted
     steps:
     - name: "List all simulators"
-      run: "/Users/runner/Library/Android/sdk/emulator/emulator -list-avds"
+      run: "~/Library/Android/sdk/emulator/emulator -list-avds"
     - name: "Start adb-server"
-      run: /Users/runner/Library/Android/sdk/platform-tools/adb start-server   
+      run: "~/Library/Android/sdk/platform-tools/adb start-server"
     - name: "Start Simulator"
-      run: /Users/runner/Library/Android/sdk/emulator/emulator -avd Pixel_3a_API_30 -id Pixel_3a_API_30 -no-audio & #FIXME: figure out how to add more avds, only launches one
+      run: "~/Library/Android/sdk/emulator/emulator -avd Pixel_3a_API_30 -id Pixel_3a_API_30 -no-audio &" #FIXME: figure out how to add more avds, only launches one
       continue-on-error: true
     - name: Checkout
       uses: actions/checkout@v1
@@ -91,7 +91,7 @@ jobs:
         echo "APPCENTER_TOKEN_IOS=${{ secrets.APPCENTER_TOKEN_IOS }}" >> assets/.env
         echo "APPCENTER_APPID_IOS=${{ secrets.APPCENTER_APPID_IOS }}" >> assets/.env        
     - name: "Run Flutter Driver tests"
-      run: "flutter drive --target=test_driver/app.dart --flavor prod --device-id Pixel_3a_API_30"
+      run: "flutter drive --target=test_driver/app.dart --flavor prod"
       env:
         TESTING_USER: ${{ secrets.TESTING_USER }}
         TESTING_PASSWORD: ${{ secrets.TESTING_PASSWORD }}
