@@ -91,7 +91,7 @@ jobs:
         echo "APPCENTER_TOKEN_IOS=${{ secrets.APPCENTER_TOKEN_IOS }}" >> assets/.env
         echo "APPCENTER_APPID_IOS=${{ secrets.APPCENTER_APPID_IOS }}" >> assets/.env        
     - name: "Run Flutter Driver tests"
-      run: "flutter drive --target=test_driver/app.dart --flavor prod --device-id emulator-5554"
+      run: "flutter drive --target=test_driver/app.dart --flavor prod --device-id Pixel_3a_API_30"
       env:
         TESTING_USER: ${{ secrets.TESTING_USER }}
         TESTING_PASSWORD: ${{ secrets.TESTING_PASSWORD }}
@@ -99,4 +99,3 @@ jobs:
         APPCENTER_KEYSTORE_PASSWORD: ${{ secrets.APPCENTER_KEYSTORE_PASSWORD}}
         APPCENTER_KEY_ALIAS: ${{ secrets.APPCENTER_KEY_ALIAS}}
         APPCENTER_KEY_PASSWORD: ${{ secrets.APPCENTER_KEY_PASSWORD}}
-        
