@@ -7,9 +7,9 @@ jobs:
     name: Drive flutter (IOS)
     strategy:
       matrix:
-        device:
-        - "iPhone SE (2nd generation) (14.1)"
-        - "iPhone 11 Pro Max (14.1)"
+        device: #CREATE THESE FIRST IN MAC SIMULATOR!
+        - "iPhoneSEIOS141" 
+        - "iPhone11proMaxIOS141"
       fail-fast: false
     runs-on: self-hosted
     steps:
@@ -17,14 +17,10 @@ jobs:
       run: "xcrun xctrace list devices"
     - name: "Start Simulator"
       run: |
-        UDID=$(
-          xcrun xctrace list devices |
-          awk \
-            -F ' *[][]' \
-            -v 'device=${{ matrix.device }}' \
-            '$1 == device { print $2 }'
+        UDID=$(          
+        xcrun xctrace list devices &> /tmp/devices.list
+        grep '${{ matrix.device }}' /tmp/devices.list | cut -d '(' -f 3 | cut -d ')' -f 1
         )
-        xcrun simctl shutdown all
         xcrun simctl boot "${UDID:?No Simulator with this name found}"
       continue-on-error: true
     - name: Checkout
