@@ -3,29 +3,13 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:supernodeapp/theme/colors.dart';
 import 'package:supernodeapp/theme/font.dart';
 
-class IosButtonStyle {
-  String title;
-  TextStyle style;
-
-  IosButtonStyle({String title, TextStyle style = kBigFontOfBlack}) {
-    this.title = title;
-    this.style = style;
-  }
-}
-
-typedef OnItemClickListener = void Function(int index);
-
-class IosStyleBottomDialog extends StatelessWidget {
-  final int blueActionIndex;
-  final List<IosButtonStyle> list;
+abstract class _IosStyleBottomDialogBase extends StatelessWidget {
   final OnItemClickListener onItemClickListener;
   final BuildContext context;
 
-  const IosStyleBottomDialog({
+  const _IosStyleBottomDialogBase({
     Key key,
-    @required this.list,
     this.onItemClickListener,
-    this.blueActionIndex = -1,
     this.context,
   }) : super(key: key);
 
@@ -39,14 +23,50 @@ class IosStyleBottomDialog extends StatelessWidget {
           right: 20,
           child: GestureDetector(
             onTap: () {},
-            child: Column(
-              children: <Widget>[
-                _buildContentList(context),
-                _buildCancelItem(context),
-              ],
-            ),
+            child: buildDialog(),
           ),
         ),
+      ],
+    );
+  }
+
+  Widget buildDialog();
+}
+
+class IosButtonStyle {
+  String title;
+  TextStyle style;
+
+  IosButtonStyle({String title, TextStyle style = kBigFontOfBlack}) {
+    this.title = title;
+    this.style = style;
+  }
+}
+
+typedef OnItemClickListener = void Function(int index);
+
+///
+/// iOS style Bottom Dialog with list of buttons IosButtonStyle
+/// and a separate Cancel button by default
+///
+class IosStyleBottomDialog extends _IosStyleBottomDialogBase {
+  final int blueActionIndex;
+  final List<IosButtonStyle> list;
+
+  const IosStyleBottomDialog({
+    Key key,
+    @required this.list,
+    OnItemClickListener onItemClickListener,
+    this.blueActionIndex = -1,
+    BuildContext context,
+  }) : super(key: key, onItemClickListener: onItemClickListener, context: context);
+
+  @override
+  Widget buildDialog(){
+    return Column(
+      children: <Widget>[
+        _buildContentList(context),
+        _buildCancelItem(context),
       ],
     );
   }
@@ -153,6 +173,39 @@ class IosStyleBottomDialog extends StatelessWidget {
         child: Text(FlutterI18n.translate(context, 'device_cancel'),
             style: kBigFontOfBlack),
       ),
+    );
+  }
+}
+
+///
+/// iOS style Bottom Dialog with UI defined by param child
+///
+class IosStyleBottomDialog2 extends _IosStyleBottomDialogBase {
+  final Widget child;
+
+  const IosStyleBottomDialog2({
+    Key key,
+    @required this.child,
+    OnItemClickListener onItemClickListener,
+    BuildContext context,
+  }) : super(key: key, onItemClickListener: onItemClickListener, context: context);
+
+  @override
+  Widget buildDialog(){
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+          boxShadow: [
+            BoxShadow(
+              color: shodowColor,
+              offset: Offset(0, 2),
+              blurRadius: 7,
+            ),
+          ]),
+      alignment: Alignment.center,
+      padding: EdgeInsets.only(left: 22, right:22, top: 28, bottom:60),
+      child: child,
     );
   }
 }

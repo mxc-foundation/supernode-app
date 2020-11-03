@@ -104,6 +104,7 @@ Widget buildView(
             ),
             Divider(),
             listItem(FlutterI18n.translate(_ctx, 'logout'),
+                key: Key('logout'),
                 trailing: Text(''),
                 onTap: () =>
                     dispatch(SettingsActionCreator.onSettings('logout'))),

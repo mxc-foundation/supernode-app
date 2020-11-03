@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:supernodeapp/common/components/buttons/circle_button.dart';
 import 'package:supernodeapp/common/components/buttons/primary_button.dart';
+import 'package:supernodeapp/common/components/dialog/full_screen_dialog.dart';
 import 'package:supernodeapp/common/components/expansion_super_node_tile.dart';
+import 'package:supernodeapp/common/components/picker/ios_style_bottom_dailog.dart';
 import 'package:supernodeapp/common/components/text_field/text_field_with_list.dart';
 import 'package:supernodeapp/common/components/text_field/text_field_with_title.dart';
 import 'package:supernodeapp/configs/images.dart';
@@ -49,11 +51,22 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                           ),
                         ),
                         SizedBox(height: s(100)),
-                        Center(
-                          child: Text(
-                            FlutterI18n.translate(_ctx, 'choose_supernode'),
-                            style: TextStyle(fontSize: s(14), fontWeight: FontWeight.w400, color: Colors.black),
-                          ),
+                        Row(
+                          mainAxisAlignment : MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              FlutterI18n.translate(_ctx, 'choose_supernode'),
+                              style: TextStyle(fontSize: s(14), fontWeight: FontWeight.w400, color: Colors.black),
+                            ),
+                            GestureDetector(
+                              onTap: () => _showInfoDialog(_ctx),
+                              child: Padding(
+                                key: Key("questionCircle"),
+                                padding: EdgeInsets.all(s(5)),
+                                child: Image.asset(AppImages.questionCircle, height: s(20)),
+                              ),
+                            )
+                          ],
                         ),
                       ],
                     ),
@@ -276,6 +289,58 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
         FocusScope.of(_ctx).requestFocus(FocusNode());
       },
     ));
+}
+
+void _showInfoDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return FullScreenDialog(
+        child: IosStyleBottomDialog2(
+            context: context,
+            child: Column(
+              children: [
+                Container(
+                  width: s(86),
+                  height: s(86),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Container(
+                    width: s(67),
+                    height: s(67),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle, boxShadow: [
+                      BoxShadow(
+                        color: darkBackground,
+                        offset: Offset(0, 1),
+                        blurRadius: 10,
+                        spreadRadius: 5,
+                      )
+                    ]),
+                    child: Icon(Icons.add, size: s(12)),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Text(FlutterI18n.translate(context, 'info_supernode'),
+                      key: ValueKey("helpText"),
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: s(16),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    textAlign: TextAlign.center,
+                  )
+                ),
+              ],
+            )
+        ),
+      );
+    },
+  );
 }
 
 //Sys.superNodes.keys

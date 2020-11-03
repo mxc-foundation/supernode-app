@@ -149,7 +149,9 @@ flutter:
     - assets/images/deposit/
     - assets/images/withdraw/
     - assets/images/stake/
+    - assets/images/wallet/
     - assets/images/device/
+    - assets/images/gateway/
     - assets/images/calculator/currencies/
     - assets/images/connectivity/
     - assets/images/settings/

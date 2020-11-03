@@ -4,7 +4,6 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:supernodeapp/common/components/stake/stake_item.dart';
 import 'package:supernodeapp/common/components/wallet/list_item.dart';
 import 'package:supernodeapp/page/home_page/wallet_component/action.dart';
-import 'package:supernodeapp/theme/colors.dart';
 import 'package:supernodeapp/theme/font.dart';
 
 import 'action.dart';

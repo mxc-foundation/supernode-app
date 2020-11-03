@@ -22,8 +22,17 @@ class AppImages {
   static const String done = 'assets/images/app/done.png';
   static const String noData = 'assets/images/app/no-data.png';
   static const String circleLogo = 'assets/images/app/logo-circle.png';
+  static const String questionCircle = 'assets/images/app/ic-question-circle.png';
 
   //login
   static const String placeholder = "assets/images/login/placeholder.png";
   static const String email = 'assets/images/login/email.png';
+
+  //wallet
+  static const String infoMXCVault= 'assets/images/wallet/info-mxc-vault.png';
+  static const String infoCurrentTransactionFee= 'assets/images/wallet/info-current-transaction-fee.png';
+
+  //gateway
+  static const String infoDownlinkPrice= 'assets/images/gateway/info-downloadlink_price.png';
+
 }

@@ -3,9 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:supernodeapp/common/components/buttons/primary_button.dart';
+import 'package:supernodeapp/common/components/dialog/full_screen_dialog.dart';
 import 'package:supernodeapp/common/components/page/page_frame.dart';
 import 'package:supernodeapp/common/components/page/page_nav_bar.dart';
+import 'package:supernodeapp/common/components/picker/ios_style_bottom_dailog.dart';
+import 'package:supernodeapp/common/utils/screen_util.dart';
 import 'package:supernodeapp/common/utils/utils.dart';
+import 'package:supernodeapp/configs/images.dart';
 import 'package:supernodeapp/page/stake_page/details_stake_page/action.dart';
 import 'package:supernodeapp/theme/colors.dart';
 import 'package:supernodeapp/theme/font.dart';
@@ -67,11 +71,24 @@ Widget buildView(
             ),
           ),
           SizedBox(width: 16),
-          Text(
-            months == null
-                ? FlutterI18n.translate(_ctx, 'flex_stake')
-                : FlutterI18n.translate(_ctx, 'x_month_stake')
-                    .replaceFirst('{0}', months.toString()),
+          months == null
+              ? Row(
+            children: [
+              Text(
+                FlutterI18n.translate(_ctx, 'flex_stake'),
+                style: kBigFontOfBlack.copyWith(fontWeight: FontWeight.w600)
+              ),
+              GestureDetector(
+                onTap: () => _showInfoDialog(_ctx),
+                child: Padding(
+                  key: Key("questionCircle"),
+                  padding: EdgeInsets.all(s(5)),
+                  child: Image.asset(AppImages.questionCircle, height: s(20)),
+                ),
+              )
+            ],
+          )
+              : Text(FlutterI18n.translate(_ctx, 'x_month_stake').replaceFirst('{0}', months.toString()),
             style: kBigFontOfBlack.copyWith(fontWeight: FontWeight.w600),
           ),
           Spacer(),
@@ -190,6 +207,51 @@ Widget buildView(
           ),
         ),
     ],
+  );
+}
+
+void _showInfoDialog(BuildContext context){
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return FullScreenDialog(
+        child: IosStyleBottomDialog2(
+            context: context,
+            child: Column(
+              children: [
+                Container(
+                  height: 80,
+                  width: 80,
+                  alignment: Alignment.center,
+                  child: Text('~',
+                    style: Theme.of(context).textTheme.bodyText1.copyWith(
+                      color: Colors.white,
+                      fontSize: 40,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: stakeFlexColor,
+                  ),
+                ),
+                Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Text(
+                      FlutterI18n.translate(context, 'info_flex_stake'),
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: s(16),
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.center,
+                    )
+                ),
+              ],
+            )
+        ),
+      );
+    },
   );
 }
 

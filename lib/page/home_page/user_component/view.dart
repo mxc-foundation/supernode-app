@@ -42,6 +42,7 @@ Widget buildView(UserState state, Dispatch dispatch, ViewService viewService) {
       ),
       actions: [
         IconButton(
+          key: Key('settingsButton'),
           icon: Icon(
             Icons.settings,
             color: Colors.black,
