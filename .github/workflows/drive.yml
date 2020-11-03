@@ -36,7 +36,7 @@ jobs:
     - name: create env file
       run: touch assets/.env
     - name: "Run Flutter Driver tests"
-      run: "flutter drive --target=test_driver/app.dart"
+      run: "flutter drive --target=test_driver/app.dart --device-id ${{ matrix.device }}"
       env:
         TESTING_USER: ${{ secrets.TESTING_USER }}
         TESTING_PASSWORD: ${{ secrets.TESTING_PASSWORD }}
@@ -55,7 +55,7 @@ jobs:
     - name: "Start adb-server"
       run: /usr/local/bin/adb start-server   
     - name: "Start Simulator"
-      run: /usr/local/bin/emulator -avd Pixel_3a_API_30 -id Pixel_3a_API_30 -no-audio #FIXME: figure out how to add more avds, only launches one
+      run: /usr/local/bin/emulator -avd ${{ matrix.device }} -id ${{ matrix.device }} -no-audio #FIXME: figure out how to add more avds, only launches one
       continue-on-error: true
     - name: Checkout
       uses: actions/checkout@v1
@@ -87,7 +87,7 @@ jobs:
         echo "APPCENTER_TOKEN_IOS=${{ secrets.APPCENTER_TOKEN_IOS }}" >> assets/.env
         echo "APPCENTER_APPID_IOS=${{ secrets.APPCENTER_APPID_IOS }}" >> assets/.env        
     - name: "Run Flutter Driver tests"
-      run: "flutter drive --target=test_driver/app.dart --flavor prod --device-id Pixel_3a_API_30"
+      run: "flutter drive --target=test_driver/app.dart --flavor prod --device-id ${{ matrix.device }}"
       env:
         TESTING_USER: ${{ secrets.TESTING_USER }}
         TESTING_PASSWORD: ${{ secrets.TESTING_PASSWORD }}
