@@ -11,7 +11,7 @@ jobs:
         - "iPhoneSEIOS141" 
         - "iPhone11proMaxIOS141"
       fail-fast: false
-    runs-on: self-hosted
+    runs-on: [self-hosted, macOS]
     steps:
     - name: "List all simulators"
       run: "xcrun xctrace list devices"
@@ -48,7 +48,7 @@ jobs:
         device:
         - "Pixel_3a_API_30"
       fail-fast: false
-    runs-on: self-hosted
+    runs-on: [self-hosted, macOS]
     steps:
     - name: "List all simulators"
       run: "~/Library/Android/sdk/emulator/emulator -list-avds"
