@@ -4,6 +4,7 @@ on:
 
 jobs:
   drive_ios:
+    needs: drive_android #FIXME: temp to force android tests
     name: Drive flutter (IOS)
     strategy:
       matrix:
@@ -47,6 +48,7 @@ jobs:
       matrix:
         device:
         - "Pixel_3a_API_30"
+        - "Pixel_3_API_29"
       fail-fast: false
     runs-on: [self-hosted, android]
     steps:
@@ -55,7 +57,9 @@ jobs:
     - name: "Start adb-server"
       run: /usr/local/bin/adb start-server   
     - name: "Start Simulator"
-      run: /usr/local/bin/emulator -avd ${{ matrix.device }} -id ${{ matrix.device }} -no-audio #FIXME: figure out how to add more avds, only launches one
+      run: |
+        UDID=$(/usr/local/bin/adb devices | grep emulator |awk '{print$1}')
+        /usr/local/bin/emulator -avd ${{ matrix.device }} -id ${{ matrix.device }} -no-audio #FIXME: figure out how to add more avds, only launches one
       continue-on-error: true
     - name: Checkout
       uses: actions/checkout@v1
