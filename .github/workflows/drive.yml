@@ -37,7 +37,7 @@ jobs:
     - name: create env file
       run: touch assets/.env
     - name: "Run Flutter Driver tests"
-      run: "flutter drive --target=test_driver/app.dart --device-id ${UDID}"
+      run: "flutter drive --target=test_driver/app.dart --device-id ${grep '${{ matrix.device }}' /tmp/devices.list | cut -d '(' -f 3 | cut -d ')' -f 1}"
       env:
         TESTING_USER: ${{ secrets.TESTING_USER }}
         TESTING_PASSWORD: ${{ secrets.TESTING_PASSWORD }}
