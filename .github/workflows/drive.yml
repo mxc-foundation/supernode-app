@@ -37,7 +37,7 @@ jobs:
     - name: create env file
       run: touch assets/.env
     - name: "Run Flutter Driver tests"
-      run: "flutter drive --target=test_driver/app.dart --device-id ${{ matrix.device }}"
+      run: "flutter drive --target=test_driver/app.dart --device-id ${UDID}"
       env:
         TESTING_USER: ${{ secrets.TESTING_USER }}
         TESTING_PASSWORD: ${{ secrets.TESTING_PASSWORD }}
@@ -56,10 +56,10 @@ jobs:
       run: "/usr/local/bin/emulator -list-avds"
     - name: "Start adb-server"
       run: /usr/local/bin/adb start-server   
-    - name: "Start Simulator"
+    - name: "Start Simulator" #FIXME: figure out how to add more avds, only launches one
       run: |
         UDID=$(/usr/local/bin/adb devices | grep emulator |awk '{print$1}')
-        /usr/local/bin/emulator -avd ${{ matrix.device }} -id ${{ matrix.device }} -no-audio #FIXME: figure out how to add more avds, only launches one
+        /usr/local/bin/emulator -avd ${{ matrix.device }} -id ${{ matrix.device }} -no-audio
       continue-on-error: true
     - name: Checkout
       uses: actions/checkout@v1
