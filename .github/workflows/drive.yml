@@ -4,13 +4,12 @@ on:
 
 jobs:
   drive_ios:
-    #needs: drive_android #FIXME: temp to force android tests
     name: Drive flutter (IOS)
     strategy:
       matrix:
-        device: #CREATE THESE FIRST IN MAC SIMULATOR!
-        - "iPhoneSEIOS141" 
-        - "iPhone11proMaxIOS141"
+        device:
+        - "iPhone SE (2nd generation) (14.1)"
+        - "iPhone 11 Pro Max (14.1)"
       fail-fast: false
     runs-on: [self-hosted, macOS]
     steps:
