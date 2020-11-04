@@ -15,13 +15,17 @@ jobs:
     runs-on: [self-hosted, macOS]
     steps:
     - name: "List all simulators"
-      run: "xcrun xctrace list devices"
+      run: "xcrun instruments -s"
     - name: "Start Simulator"
       run: |
-        UDID=$(          
-        xcrun xctrace list devices &> /tmp/devices.list
-        grep '${{ matrix.device }}' /tmp/devices.list | cut -d '(' -f 3 | cut -d ')' -f 1
+        UDID=$(
+          xcrun instruments -s |
+          awk \
+            -F ' *[][]' \
+            -v 'device=${{ matrix.device }}' \
+            '$1 == device { print $2 }'
         )
+        xcrun simctl shutdown all
         xcrun simctl boot "${UDID:?No Simulator with this name found}"
       continue-on-error: true
     - name: Checkout
@@ -37,7 +41,15 @@ jobs:
     - name: create env file
       run: touch assets/.env
     - name: "Run Flutter Driver tests"
-      run: "flutter drive --target=test_driver/app.dart --device-id ${grep '${{ matrix.device }}' /tmp/devices.list | cut -d '(' -f 3 | cut -d ')' -f 1}"
+      run: |
+        UDID=$(
+          xcrun instruments -s |
+          awk \
+            -F ' *[][]' \
+            -v 'device=${{ matrix.device }}' \
+            '$1 == device { print $2 }'
+        )
+        flutter drive --target=test_driver/app.dart --device-id ${UDID}
       env:
         TESTING_USER: ${{ secrets.TESTING_USER }}
         TESTING_PASSWORD: ${{ secrets.TESTING_PASSWORD }}
