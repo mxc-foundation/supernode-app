@@ -48,7 +48,7 @@ jobs:
             -v 'device=${{ matrix.device }}' \
             '$1 == device { print $2 }'
         )
-        flutter drive --target=test_driver/app.dart --device-id ${UDID}
+        "flutter drive --target=test_driver/app.dart --device-id ${UDID}""
       env:
         TESTING_USER: ${{ secrets.TESTING_USER }}
         TESTING_PASSWORD: ${{ secrets.TESTING_PASSWORD }}
@@ -67,10 +67,8 @@ jobs:
       run: "/usr/local/bin/emulator -list-avds"
     - name: "Start adb-server"
       run: /usr/local/bin/adb start-server   
-    - name: "Start Simulator" #FIXME: figure out how to add more avds, only launches one
-      run: |
-        UDID=$(/usr/local/bin/adb devices | grep emulator |awk '{print$1}')
-        /usr/local/bin/emulator -avd ${{ matrix.device }} -id ${{ matrix.device }} -no-audio
+    - name: "Start Simulator" 
+      run: "/usr/local/bin/emulator -avd ${{ matrix.device }} -id ${{ matrix.device }} -no-audio"
       continue-on-error: true
     - name: Checkout
       uses: actions/checkout@v1
@@ -102,7 +100,9 @@ jobs:
         echo "APPCENTER_TOKEN_IOS=${{ secrets.APPCENTER_TOKEN_IOS }}" >> assets/.env
         echo "APPCENTER_APPID_IOS=${{ secrets.APPCENTER_APPID_IOS }}" >> assets/.env        
     - name: "Run Flutter Driver tests"
-      run: "flutter drive --target=test_driver/app.dart --flavor prod --device-id ${{ matrix.device }}"
+      run: |
+        UDID=$(/usr/local/bin/adb devices | grep emulator |awk '{print$1}')
+        "flutter drive --target=test_driver/app.dart --flavor prod --device-id ${UDID}"
       env:
         TESTING_USER: ${{ secrets.TESTING_USER }}
         TESTING_PASSWORD: ${{ secrets.TESTING_PASSWORD }}
