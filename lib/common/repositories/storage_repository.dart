@@ -82,6 +82,7 @@ class StorageRepository {
   static const String _userIdKey = 'user_id';
   static const String _userNameKey = 'username';
   static const String _passwordKey = 'password';
+  static const String _demoModeKey = 'demo_mode';
   static const String _supernodeKey = 'supernode';
 
   StorageManagerSupernodeUser supernodeSession() {
@@ -133,6 +134,14 @@ class StorageRepository {
     @required String address,
   }) async {
     await _sharedPreferences.setString(_dataHighwayAddress, address);
+  }
+
+  bool isDemo() {
+    return _sharedPreferences.getBool(_demoModeKey);
+  }
+
+  Future<void> setIsDemo(bool val) async {
+    await _sharedPreferences.setBool(_demoModeKey, val);
   }
 
   Locale locale() {

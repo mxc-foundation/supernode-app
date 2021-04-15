@@ -79,9 +79,15 @@ List<BlocListener> listeners() => [
         },
       ),
       BlocListener<AppCubit, AppState>(
+        listenWhen: (a, b) => a.isDemo != b.isDemo,
+        listener: (context, state) {
+          context.read<StorageRepository>().setIsDemo(state.isDemo);
+        },
+      ),
+      BlocListener<AppCubit, AppState>(
         listenWhen: (a, b) => a.locale != b.locale,
         listener: (context, state) {
-          context.read<StorageRepository>().setLocale(state.locale);
+          context.read<StorageRepository>().setIsDemo(state.isDemo);
         },
       ),
     ];
@@ -96,7 +102,7 @@ Future<void> main() async {
   final cacheRepository = CacheRepository();
   await cacheRepository.init();
 
-  final appCubit = AppCubit();
+  final appCubit = AppCubit(isDemo: storageRepository.isDemo() ?? false);
 
   final supernodeSession = storageRepository.supernodeSession();
   final supernodeCubit = SupernodeCubit(

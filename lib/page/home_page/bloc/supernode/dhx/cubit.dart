@@ -85,7 +85,7 @@ class SupernodeDhxCubit extends Cubit<SupernodeDhxState> {
   }
 
   Future<void> refreshLastMining() async {
-    emit(state.copyWith(yesterdayTotalMPower: state.yesterdayTotalMPower.withLoading()));
+    emit(state.copyWith(balance: state.yesterdayTotalMPower.withLoading()));
     try {
       final lastMiningPowerData = await supernodeRepository.dhx.lastMining();
       final value = double.tryParse(lastMiningPowerData.yesterdayTotalMPower);
