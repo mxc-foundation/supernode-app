@@ -4,3 +4,6 @@
 [submodule "packages/flutter_appcenter"]
 	path = packages/flutter_appcenter
 	url = https://github.com/mxc-foundation/flutter_appcenter.git
+[submodule "packages/majascan_flutter"]
+	path = packages/majascan_flutter
+	url = https://github.com/festelo/majascan_flutter.git
