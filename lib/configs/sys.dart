@@ -39,8 +39,6 @@ class Sys {
   static final tokenIOS = DotEnv().env['APPCENTER_TOKEN_IOS'];
   static final appIdIOS = DotEnv().env['APPCENTER_APPID_IOS'];
   static const betaUrlIOS = 'itms-beta://testflight.apple.com/join/NkXHEpf4';
-  static const downloadUrlAndroid =
-      'https://datadash.oss-accelerate.aliyuncs.com/app-prod-release.apk';
   static const channelProduct = 'prod';
   static const channelGooglePlay = 'play';
 

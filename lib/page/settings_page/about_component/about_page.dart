@@ -47,7 +47,8 @@ class AboutPage extends StatelessWidget {
             Divider(),
             listItem(
               FlutterI18n.translate(context, 'version'),
-              onTap: () => updateDialog(context).then((isLatest) {
+              onTap: () =>
+                  Updater.instance.updateDialog(context).then((isLatest) {
                 if (!isLatest)
                   tip(FlutterI18n.translate(context, 'tip_latest_version'),
                       success: true);

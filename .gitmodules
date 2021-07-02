@@ -1,3 +1,7 @@
 [submodule "packages/fluwx"]
 	path = packages/fluwx
 	url = https://github.com/mxc-foundation/fluwx.git
+[submodule "packages/flutter_appcenter"]
+	path = packages/flutter_appcenter
+	url = https://github.com/mxc-foundation/flutter_appcenter.git
+    branch = legacy

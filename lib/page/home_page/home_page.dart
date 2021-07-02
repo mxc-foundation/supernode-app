@@ -6,7 +6,7 @@ import 'package:supernodeapp/app_state.dart';
 import 'package:supernodeapp/common/repositories/cache_repository.dart';
 import 'package:supernodeapp/configs/images.dart';
 import 'package:supernodeapp/common/repositories/supernode_repository.dart';
-import 'package:supernodeapp/main.dart';
+import 'package:supernodeapp/main_common.dart';
 import 'package:supernodeapp/page/home_page/bloc/supernode/btc/cubit.dart';
 import 'package:supernodeapp/page/home_page/bloc/supernode/dhx/cubit.dart';
 import 'package:supernodeapp/page/home_page/bloc/supernode/gateway/cubit.dart';
