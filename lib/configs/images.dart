@@ -92,4 +92,6 @@ class AppImages {
 
   //settings
   static const String warningRobot = 'assets/images/settings/robot_warning.png';
+  static const String weChat = 'assets/images/settings/wechat.png';
+  static const String weChatQRCode = 'assets/images/settings/wechat_qr_code.png';
 }
