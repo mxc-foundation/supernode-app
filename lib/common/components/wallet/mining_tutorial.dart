@@ -64,7 +64,7 @@ class MiningTutorial extends StatefulWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: Text(FlutterI18n.translate(ctx, 'mxc_locked'),
-                    style: FontTheme.of(ctx).middle.secondary()),
+                    style: FontTheme.of(ctx).middle.button()),
               ))
         ]),
         Spacer(),
@@ -84,12 +84,12 @@ class MiningTutorial extends StatefulWidget {
                       Stack(alignment: AlignmentDirectional.center, children: [
                     Text(FlutterI18n.translate(ctx, 'mxc_locked'),
                         style: TextStyle(
-                            color: Token.supernodeDhx.ui(_ctx).color,
+                            color: Colors.transparent,
                             fontFamily: "Roboto",
                             fontSize:
                                 14)), // invisible - sets width for Container
                     Text(FlutterI18n.translate(ctx, 'mpower'),
-                        style: FontTheme.of(ctx).middle.secondary())
+                        style: FontTheme.of(ctx).middle.button())
                   ])))
         ]),
         Spacer(),
@@ -115,7 +115,7 @@ class MiningTutorial extends StatefulWidget {
                   child:
                       Stack(alignment: AlignmentDirectional.center, children: [
                     Text(FlutterI18n.translate(ctx, 'm2pro_miner'),
-                        style: FontTheme.of(ctx).middle.secondary()),
+                        style: FontTheme.of(ctx).middle.button()),
                   ])))
         ]),
         Spacer(),
@@ -140,12 +140,12 @@ class MiningTutorial extends StatefulWidget {
                       Stack(alignment: AlignmentDirectional.center, children: [
                     Text(FlutterI18n.translate(ctx, 'm2pro_miner'),
                         style: TextStyle(
-                            color: Token.supernodeDhx.ui(_ctx).color,
+                            color: Colors.transparent,
                             fontFamily: "Roboto",
                             fontSize:
                                 14)), // invisible - sets width for Container
                     Text(FlutterI18n.translate(ctx, 'mpower'),
-                        style: FontTheme.of(ctx).middle.secondary())
+                        style: FontTheme.of(ctx).middle.button())
                   ])))
         ]),
         Spacer(),
@@ -171,7 +171,7 @@ class MiningTutorial extends StatefulWidget {
                   child:
                       Stack(alignment: AlignmentDirectional.center, children: [
                     Text(FlutterI18n.translate(ctx, 'm2pro_miner'),
-                        style: FontTheme.of(ctx).middle.secondary()),
+                        style: FontTheme.of(ctx).middle.button()),
                   ])))
         ]),
         Spacer(),
@@ -199,12 +199,12 @@ class MiningTutorial extends StatefulWidget {
                       Stack(alignment: AlignmentDirectional.center, children: [
                     Text(FlutterI18n.translate(ctx, 'm2pro_miner'),
                         style: TextStyle(
-                            color: Token.supernodeDhx.ui(_ctx).color,
+                            color: Colors.transparent,
                             fontFamily: "Roboto",
                             fontSize:
                                 14)), // invisible - sets width for Container
                     Text(FlutterI18n.translate(ctx, 'mpower'),
-                        style: FontTheme.of(ctx).middle.secondary())
+                        style: FontTheme.of(ctx).middle.button())
                   ])))
         ]),
         Spacer(),
@@ -226,7 +226,7 @@ class MiningTutorial extends StatefulWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: Text(FlutterI18n.translate(ctx, 'mining_term'),
-                    style: FontTheme.of(ctx).middle.secondary())))
+                    style: FontTheme.of(ctx).middle.button())))
       ]),
       SizedBox(height: s(10)),
       Text(
@@ -259,7 +259,7 @@ class MiningTutorial extends StatefulWidget {
               padding:
                   const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
               child: Text('40% ' + FlutterI18n.translate(ctx, 'boost'),
-                  style: FontTheme.of(ctx).middle.secondary()),
+                  style: FontTheme.of(ctx).middle.button()),
             )),
         Spacer(),
         Container(
@@ -270,7 +270,7 @@ class MiningTutorial extends StatefulWidget {
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
               child: Text('0% ' + FlutterI18n.translate(ctx, 'boost'),
-                  style: FontTheme.of(ctx).middle.secondary()),
+                  style: FontTheme.of(ctx).middle.button()),
             ))
       ]),
       Image.asset(AppImages.minerBoostGraph, height: 200),
@@ -283,7 +283,7 @@ class MiningTutorial extends StatefulWidget {
               padding:
                   const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
               child: Text('20% ' + FlutterI18n.translate(ctx, 'boost'),
-                  style: FontTheme.of(ctx).middle.secondary()),
+                  style: FontTheme.of(ctx).middle.button()),
             )),
         Spacer(),
         Container(
@@ -294,7 +294,7 @@ class MiningTutorial extends StatefulWidget {
               padding:
                   const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
               child: Text('10% ' + FlutterI18n.translate(ctx, 'boost'),
-                  style: FontTheme.of(ctx).middle.secondary()),
+                  style: FontTheme.of(ctx).middle.button()),
             ))
       ]),
       SizedBox(height: 25)
@@ -439,7 +439,7 @@ class MiningTutorial extends StatefulWidget {
               borderRadius: BorderRadius.all(Radius.circular(8))),
           child: Text(
             FlutterI18n.translate(ctx, 'dhx_mining').toUpperCase(),
-            style: FontTheme.of(ctx).big.primary(),
+            style: FontTheme.of(ctx).big.button(),
           ),
         ),
       ),

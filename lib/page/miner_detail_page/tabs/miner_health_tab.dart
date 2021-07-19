@@ -53,7 +53,8 @@ class MinerHealthTab extends StatelessWidget {
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: ColorsTheme.of(context).textSecondary),
+          border: Border.all(color: ColorsTheme.of(context).boxComponents),
+          color: ColorsTheme.of(context).secondaryBackground,
           boxShadow: [
             BoxShadow(
               color: boxShadowColor,
@@ -73,7 +74,7 @@ class MinerHealthTab extends StatelessWidget {
                   foregroundDecoration: enabled
                       ? null
                       : BoxDecoration(
-                          color: ColorsTheme.of(context).textLabel,
+                          color: ColorsTheme.of(context).secondaryBackground,
                           shape: BoxShape.circle,
                           backgroundBlendMode: BlendMode.saturation,
                         ),
@@ -254,9 +255,9 @@ class MinerHealthTab extends StatelessWidget {
               ),
             ),
             onTap: () => Navigator.of(context).push(routeWidget(ViewAllPage(
-                  minerId: item.id,
-                  type: MinerStatsType.uptime,
-                ))),
+              minerId: item.id,
+              type: MinerStatsType.uptime,
+            ))),
           ),
         ),
         GraphCard(

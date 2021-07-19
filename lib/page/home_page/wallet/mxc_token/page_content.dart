@@ -51,7 +51,7 @@ class _MxcTokenPageContentState extends State<MxcTokenPageContent>
                     FlutterI18n.translate(context, 'transaction_history'),
                     style: TextStyle(
                       color: (selectedTab == 0)
-                          ? ColorsTheme.of(context).textPrimaryAndIcons
+                          ? ColorsTheme.of(context).boxComponents
                           : ColorsTheme.of(context).textLabel,
                     ),
                   ),
@@ -59,7 +59,7 @@ class _MxcTokenPageContentState extends State<MxcTokenPageContent>
                     FlutterI18n.translate(context, 'stake_assets'),
                     style: TextStyle(
                       color: (selectedTab == 1)
-                          ? ColorsTheme.of(context).textPrimaryAndIcons
+                          ? ColorsTheme.of(context).boxComponents
                           : ColorsTheme.of(context).textLabel,
                     ),
                   )

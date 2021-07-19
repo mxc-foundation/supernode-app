@@ -62,7 +62,7 @@ class _MinerDetailPageState extends State<MinerDetailPage> {
                       FlutterI18n.translate(context, 'health'),
                       style: TextStyle(
                         color: (selectedTab == 0)
-                            ? ColorsTheme.of(context).textPrimaryAndIcons
+                            ? ColorsTheme.of(context).buttonIconTextColor
                             : ColorsTheme.of(context).textLabel,
                       ),
                     ),
@@ -70,7 +70,7 @@ class _MinerDetailPageState extends State<MinerDetailPage> {
                       FlutterI18n.translate(context, 'revenue'),
                       style: TextStyle(
                         color: (selectedTab == 1)
-                            ? ColorsTheme.of(context).textPrimaryAndIcons
+                            ? ColorsTheme.of(context).buttonIconTextColor
                             : ColorsTheme.of(context).textLabel,
                       ),
                     ),
@@ -78,7 +78,7 @@ class _MinerDetailPageState extends State<MinerDetailPage> {
                       FlutterI18n.translate(context, 'data'),
                       style: TextStyle(
                         color: (selectedTab == 2)
-                            ? ColorsTheme.of(context).textPrimaryAndIcons
+                            ? ColorsTheme.of(context).buttonIconTextColor
                             : ColorsTheme.of(context).textLabel,
                       ),
                     ),

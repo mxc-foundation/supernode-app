@@ -51,7 +51,7 @@ class CouncilCard extends StatelessWidget {
                 child: Center(
                   child: FaIcon(
                     FontAwesomeIcons.landmark,
-                    color: ColorsTheme.of(context).textPrimaryAndIcons,
+                    color: ColorsTheme.of(context).buttonIconTextColor,
                   ),
                 ),
                 width: 56,
@@ -64,7 +64,7 @@ class CouncilCard extends StatelessWidget {
                   children: [
                     Text(
                       council.name,
-                      style: FontTheme.of(context).big.mxc(),
+                      style: FontTheme.of(context).big.dhx(),
                     ),
                     Text(
                       '${FlutterI18n.translate(context, 'latest_mpower')} : ${Tools.numberRounded(Tools.convertDouble(council.lastMpower))}',

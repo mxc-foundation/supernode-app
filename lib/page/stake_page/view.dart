@@ -238,7 +238,7 @@ Widget _stakeCard({
         alignment: Alignment.center,
         child: Text(
           months?.toString() ?? '~',
-          style: FontTheme.of(context).veryBig.label.bold(),
+          style: FontTheme.of(context).veryBig.button.bold(),
         ),
         padding: EdgeInsets.only(top: 2),
         decoration: BoxDecoration(

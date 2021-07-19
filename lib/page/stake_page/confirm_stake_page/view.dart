@@ -83,6 +83,7 @@ Widget buildView(
                 if (!authenticated) return;
                 Navigator.of(_ctx).pop(true);
               },
+              color: ColorsTheme.of(_ctx).mxcBlue,
               key: ValueKey('submitButton'),
             );
           }
@@ -90,6 +91,7 @@ Widget buildView(
             FlutterI18n.translate(_ctx, 'proceed_anyway') +
                 ' (${dur.inSeconds})',
             key: ValueKey('submitButtonTimeout'),
+            color: ColorsTheme.of(_ctx).mxcBlue,
             onPressed: null,
           );
         },
@@ -100,6 +102,7 @@ Widget buildView(
         onPressed: () {
           Navigator.of(_ctx).pop();
         },
+        color: ColorsTheme.of(_ctx).mxcBlue,
         key: ValueKey('goBackButton'),
       ),
     ],

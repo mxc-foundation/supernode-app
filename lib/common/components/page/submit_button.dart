@@ -8,38 +8,38 @@ Widget submitButton(
   Function onPressed,
   Key key,
   Color color,
+  TextStyle textStyle,
 }) {
   return Builder(
-    builder: (context) => Container(
-      height: 45,
-      width: double.infinity,
-      margin: EdgeInsets.only(top: top),
-      child: FlatButton(
-        key: key,
-        onPressed: onPressed,
-        color: color ?? ColorsTheme.of(context).dhxBlue,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: color ?? ColorsTheme.of(context).dhxBlue,
-            width: 1,
-            style: BorderStyle.solid,
+    builder: (context) {
+      textStyle ??= onPressed == null
+          ? FontTheme.of(context).middle.label()
+          : FontTheme.of(context).middle.button();
+      return Container(
+        height: 45,
+        width: double.infinity,
+        margin: EdgeInsets.only(top: top),
+        child: FlatButton(
+          key: key,
+          onPressed: onPressed,
+          color: color ?? ColorsTheme.of(context).dhxBlue,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: color ?? ColorsTheme.of(context).dhxBlue,
+              width: 1,
+              style: BorderStyle.solid,
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(3)),
           ),
-          borderRadius: BorderRadius.all(Radius.circular(3)),
-        ),
-        textColor: ColorsTheme.of(context).textPrimaryAndIcons,
-        padding: EdgeInsets.all(0),
-        child: Text(
-          label,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: ColorsTheme.of(context).textPrimaryAndIcons,
-            fontFamily: "Roboto",
-            fontWeight: FontWeight.w400,
-            fontSize: 14,
+          padding: EdgeInsets.all(0),
+          child: Text(
+            label,
+            textAlign: TextAlign.center,
+            style: textStyle,
           ),
         ),
-      ),
-    ),
+      );
+    },
   );
 }
 

@@ -168,7 +168,7 @@ class _TabIndicatorsState extends State<TabIndicators> {
       height: 5,
       width: isActive ? 20 : 19,
       decoration: BoxDecoration(
-        color: isActive ? color : ColorsTheme.of(context).boxComponents,
+        color: isActive ? color : ColorsTheme.of(context).textLabel,
         borderRadius: BorderRadius.all(
           Radius.circular(2),
         ),

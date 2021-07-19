@@ -18,8 +18,7 @@ Widget buildView(
 
   return GestureDetector(
     key: Key('joinCouncilView'),
-    onTap: () =>
-        FocusScope.of(viewService.context).unfocus(),
+    onTap: () => FocusScope.of(viewService.context).unfocus(),
     child: pageFrame(
       context: viewService.context,
       scaffoldKey: state.scaffoldKey,
@@ -36,14 +35,14 @@ Widget buildView(
               0: Text(
                 FlutterI18n.translate(context, 'joined_council'),
                 style: state.tab == 0
-                    ? FontTheme.of(context).middle.label()
-                    : FontTheme.of(context).middle.secondary(),
+                    ? FontTheme.of(context).middle.button()
+                    : FontTheme.of(context).middle.label(),
               ),
               1: Text(
                 FlutterI18n.translate(context, 'council_lists'),
                 style: state.tab == 1
-                    ? FontTheme.of(context).middle.label()
-                    : FontTheme.of(context).middle.secondary(),
+                    ? FontTheme.of(context).middle.button()
+                    : FontTheme.of(context).middle.label(),
               ),
             },
             key: ValueKey('tabSlider'),

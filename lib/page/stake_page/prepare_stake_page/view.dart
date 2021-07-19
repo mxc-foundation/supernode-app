@@ -21,8 +21,7 @@ Widget buildView(
 
   return GestureDetector(
     key: Key('stakeAmountView'),
-    onTap: () =>
-        FocusScope.of(viewService.context).unfocus(),
+    onTap: () => FocusScope.of(viewService.context).unfocus(),
     child: pageFrame(
       context: viewService.context,
       children: [
@@ -39,7 +38,7 @@ Widget buildView(
               alignment: Alignment.center,
               child: Text(
                 state.months == null ? '~' : state.months.toString(),
-                style: FontTheme.of(_ctx).veryBig.label.bold(),
+                style: FontTheme.of(_ctx).veryBig.button.bold(),
               ),
               padding: EdgeInsets.only(top: 2),
               decoration: BoxDecoration(

@@ -64,7 +64,6 @@ class AddFuelConfirmPage extends StatelessWidget {
               buttonTitle: FlutterI18n.translate(context, 'done'),
               bgColor: ColorsTheme.of(context).minerHealthRed,
               minWidth: 0,
-              style: FontTheme.of(context).big.label(),
             ),
           ),
           SizedBox(height: 40),

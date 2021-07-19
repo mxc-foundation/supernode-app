@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -333,7 +335,7 @@ class GatewayTab extends StatelessWidget {
                                         context, 'uptime_info')),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: ColorsTheme.of(context).mxcBlue20,
+                                    color: ColorsTheme.of(context).mxcBlue05,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
                                   ),
@@ -361,7 +363,7 @@ class GatewayTab extends StatelessWidget {
                                                       style:
                                                           FontTheme.of(context)
                                                               .big
-                                                              .primary
+                                                              .mxc
                                                               .bold())),
                                           Image.asset(AppImages.uptime),
                                           Text(
@@ -369,7 +371,7 @@ class GatewayTab extends StatelessWidget {
                                                 context, 'uptime'),
                                             style: FontTheme.of(context)
                                                 .small
-                                                .primary
+                                                .mxc
                                                 .bold(),
                                           ),
                                         ]),
@@ -607,7 +609,7 @@ class GatewayTab extends StatelessWidget {
                                 ),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: ColorsTheme.of(context).mxcBlue20,
+                                    color: ColorsTheme.of(context).mxcBlue05,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
                                   ),
@@ -629,14 +631,14 @@ class GatewayTab extends StatelessWidget {
                                                     '-- %',
                                                     style: FontTheme.of(context)
                                                         .big
-                                                        .primary
+                                                        .mxc
                                                         .bold(),
                                                   )
                                                 : Text(
                                                     '${Tools.priceFormat(gatewayState.miningFuelHealth.value * 100)} %',
                                                     style: FontTheme.of(context)
                                                         .big
-                                                        .primary
+                                                        .mxc
                                                         .bold(),
                                                   )),
                                         Stack(
@@ -645,7 +647,7 @@ class GatewayTab extends StatelessWidget {
                                             Image.asset(
                                               AppImages.uptime,
                                               color: ColorsTheme.of(context)
-                                                  .textPrimaryAndIcons,
+                                                  .boxComponents,
                                             ),
                                             Image.asset(
                                               AppImages.fuel,
@@ -659,7 +661,7 @@ class GatewayTab extends StatelessWidget {
                                               context, 'fuel'),
                                           style: FontTheme.of(context)
                                               .small
-                                              .primary
+                                              .mxc
                                               .bold(),
                                         ),
                                       ],
@@ -688,7 +690,6 @@ class GatewayTab extends StatelessWidget {
         FlutterI18n.translate(context, 'gateway'),
         onPressed: () => openSettings(context),
       ),
-      backgroundColor: ColorsTheme.of(context).primaryBackground,
       body: BlocBuilder<GatewayCubit, GatewayState>(
         buildWhen: (a, b) => a.gateways != b.gateways,
         builder: (ctx, state) => Container(
@@ -765,6 +766,7 @@ class GatewaysList extends StatelessWidget {
         child: GatewayListTile(
           state: state,
           topOfList: index == 0,
+          endOfList: index == this.state.gateways.value.length - 1,
           onTap: () async {
             if (!state.reseller)
               await Navigator.push(
@@ -790,24 +792,7 @@ class GatewaysList extends StatelessWidget {
         if (page == 0) return state.gateways.value;
         return await context.read<GatewayCubit>().loadNextPage(page);
       },
-      separatorBuilder: (BuildContext context, int index) =>
-          Divider(height: 1, thickness: 1, color: boxShadowColor),
-      footer: Container(
-        height: 10,
-        margin: kOuterRowBottom10,
-        decoration: BoxDecoration(
-          color: ColorsTheme.of(context).secondaryBackground,
-          borderRadius: BorderRadius.vertical(bottom: Radius.circular(10)),
-          boxShadow: [
-            BoxShadow(
-              color: boxShadowColor,
-              offset: Offset(0, 2),
-              blurRadius: 7,
-            ),
-          ],
-        ),
-        child: SizedBox(),
-      ),
+      padding: EdgeInsets.only(bottom: 20),
       onError: (dynamic error) => Center(
         child: Text('Some error occured'),
       ),
@@ -820,11 +805,13 @@ class GatewayListTile extends StatelessWidget {
   final VoidCallback onTap;
   final GatewayItem state;
   final bool topOfList;
+  final bool endOfList;
 
   GatewayListTile({
     @required this.onTap,
     @required this.state,
     @required this.topOfList,
+    this.endOfList = false,
   });
 
   @override
@@ -832,17 +819,20 @@ class GatewayListTile extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(top: (topOfList ? 5 : 0)),
       decoration: BoxDecoration(
-        color: ColorsTheme.of(context).secondaryBackground,
-        borderRadius: (topOfList)
-            ? BorderRadius.vertical(top: Radius.circular(10))
-            : null,
-        boxShadow: [
-          BoxShadow(
-            color: boxShadowColor,
-            offset: Offset(0, 2),
-            blurRadius: 7,
-          ),
-        ],
+        color: ColorsTheme.of(context).boxComponents,
+        borderRadius: BorderRadius.vertical(
+          top: topOfList ? Radius.circular(10) : Radius.zero,
+          bottom: endOfList ? Radius.circular(10) : Radius.zero,
+        ),
+        boxShadow: endOfList
+            ? null
+            : [
+                BoxShadow(
+                  color: boxShadowColor,
+                  offset: Offset(0, 2),
+                  blurRadius: 7,
+                ),
+              ],
       ),
       child: ListTile(
         tileColor: ColorsTheme.of(context).secondaryBackground,

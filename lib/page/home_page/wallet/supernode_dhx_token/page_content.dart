@@ -16,7 +16,6 @@ import 'package:supernodeapp/page/home_page/bloc/supernode/gateway/state.dart';
 import 'package:supernodeapp/page/home_page/shared.dart';
 import 'package:supernodeapp/page/home_page/wallet/supernode_dhx_token/actions.dart';
 import 'package:supernodeapp/page/home_page/wallet/token_card.dart';
-import 'package:supernodeapp/theme/colors.dart';
 import 'package:supernodeapp/theme/theme.dart';
 import 'transactions_history.dart';
 import 'mining_income.dart';
@@ -65,7 +64,7 @@ class _SupernodeDhxTokenPageContentState
                     key: Key('transactionHistory'),
                     style: TextStyle(
                       color: (selectedTab == 0)
-                          ? ColorsTheme.of(context).textPrimaryAndIcons
+                          ? ColorsTheme.of(context).boxComponents
                           : ColorsTheme.of(context).textLabel,
                     ),
                   ),
@@ -73,7 +72,7 @@ class _SupernodeDhxTokenPageContentState
                     FlutterI18n.translate(context, 'mining_income'),
                     style: TextStyle(
                         color: (selectedTab == 1)
-                            ? ColorsTheme.of(context).textPrimaryAndIcons
+                            ? ColorsTheme.of(context).boxComponents
                             : ColorsTheme.of(context).textLabel),
                   )
                 }),
@@ -179,14 +178,15 @@ class NumberMinersAndMPower extends StatelessWidget {
               SizedBox(height: s(5)),
               Container(
                 decoration: BoxDecoration(
-                    color: Token.supernodeDhx.ui(context).color,
-                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                  color: Token.supernodeDhx.ui(context).color,
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 8.0, vertical: 4.0),
                   child: Text(
                     FlutterI18n.translate(context, 'm2pro_miner'),
-                    style: FontTheme.of(context).middle.secondary(),
+                    style: FontTheme.of(context).middle.button(),
                   ),
                 ),
               )
@@ -226,11 +226,7 @@ class NumberMinersAndMPower extends StatelessWidget {
                     children: [
                       Text(
                         FlutterI18n.translate(context, 'm2pro_miner'),
-                        style: TextStyle(
-                          color: Token.supernodeDhx.ui(context).color,
-                          fontFamily: "Roboto",
-                          fontSize: 14,
-                        ),
+                        style: FontTheme.of(context).middle.transparent(),
                       ), // invisible - sets width for Container
                       Text(
                         FlutterI18n.translate(context, 'mpower'),

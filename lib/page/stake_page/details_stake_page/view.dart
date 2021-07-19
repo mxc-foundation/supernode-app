@@ -55,7 +55,7 @@ Widget buildView(
             alignment: Alignment.center,
             child: Text(
               months == null ? '~' : months.toString(),
-              style: FontTheme.of(_ctx).veryBig.label.bold(),
+              style: FontTheme.of(_ctx).veryBig.button.bold(),
             ),
             padding: EdgeInsets.only(top: 2),
             decoration: BoxDecoration(
