@@ -142,7 +142,7 @@ class _GraphCardState extends State<GraphCard> {
             children: [
               Expanded(
                 child: Text(
-                  widget.title ?? '50% (84h)',
+                  widget.title ?? '0% (0h)',
                   style: FontTheme.of(context).big.mxc(),
                 ),
               ),

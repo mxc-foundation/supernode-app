@@ -165,14 +165,14 @@ class MinerHealthTab extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(top: 16),
                 child: CircularGraph(
-                  item.health * 100,
-                  item.health <= 0.1
+                  (item.health ?? 0) * 100,
+                  (item.health ?? 0) <= 0.1 
                       ? ColorsTheme.of(context).minerHealthRed
                       : ColorsTheme.of(context).mxcBlue,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('${(item.health * 100).round()}%',
+                      Text('${((item.health ?? 0) * 100).round()}%',
                           style: FontTheme.of(context).veryBig.primary.bold()),
                       Text(
                         FlutterI18n.translate(context, 'health_score'),
@@ -184,7 +184,7 @@ class MinerHealthTab extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: item.miningFuel > Decimal.zero
+              onTap: item.miningFuel != null && item.miningFuel > Decimal.zero
                   ? () => Navigator.of(context)
                       .push(routeWidget(SendToWalletPage(gatewayItem: item)))
                       .then((value) => onRefresh())
@@ -209,7 +209,7 @@ class MinerHealthTab extends StatelessWidget {
                     child: Container(
                       child: Icon(
                         Icons.arrow_forward,
-                        color: item.miningFuel > Decimal.zero
+                        color: item.miningFuel != null && item.miningFuel > Decimal.zero
                             ? ColorsTheme.of(context).minerHealthRed
                             : ColorsTheme.of(context).textLabel,
                         size: 26,
@@ -234,10 +234,11 @@ class MinerHealthTab extends StatelessWidget {
                 color: ColorsTheme.of(context).minerHealthRed,
               ),
               SizedBox(width: 10),
-              Text(
-                '${Tools.priceFormat(item.miningFuel.toDouble())} / ${Tools.priceFormat(item.miningFuelMax.toDouble())} MXC',
-                style: FontTheme.of(context).big(),
-              )
+              item.miningFuel != null
+                  ? Text(
+                      '${Tools.priceFormat(item.miningFuel.toDouble())} / ${Tools.priceFormat(item.miningFuelMax.toDouble())} MXC',
+                      style: FontTheme.of(context).big())
+                  : Text('0.0 / 0.0 MXC', style: FontTheme.of(context).big())
             ],
           ),
         ),
@@ -260,11 +261,11 @@ class MinerHealthTab extends StatelessWidget {
           ),
         ),
         GraphCard(
-          online: DateTime.tryParse(item.lastSeenAt)
+          online: item.lastSeenAt != null ? DateTime.tryParse(item.lastSeenAt)
                   .difference(DateTime.now())
                   .abs() <
-              Duration(minutes: 5),
-          lastSeen: DateTime.tryParse(item.lastSeenAt),
+              Duration(minutes: 5) : false,
+          lastSeen: DateTime.tryParse(item.lastSeenAt ?? ''),
           maxValue: 1,
           subtitle: FlutterI18n.translate(context, 'score_weekly_total'),
           title:
