@@ -76,7 +76,7 @@ class MinerStatsCubit extends Cubit<MinerStatsState> {
       label = '${Tools.priceFormat(item.uptime / 3600, range: 0)} h';
     } else if (type == MinerStatsType.revenue) {
       label = '${Tools.priceFormat(item.revenue)} MXC';
-    } else if (type == MinerStatsType.revenue) {
+    } else if (type == MinerStatsType.frameReceived) {
       label = '${Tools.priceFormat(item.received)}';
     } else {
       label = '${Tools.priceFormat(item.transmitted)}';

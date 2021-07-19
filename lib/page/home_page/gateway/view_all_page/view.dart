@@ -11,7 +11,6 @@ import 'package:supernodeapp/common/repositories/supernode_repository.dart';
 import 'package:supernodeapp/common/utils/time.dart';
 import 'package:supernodeapp/page/home_page/gateway/view_all_page/component/bar_chart.dart';
 import 'package:supernodeapp/page/home_page/gateway/view_all_page/component/chart_stats.dart';
-import 'package:supernodeapp/theme/colors.dart';
 import 'package:supernodeapp/theme/spacing.dart';
 import 'package:supernodeapp/theme/theme.dart';
 
@@ -77,17 +76,7 @@ class _ViewAllPageState extends State<_ViewAllPage>
     context.read<MinerStatsCubit>().setSelectedType(widget.type);
     Future.wait([
       context.read<MinerStatsCubit>().dispatchData(
-          type: widget.type,
-          minerId: widget.minerId,
-          time: MinerStatsTime.week),
-      // context.read<MinerStatsCubit>().dispatchData(
-      //     type: widget.type,
-      //     minerId: widget.minerId,
-      //     time: MinerStatsTime.month),
-      // context.read<MinerStatsCubit>().dispatchData(
-      //     type: widget.type,
-      //     minerId: widget.minerId,
-      //     time: MinerStatsTime.year),
+          type: widget.type, minerId: widget.minerId, time: MinerStatsTime.week)
     ]);
   }
 
